@@ -1,0 +1,70 @@
+# ==================== 依赖与构建产物 ====================
+# 依赖目录
+node_modules/
+# 构建输出目录
+dist/
+# SSR 构建输出
+dist-ssr/
+# Vite 开发服务器缓存
+.vite/
+# TypeScript 编译缓存
+.tsbuildinfo
+
+# ==================== 日志与临时文件 ====================
+# 日志文件
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+# 临时文件
+tmp/
+temp/
+
+# ==================== 环境变量与敏感信息 ====================
+# 环境变量文件 (包含本地开发、测试、生产环境)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# 通常会保留一个示例文件，不含敏感信息，供团队参考
+# .env.example
+
+# ==================== 编辑器与IDE ====================
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+# IntelliJ IDEA (WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+# Sublime Text
+*.sublime-*
+# Vim
+*.swp
+*.swo
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+# Mac OS
+.DS_Store
+.Spotlight-V100
+.Trashes
+
+# ==================== 操作系统与其他 ====================
+# 操作系统生成的临时文件
+*~
+# 自定义的本地文件或目录，可用于存放个人开发配置等
+.local/
+# 一些工具生成的配置备份文件
+*.bak
+*.backup
