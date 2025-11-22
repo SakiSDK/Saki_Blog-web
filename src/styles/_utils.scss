@@ -1,5 +1,7 @@
 @use 'sass:map';
 @use 'sass:string';
+@use "sass:meta";
+@use "sass:list";
 @use 'variables' as *;
 
 
@@ -18,8 +20,8 @@
   $result: (); // 存储结果 
 
   @each $v in $values {
-    @if(util.has-space($v)) {
-      $result: list.append($result, util.space($v));
+    @if(has-space($v)) {
+      $result: list.append($result, space($v));
     } @else {
       $result: list.append($result, $v);
     }

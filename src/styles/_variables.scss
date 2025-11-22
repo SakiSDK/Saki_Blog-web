@@ -34,10 +34,39 @@ $breakpoints: (
 
 /** ---------- 字体 ---------- */
 $font-family: (
-  base: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-  mono: "'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  title: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+  base: (
+    url('../assets/fonts/base-jiangcheng.woff2') format('woff2'),
+    url('../assets/fonts/base-jiangcheng.woff') format('woff'),
+    url('../assets/fonts/base-jiangcheng.ttf') format('truetype'),
+  ),
+  title: (
+    url('../assets/fonts/title-FZG.woff2') format('woff2'),
+    url('../assets/fonts/title-FZG.woff') format('woff'),
+    url('../assets/fonts/title-FZG.ttf') format('truetype'),
+  )
 );
+/** ---------- 字体注册 ---------- */
+// 循环遍历字体映射，动态生成 @font-face 规则
+@each $font-name, $font-sources in $font-family {
+  // $font-name 会是 'base', 'title'...
+  // $font-sources 会是对应的 url 和 format 列表
+
+  @font-face {
+    // 定义一个字体族名称，建议使用一个统一的前缀，比如 'MyFont-'
+    // 这样可以避免与系统字体或其他字体库冲突
+    font-family: '#{$font-name}';
+    
+    // 使用 join() 函数将 $font-sources 列表用逗号连接成一个字符串
+    // 这正是 CSS src 属性所需要的格式
+    src:$font-sources;
+
+    // 可选：定义字体的其他属性
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; // 推荐使用，提升页面加载性能
+  }
+}
+
 
 /** ---------- 圆角 ---------- */
 $radius: (

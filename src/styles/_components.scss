@@ -1,0 +1,17 @@
+@use './mixins' as *;
+
+%full-size {
+  @include size(100%);
+}
+
+%full-height {
+  @include size(100%, auto);
+}
+
+%full-width {
+  @include size(auto, 100%);
+}
+
+%full-screen {
+  @include size(100vw, 100vh);
+}

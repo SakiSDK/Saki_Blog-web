@@ -6,7 +6,7 @@
     <div class="home">
         <div class="home__container">
             <div class="home__hero">
-                123123
+                你好啊
             </div>
             <div class="home__section">
 
@@ -17,7 +17,9 @@
 
 <style lang="scss" scoped>
 .home {
-    @include mix.margin("lg sm");
+    // @include mix.margin("lg sm");
+    // @include mix.font-family(base);
+    @include mix.font-size(title);
 }
 
 

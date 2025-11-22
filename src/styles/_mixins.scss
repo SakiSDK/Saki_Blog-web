@@ -1,79 +1,31 @@
-@use "sass:list";
 @use "sass:map";
-@use "sass:meta";
-@use "sass:string";
 @use "utils" as util;
 
 
-@mixin gap($s){
-  // 判断 $s 类型
-  $values: if(
-    meta.type-of($s) == 'string', 
-    string.split($s, ' '), 
-    if(
-      meta.type-of($s) == 'list', 
-      $s, 
-      ($s,)
-    )
-  ); // 单个值包成列表
-  $result: (); // 存储结果 
-
-
-  @each $v in $values {
-    @if(util.has-space($v)){
-      $result: list.append($result, util.space($v));
-    } @else {
-      $result: list.append($result, $v);
-    }
-  }
-  gap: $result;
+@mixin gap($v){
+  $process: util.process-space-values($v);
+  gap: $process;
 }
 
-@mixin margin($s){
-  // 判断 $s 类型
-  $values: if(
-    meta.type-of($s) == 'string', 
-    string.split($s, ' '), 
-    if(
-      meta.type-of($s) == 'list', 
-      $s, 
-      ($s,)
-    )
-  ); // 单个值包成列表
-  $result: (); // 存储结果 
-
-  @each $v in $values {
-    @if(util.has-space($v)){
-      $result: list.append($result, util.space($v));
-    } @else {
-      $result: list.append($result, $v);
-    }
-  }
-
-  margin: $result;
+@mixin margin($v){
+  $process: util.process-space-values($v);
+  margin: $process;
 }
 
-@mixin padding($s){
-  // 判断 $s 类型
-  $values: if(
-    meta.type-of($s) == 'string', 
-    string.split($s, ' '), 
-    if(
-      meta.type-of($s) == 'list', 
-      $s, 
-      ($s,)
-    )
-  ); // 单个值包成列表
-  $result: (); // 存储结果 
-
-  @each $v in $values {
-    @if(util.has-space($v)){
-      $result: list.append($result, util.space($v));
-    } @else {
-      $result: list.append($result, $v);
-    }
-  }
-
-  padding: $result;
+@mixin padding($v){
+  $process: util.process-space-values($v);
+  padding: $process;
 }
 
+@mixin font-family($v){
+  font-family: util.font-family($v);
+}
+
+@mixin font-size($v){
+  font-size: util.font-size($v);
+}
+
+@mixin size($w, $h: $w){
+  width: $w;
+  height: $h;
+}
