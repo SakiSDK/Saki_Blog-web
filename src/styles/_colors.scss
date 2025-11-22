@@ -1,0 +1,138 @@
+@use './utils' as *;
+
+/** ---------- 通用颜色 ---------- */
+$colors: (
+  // 蓝色
+  color-blue-base: #1289f8,
+  color-blue-subtle: rgba(18, 137, 248, 0.8),
+  color-blue-weak: rgba(18, 137, 248, 0.4),
+  color-blue-ghost: rgba(18, 137, 248, 0.2),
+  color-blue-transparent: rgba(18, 137, 248, 0.1),
+  
+  // 黄色
+  color-yellow-base: #ffa726,
+  color-yellow-subtle: rgba(255, 168, 38, 0.8),
+  color-yellow-weak: rgba(255, 168, 38, 0.4),
+  color-yellow-ghost: rgba(255, 168, 38, 0.2),
+  color-yellow-transparent: rgba(255, 168, 38, 0.1),
+
+  // 紫色
+  color-purple-base: #7b1fa2,
+  color-purple-subtle: rgba(123, 31, 162, 0.8),
+  color-purple-weak: rgba(123, 31, 162, 0.4),
+  color-purple-ghost: rgba(123, 31, 162, 0.2),
+  color-purple-transparent: rgba(123, 31, 162, 0.1),
+
+  // 红色
+  color-red-base: #f44336,
+  color-red-subtle: rgba(244, 67, 54, 0.8),
+  color-red-weak: rgba(244, 67, 54, 0.4),
+  color-red-ghost: rgba(244, 67, 54, 0.2),
+  color-red-transparent: rgba(244, 67, 54, 0.1),
+
+  // 白色
+  color-white-base: rgb(255, 255, 255),
+  color-white-subtle: rgba(255, 255, 255, 0.8),
+  color-white-weak: rgba(255, 255, 255, 0.4),
+  color-white-ghost: rgba(255, 255, 255, 0.2),
+  color-white-transparent: rgba(255, 255, 255, 0.1),
+
+  // 黑色
+  color-black-base: rgb(54, 54, 54),
+  color-black-subtle: rgba(54, 54, 54, 0.8),
+  color-black-weak: rgba(54, 54, 54, 0.4),
+  color-black-ghost: rgba(54, 54, 54, 0.2),
+  color-black-transparent: rgba(54, 54, 54, 0.1),
+
+  // 灰色
+  color-gray-base: rgb(153, 153, 153),
+  color-gray-subtle: rgba(153, 153, 153, 0.8),
+  color-gray-weak: rgba(153, 153, 153, 0.4),
+  color-gray-ghost: rgba(153, 153, 153, 0.2),
+  color-gray-transparent: rgba(153, 153, 153, 0.1),
+
+
+  // 背景色
+  background-white-base: rgba(234, 239, 248),
+  background-white-subtle: rgba(234, 239, 248, 0.8),
+  background-white-weak: rgba(234, 239, 248, 0.4),
+  background-white-ghost: rgba(234, 239, 248, 0.2),
+  background-white-transparent: rgba(234, 239, 248, 0.1),
+
+  background-black-base: rgba(26, 26, 26),
+  background-black-subtle: rgba(26, 26, 26, 0.8),
+  background-black-weak: rgba(26, 26, 26, 0.4),
+  background-black-ghost: rgba(26, 26, 26, 0.2),
+  background-black-transparent: rgba(26, 26, 26, 0.1),
+);
+
+
+
+/** ---------- 主题色 ---------- */
+// 亮色主题
+$light-theme: (
+  // 主颜色
+  color-primary-base: get-color($colors, color-blue-base),
+  color-primary-subtle: get-color($colors, color-blue-subtle),
+  color-primary-weak: get-color($colors, color-blue-weak),
+  color-primary-ghost: get-color($colors, color-blue-ghost),
+  color-primary-transparent: get-color($colors, color-blue-transparent),
+
+  // 次级颜色
+  color-secondary-base: get-color($colors, color-purple-base),
+  color-secondary-subtle: get-color($colors, color-purple-subtle),
+  color-secondary-weak: get-color($colors, color-purple-weak),
+  color-secondary-ghost: get-color($colors, color-purple-ghost),
+  color-secondary-transparent: get-color($colors, color-purple-transparent),
+
+  // 文字颜色
+  text-color-base: get-color($colors, color-black-base),
+  text-color-subtle: get-color($colors, color-black-subtle),
+  text-color-weak: get-color($colors, color-black-weak),
+  text-color-ghost: get-color($colors, color-black-ghost),
+  text-color-transparent: get-color($colors, color-black-transparent),
+
+  // 默认按钮颜色
+  button-color-base: get-color($colors, color-gray-base),
+  button-color-subtle: get-color($colors, color-gray-subtle),
+  button-color-weak: get-color($colors, color-gray-weak),
+  button-color-ghost: get-color($colors, color-gray-ghost),
+  button-color-transparent: get-color($colors, color-gray-transparent),
+
+  // 背景色
+  background-color-base: get-color($colors, background-white-base),
+  background-color-subtle: get-color($colors, background-white-subtle),
+  background-color-weak: get-color($colors, background-white-weak),
+  background-color-ghost: get-color($colors, background-white-ghost),
+  background-color-transparent: get-color($colors, background-white-transparent),
+);
+// 暗色主题
+$dark-theme: (
+  // 主颜色
+  color-primary-base: get-color($colors, color-yellow-base),
+  color-primary-subtle: get-color($colors, color-yellow-subtle),
+  color-primary-weak: get-color($colors, color-yellow-weak),
+  color-primary-ghost: get-color($colors, color-yellow-ghost),
+  color-primary-transparent: get-color($colors, color-yellow-transparent),
+  
+  // 次级颜色
+  color-secondary-base: get-color($colors, color-red-base),
+  color-secondary-subtle: get-color($colors, color-red-subtle),
+  color-secondary-weak: get-color($colors, color-red-weak),
+  color-secondary-ghost: get-color($colors, color-red-ghost),
+  color-secondary-transparent: get-color($colors, color-red-transparent),
+
+  // 文字颜色
+  text-color-base: get-color($colors, color-white-base),
+  text-color-subtle: get-color($colors, color-white-subtle),
+  text-color-weak: get-color($colors, color-white-weak),
+  text-color-ghost: get-color($colors, color-white-ghost),
+  text-color-transparent: get-color($colors, color-white-transparent),
+
+  // 背景色
+  background-color-base: get-color($colors, background-black-base),
+  background-color-subtle: get-color($colors, background-black-subtle),
+  background-color-weak: get-color($colors, background-black-weak),
+  background-color-ghost: get-color($colors, background-black-ghost),
+  background-color-transparent: get-color($colors, background-black-transparent),
+)

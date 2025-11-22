@@ -6,6 +6,7 @@
 @use 'variables' as *;
 
 
+/** ---------- 辅助函数 ---------- */
 @function process-space-values($s) {
   // 判断 $s 类型
   $values: if(
@@ -29,6 +30,22 @@
   }
 
   @return $result;
+}
+@function generate-root-colors($color) { 
+
+}
+@function generate-root-theme($theme){
+  
+}
+
+
+/** ---------- 获取变量 ---------- */
+@function get-color($colors, $v) {
+  @if map.has-key($colors, $v) {
+    @return map.get($colors, $v);
+  } @else {
+    @error "#{$colors}: 没有找到 `#{$v}`，请检查变量名";
+  }
 }
 
 @function get-sapce($s){
