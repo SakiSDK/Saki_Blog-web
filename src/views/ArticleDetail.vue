@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <div class="album">
-    <div class="album__container">
-      
+  <div class="article-detail">
+    <div class="article-container">
+      article
     </div>
   </div>
 </template>

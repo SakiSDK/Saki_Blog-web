@@ -1,0 +1,31 @@
+// 初始化层
+@use './animations' as *;
+@use './reset' as *;
+@use './variables' as *;
+@use './utils' as *;
+@use './mixins' as *;
+@use './components' as *;
+@use './colors' as *;
+@use './base' as *;
+
+/** ---------- 全局样式 ---------- */
+body {
+
+}
+
+/* 现代浏览器方案 */
+html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+/* 兼容方案 */
+body {
+    margin-right: calc(-1 * (100vw - 100%));
+}
+html {
+    overscroll-behavior: none;
+}

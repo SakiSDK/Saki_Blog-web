@@ -1,0 +1,118 @@
+@use 'sass:map';
+@use 'sass:string';
+@use 'variables' as *;
+
+
+@function process-space-values($s) {
+  // 判断 $s 类型
+  $values: if(
+    meta.type-of($s) == 'string', 
+    string.split($s, ' '), 
+    if(
+      meta.type-of($s) == 'list', 
+      $s, 
+      ($s,)
+    )
+  );
+  
+  $result: (); // 存储结果 
+
+  @each $v in $values {
+    @if(util.has-space($v)) {
+      $result: list.append($result, util.space($v));
+    } @else {
+      $result: list.append($result, $v);
+    }
+  }
+
+  @return $result;
+}
+@function space($s) {
+  @if map.has-key($space, $s) {
+    @return map.get($space, $s);
+  } @else {
+    @error "space: 没有找到 `#{$s}`，请检查变量名";
+  }
+}
+@function has-space($s) {
+  @if map.has-key($space, $s) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function breakpoints($b) {
+  @if map.has-key($breakpoints, $b) {
+    @return map.get($breakpoints, b);
+  } @else {
+    @error "breakpoints: 没有找到 `#{$b}`，请检查变量名";
+  }
+}
+@function has-breakpoints($b) {
+  @if map.has-key($breakpoints, $b) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function font-family($f: base) {
+  @if map.has-key($font-family, $f) {
+    @return map.get($font-family, $f);
+  } @else {
+    @error "font-family: 没有找到 `#{$f}`，请检查变量名";
+  }
+}
+@function has-font-family($f) {
+  @if map.has-key($font-family, $f) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function z-index($z) {
+  @if map.has-key($z-index, $z) {
+    @return map.get($z-index, $z);
+  } @else {
+    @error "z-index: 没有找到 `#{$z}`，请检查变量名";
+  }
+}
+@function has-z-index($z) {
+  @if map.has-key($z-index, $z) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function radius($r) {
+  @if map.has-key($radius, $r) {
+    @return map.get($radius, $r);
+  } @else {
+    @error "radius: 没有找到 `#{$r}`，请检查变量名";
+  }
+}
+@function has-radius($r) {
+  @if map.has-key($radius, $r) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function font-size($s) {
+  @if map.has-key($font-size, $s) {
+    @return map.get($font-size, $s);
+  } @else {
+    @error "font-size: 没有找到 `#{$s}`，请检查变量名";
+  }
+}
+@function has-font-size($s) {
+  @if map.has-key($font-size, $s) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

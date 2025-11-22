@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <div class="album">
-    <div class="album__container">
+  <div class="album-detail">
+    <div class="album-detail">
       
     </div>
   </div>
