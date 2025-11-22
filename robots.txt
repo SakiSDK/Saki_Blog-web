@@ -1,0 +1,19 @@
+# 阻止 OpenAI ChatGPT Crawler
+User-agent: GPTBot
+Disallow: /
+
+# 阻止 CommonCrawl（很多模型的训练用）
+User-agent: CCBot
+Disallow: /
+
+# 阻止 Google 爬虫
+User-agent: Googlebot
+Disallow: /
+
+# 阻止百度爬虫
+User-agent: Baiduspider
+Disallow: /
+
+# 阻止所有剩余爬虫
+User-agent: *
+Disallow: /
