@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use "sass:meta";
 @use "sass:list";
+@use "sass:math";
 @use 'variables' as *;
 
 
@@ -29,12 +30,27 @@
 
   @return $result;
 }
-@function space($s) {
+
+@function get-sapce($s){
   @if map.has-key($space, $s) {
     @return map.get($space, $s);
   } @else {
     @error "space: 没有找到 `#{$s}`，请检查变量名";
   }
+}
+@function space($s) {
+  @if meta.type-of($s) == 'number' and math.is-unitless($s) == false {
+    @return $s;
+  }
+  @if meta.type-of($s) == 'number' and math.is-unitless($s) {
+    @return #{$s}px;
+  }
+  @if meta.type-of($s) == 'string' {
+    @return get-sapce($s);
+  }
+  // 其他情况，返回原值
+  @warn "space: 不支持的类型 `#{$s}`";
+  @return $s;
 }
 @function has-space($s) {
   @if map.has-key($space, $s) {
@@ -44,12 +60,25 @@
   }
 }
 
-@function breakpoints($b) {
+@function get-breakpoints($b) {
   @if map.has-key($breakpoints, $b) {
     @return map.get($breakpoints, b);
   } @else {
     @error "breakpoints: 没有找到 `#{$b}`，请检查变量名";
   }
+}
+@function breakpoints($b) {
+  @if meta.type-of($b) == 'number' and math.is-unitless($b) == false {
+    @return $b;
+  }
+  @if meta.type-of($b) == 'number' and math.is-unitless($b) {
+    @return #{$b}px;
+  }
+  @if meta.type-of($b) == 'string' {
+    @return get-breakpoints($b);
+  }
+  @warn "breakpoints: 不支持的类型 `#{$b}`";
+  @return $b;
 }
 @function has-breakpoints($b) {
   @if map.has-key($breakpoints, $b) {
@@ -74,12 +103,15 @@
   }
 }
 
-@function z-index($z) {
+@function get-z-index($z) {
   @if map.has-key($z-index, $z) {
     @return map.get($z-index, $z);
   } @else {
     @error "z-index: 没有找到 `#{$z}`，请检查变量名";
   }
+}
+@function z-index($z) {
+  @return get-z-index($z);
 }
 @function has-z-index($z) {
   @if map.has-key($z-index, $z) {
@@ -89,12 +121,25 @@
   }
 }
 
-@function radius($r) {
+@function get-radius($r) {
   @if map.has-key($radius, $r) {
     @return map.get($radius, $r);
   } @else {
     @error "radius: 没有找到 `#{$r}`，请检查变量名";
   }
+}
+@function radius($r) {
+  @if meta.type-of($r) == 'number' and math.is-unitless($r) == false {
+    @return $r;
+  }
+  @if meta.type-of($r) == 'number' and math.is-unitless($r) {
+    @return #{$r}px;
+  }
+  @if meta.type-of($r) == 'string' {
+    @return get-radius($r);
+  }
+  @warn "radius: 不支持的类型 `#{$r}`";
+  @return $r;
 }
 @function has-radius($r) {
   @if map.has-key($radius, $r) {
@@ -104,12 +149,25 @@
   }
 }
 
-@function font-size($s) {
+@function get-font-size($s) {
   @if map.has-key($font-size, $s) {
     @return map.get($font-size, $s);
   } @else {
     @error "font-size: 没有找到 `#{$s}`，请检查变量名";
   }
+}
+@function font-size($s) {
+  @if meta.type-of($s) == 'number' and math.is-unitless($s) == false {
+    @return $s;
+  }
+  @if meta.type-of($s) == 'number' and math.is-unitless($s) {
+    @return #{$s}px;
+  }
+  @if meta.type-of($s) == 'string' {
+    @return get-font-size($s);
+  }
+  @warn "font-size: 不支持的类型 `#{$s}`";
+  @return $s;
 }
 @function has-font-size($s) {
   @if map.has-key($font-size, $s) {
