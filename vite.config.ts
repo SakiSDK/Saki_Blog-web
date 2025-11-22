@@ -25,8 +25,8 @@ export default defineConfig({
           @use "@/styles/utils.scss" as util;
           @use "@/styles/mixins.scss" as mix;
           @use "@/styles/animations.scss" as anim;
-          @use "@/styles/main.scss" as *;
         `
+          // @use "@/styles/main.scss" as *;
       }
     }
   },

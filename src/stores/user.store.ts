@@ -1,5 +1,7 @@
+import { defineStore } from "pinia";
 
-
-const routes = [
-
-]
+export const useUserStore = defineStore('user', () => {
+  
+}, {
+  persist: true
+})

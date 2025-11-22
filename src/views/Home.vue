@@ -9,7 +9,12 @@
                 你好啊
             </div>
             <div class="home__section">
-
+                <ul>
+                    <li>123</li>
+                    <li>123</li>
+                    <li>123</li>
+                    <li>123</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -19,8 +24,6 @@
 .home {
     // @include mix.margin("lg sm");
     // @include mix.font-family(base);
-    @include mix.font-size(title);
+    // @include mix.font-size(title);
 }
-
-
 </style>

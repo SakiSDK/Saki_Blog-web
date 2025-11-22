@@ -6,34 +6,3 @@
 @use './mixins' as *;
 @use './components' as *;
 @use './colors' as *;
-@use './base' as *;
-
-
-/** ---------- 全局样式 ---------- */
-body {
-  font-family: 'base';
-  // font-size: font-size('lg');
-  // color: var(--text);
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 现代浏览器方案 */
-html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Opera */
-}
-
-/* 兼容方案 */
-body {
-  margin-right: calc(-1 * (100vw - 100%));
-}
-html {
-  overscroll-behavior: none;
-}
-
-:root {
-  --text: #333;
-}
