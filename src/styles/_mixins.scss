@@ -18,6 +18,13 @@
 @mixin margin($v){
   margin: space-value($v);
 }
+@mixin margin-d($d, $v){
+  @if is-direction-base($d) {
+    margin-#{direction-base-value($d)}: space-value($v);
+  } @else {
+    margin: space-valuue($v);
+  }
+}
 @mixin margin-x($v){
   margin-left: space-value($v);
   margin-right: space-value($v);
@@ -27,8 +34,15 @@
   margin-bottom: space-value($v);
 }
 
-@mixin padding($v){
+@mixin padding($v) {
   padding: space-value($v);
+}
+@mixin padding-d($v) {
+  @if is-direction-base($d) {
+    padding-#{direction-base-value($d)}: space-value($v);
+  } @else {
+    padding: space-valuue($v);
+  }
 }
 @mixin padding-x($v){
   padding-left: space-value($v);
@@ -195,6 +209,7 @@
   $g: null,
   $rg: null,
   $cg: null,
+  $w: null,
 ){ 
   display: flex;
   flex-direction: $d;
@@ -208,6 +223,9 @@
   }
   @if $cg != null {
     column-gap: space-value($cg);
+  }
+  @if $w != null {
+    flex-wrap: $w;
   }
 }
 // 网格盒子样式

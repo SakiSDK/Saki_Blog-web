@@ -67,6 +67,16 @@ $font-family: (
   }
 }
 
+/** ---------- 正常方向 ---------- */
+$direction-base: (
+  t: 'top', r: 'right', l: 'left', b: 'bottom'
+);
+
+/** ---------- 四角方向 ---------- */
+$direction-corner :(
+  tl: 'top-left', tr: 'top-right', bl: 'bottom-left', br: 'bottom-left'
+);
+
 
 /** ---------- 圆角 ---------- */
 $radius: (

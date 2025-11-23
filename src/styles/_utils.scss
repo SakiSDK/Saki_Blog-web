@@ -227,3 +227,53 @@
   @warn "Animation fill mode `#{$key}` not found";
   @return none;
 }
+
+/** ---------- 判断基础方向是否输入正确 ---------- */
+@function is-direction-base($d) {
+  @if map.has-key($direction-base, $d) == null {
+    @warn '请输入正确的基础方向: #{map.keys($direction-base)}';
+    @return false;
+  }
+  @return true;
+}
+
+/** ---------- 判断四角方向是否输入正确 ---------- */
+@function is-direction-corner($d) {
+  @if map.has-key($direction-corner, $d) == null {
+    @warn '请输入正确的四角方向: #{map.keys($direction-corner)}';
+    @return false;
+  }
+  @return true;
+}
+
+/** ---------- 通用方向判断函数 ---------- */
+@function is-direction($d) {
+  @if map.has-key($direction-base, $d) != null or map.has-key($direction-corner, $d) != null {
+    @return true;
+  } @else {
+    @warn '请输入正确的方向: #{map.keys($direction-base)}, #{map.keys($direction-corner)}';
+    @return false;
+  }
+}
+
+/** ---------- 获取正常方向 ---------- */
+@function direction-base-value($d){
+  @if is-direction-base($d) {
+    @return map.get($direction-base, $d);
+  } @else if (list.index(map.values($direction-base)), $d){
+    @return $d;
+  } @else {
+    @warn '请输入正确的方向';
+  }
+}
+
+/** ---------- 获取四角方向 ---------- */
+@function direction-corner-value($d){
+  @if is-direction-corner($d) {
+    @return map.get($direction-corner, $d);
+  } @else if (list.index(map.values($direction-corner)), $d){
+    @return $d;
+  } @else {
+    @warn '请输入正确的方向';
+  }
+}
