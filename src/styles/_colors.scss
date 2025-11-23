@@ -41,6 +41,11 @@ $colors: ();
   $bg: if($is-dark, map.get($base-colors, bg-dark), map.get($base-colors, bg-light));
   $bg-gradient: if($is-dark, map.get($base-colors, bg-dark), map.get($base-colors, bg-light-gradient));
   $neutral: map.get($base-colors, gray);
+  $interactive: if(
+    $is-dark, 
+    color.mix(map.get($base-colors, black), map.get($base-colors, white), 90%),
+    color.mix(map.get($base-colors, white), map.get($base-colors, black), 90%)
+  );
 
   // 主色系
   --primary-base: #{$primary};
@@ -70,6 +75,13 @@ $colors: ();
   --bg-weak: #{color.adjust($bg, $alpha: -0.6)};
   --bg-ghost: #{color.adjust($bg, $alpha: -0.8)};
   --bg-transparent: #{color.adjust($bg, $alpha: -0.9)};
+
+  // 按钮色
+  --interactive-base: #{$interactive};
+  --interactive-subtle: #{color.adjust($interactive, $alpha: -0.2)};
+  --interactive-weak: #{color.adjust($interactive, $alpha: -0.6)};
+  --interactive-ghost: #{color.adjust($interactive, $alpha: -0.8)};
+  --interactive-transparent: #{color.adjust($interactive, $alpha: -0.9)};
 
   // 中性色系
   --neutral-base: #{$neutral};

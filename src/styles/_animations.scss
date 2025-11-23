@@ -31,3 +31,10 @@
     transition: $transition-value;
   }
 }
+
+@keyframes ripple {
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}

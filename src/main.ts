@@ -5,6 +5,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate' // 引入 pi
 import router from './routers'
 import 'normalize.css'
 import './styles/main.scss'
+import BaseComponents from '@/components/bases/index'
 
 
 const pinia = createPinia()
@@ -14,4 +15,6 @@ const app = createApp(App)
 
 app.use(router);
 app.use(pinia)
+// 注册全局组件
+app.use(BaseComponents)
 app.mount('#app')

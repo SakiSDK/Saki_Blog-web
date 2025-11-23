@@ -7,7 +7,7 @@
     <div class="home">
         <div class="home__container">
             <div class="home__hero">
-                你好啊
+                你好啊<Icon :name="'trash'"/>
             </div>
             <div class="home__section">
                 <ul>
@@ -23,8 +23,6 @@
 
 <style lang="scss" scoped>
 .home {
-    &__hero {
-        
-    }
+
 }
 </style>
