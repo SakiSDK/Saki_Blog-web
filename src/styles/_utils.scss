@@ -27,9 +27,6 @@
     @if map.has-key($map, $input) {
       @return map.get($map, $input);
     } @else {
-      @if $map-name != '' {
-        @error "#{$map-name}: 未找到键 `#{$input}`，请检查变量名";
-      }
       @return $input; // 非映射场景（如 space 的 "1px" 直接返回）
     }
   }
@@ -85,7 +82,7 @@
 
 
 
-
+/** ---------- 工具函数  ---------- */
 // 解析transition属性
 @function transition-duration($key: 'base') {
   @if map.has-key($transition-duration, $key) {
@@ -194,6 +191,39 @@
     @return $z;
   }
 }
+
 @function has-z-index($z) {
   @return map.has-key($z-index, $z);
+}
+
+@function animation-duration($key: 'base') {
+  @if map.has-key($animation-duration, $key) {
+    @return map.get($animation-duration, $key);
+  }
+  @warn "Animation duration `#{$key}` not found";
+  @return 0.45s;
+}
+
+@function animation-timing($key: 'ease') {
+  @if map.has-key($animation-timing-function, $key) {
+    @return map.get($animation-timing-function, $key);
+  }
+  @warn "Animation timing `#{$key}` not found";
+  @return ease;
+}
+
+@function animation-iteration($key: 'once') {
+  @if map.has-key($animation-iteration, $key) {
+    @return map.get($animation-iteration, $key);
+  }
+  @warn "Animation iteration `#{$key}` not found";
+  @return 1;
+}
+
+@function animation-fill-mode($key: 'none') {
+  @if map.has-key($animation-fill-mode, $key) {
+    @return map.get($animation-fill-mode, $key);
+  }
+  @warn "Animation fill mode `#{$key}` not found";
+  @return none;
 }

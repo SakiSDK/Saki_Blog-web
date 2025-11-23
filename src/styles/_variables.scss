@@ -105,7 +105,7 @@ $opacity: (
 /** ---------- transition相关属性变量 ---------- */
 $transition-duration: (
   fast: 0.15s,
-  base: 0.25s,
+  base: 0.3s,
   slow: 0.4s,
   slower: 0.5s
 );
@@ -135,4 +135,39 @@ $transition-delay: (
   base: 0.2s,
   slow: 0.3s,
   slower: 0.4s
+);
+
+/** ---------- animation相关属性变量 ---------- */
+$animation-duration: (
+  'fast': 0.45s,
+  'base': 0.75s, 
+  'slow': 1.2s,
+  'slower': 1.8s,
+  'page': 0.9s,
+  'modal': 1.2s
+);
+
+$animation-timing-function: (
+  'ease': ease,
+  'ease-in': ease-in,
+  'ease-out': ease-out,
+  'ease-in-out': ease-in-out,
+  'linear': linear,
+  'bounce': cubic-bezier(0.68, -0.55, 0.265, 1.55),
+  'elastic': cubic-bezier(0.34, 1.56, 0.64, 1),
+  'smooth': cubic-bezier(0.4, 0, 0.2, 1)
+);
+
+$animation-iteration: (
+  'once': 1,
+  'infinite': infinite,
+  'twice': 2,
+  'thrice': 3
+);
+
+$animation-fill-mode: (
+  'none': none,
+  'forwards': forwards,
+  'backwards': backwards,
+  'both': both
 );

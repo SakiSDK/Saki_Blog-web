@@ -1,27 +1,18 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
+import type {IconProps} from '@/types/components/Icon';
+import type { CSSProperties } from 'vue';
 
 defineOptions({
   name: 'Icon',
 });
 
 // 1. 定义 props
-const props = defineProps<{
-  // 图标名称 (对应 symbol 的 id: #icon-xxx)
-  name: string;
-  // 图标颜色 (默认继承父元素颜色)
-  color?: string;
-  // 图标大小 (默认 1em)
-  size?: string | number;
-  // 额外类名
-  className?: string;
-  // 图标标题 (无障碍访问)
-  title?: string;
-}>();
+const props = defineProps<IconProps>();
 
 // 2. 计算样式
-const iconStyle = computed(() => {
-  const style: Record<string, string> = {};
+const iconStyle = computed<CSSProperties>(() => {
+  const style: CSSProperties = {};
   
   // 处理颜色
   if (props.color) {

@@ -22,6 +22,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
+          @use "@/styles/components.scss" as *;
           @use "@/styles/colors.scss" as *;
           @use "@/styles/utils.scss" as util;
           @use "@/styles/mixins.scss" as mix;

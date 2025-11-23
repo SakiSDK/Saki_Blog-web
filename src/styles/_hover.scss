@@ -50,7 +50,7 @@
 }
 
 // hover 缩放
-@mixin scale($ratio: 1.05, $include-transition: true) {
+@mixin scale($ratio: 1.05, $include-transition: false) {
   @if $include-transition {
     @include transition(transform);
   }
@@ -63,7 +63,7 @@
 }
 
 // 位移
-@mixin move($x: 0, $y: -2px, $include-transition: true) {
+@mixin move($x: 0, $y: -2px, $include-transition: false) {
   @if $include-transition {
     @include transition(transform);
   }
@@ -73,7 +73,7 @@
 }
 
 // 旋转
-@mixin rotate($deg: 90deg, $include-transition: true) {
+@mixin rotate($deg: 90deg, $include-transition: false) {
   @if $include-transition {
     @include transition(transform);
   }
@@ -83,7 +83,7 @@
 }
 
 // 模糊
-@mixin blur($px: 2px, $include-transition: true) {
+@mixin blur($px: 2px, $include-transition: false) {
   @if $include-transition {
     @include transition(filter);
   }

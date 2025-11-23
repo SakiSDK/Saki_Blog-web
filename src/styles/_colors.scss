@@ -4,28 +4,32 @@
 
 /** ---------- 基础色 ---------- */
 $base-colors: (
-  blue: #1289f8,
-  yellow: #ffa726,
-  purple: #7b1fa2,
-  red: #f44336,
-  white: #ffffff,
-  black: #363636,
-  gray: #999999,
-  bg-light: #f2f6ff,
-  bg-light-gradient: #f9fbff,
-  bg-dark: rgba(26, 26, 26),
+  'blue': #1289f8,
+  'yellow': #ffa726,
+  'purple': #7b1fa2,
+  'red': #f44336,
+  'white': #ffffff,
+  'black': #363636,
+  'green': #52c41a,
+  'gray': #999999,
+  'bg-light': #f7f9fe,
+  'bg-light-gradient': #f9fbff,
+  'bg-dark': rgba(26, 26, 26),
+  'bg-dark-gradient': rgba(26, 26, 26),
+  'border-dark': #3d3d3f,
+  'border-light': #e3e8f7,
 );
 
 /** ---------- 自动生成颜色变体 ---------- */
-$colors: ();
-@each $name, $color in $base-colors {
-  $variant: generate-color-variant($color, $name);
-  $colors: map.merge($colors, $variant);
-}
+// $colors: ();
+// @each $name, $color in $base-colors {
+//   $variant: generate-color-variant($color, $name);
+//   $colors: map.merge($colors, $variant);
+// }
 @mixin generate-colors{
   :root {
-    @each $key, $value in $colors {
-      --#{$key}: #{$value};
+    @each $key, $value in $base-colors {
+      --#{$key}-base: #{$value};
     }
   }
 }
@@ -35,16 +39,25 @@ $colors: ();
 /** ---------- 主题色 ---------- */
 // 使用body的类名控制主题变化
 @mixin generate-theme($is-dark: false){
-  $primary: if($is-dark, map.get($base-colors, yellow), map.get($base-colors, blue));
-  $secondary: if($is-dark, map.get($base-colors, red), map.get($base-colors, purple));
-  $text: if($is-dark, map.get($base-colors, white), map.get($base-colors, black));
-  $bg: if($is-dark, map.get($base-colors, bg-dark), map.get($base-colors, bg-light));
-  $bg-gradient: if($is-dark, map.get($base-colors, bg-dark), map.get($base-colors, bg-light-gradient));
-  $neutral: map.get($base-colors, gray);
+  $primary: if($is-dark, map.get($base-colors, 'yellow'), map.get($base-colors, 'blue'));
+  $secondary: if($is-dark, map.get($base-colors, 'red'), map.get($base-colors, 'purple'));
+  $text: if($is-dark, map.get($base-colors, 'white'), map.get($base-colors, 'black'));
+  $bg: if($is-dark, map.get($base-colors, 'bg-dark'), map.get($base-colors, 'bg-light'));
+  $bg-gradient: if(
+    $is-dark, 
+    map.get($base-colors, 'bg-dark'), 
+    map.get($base-colors, 'bg-light-gradient')
+  );
+  $neutral: map.get($base-colors, 'gray');
   $interactive: if(
     $is-dark, 
-    color.mix(map.get($base-colors, black), map.get($base-colors, white), 90%),
-    color.mix(map.get($base-colors, white), map.get($base-colors, black), 90%)
+    color.mix(map.get($base-colors, 'black'), map.get($base-colors, 'white'), 90%),
+    color.mix(map.get($base-colors, 'white'), map.get($base-colors, 'black'), 90%)
+  );
+  $surface: if(
+    $is-dark, 
+    map.get($base-colors, 'black'),
+    map.get($base-colors, 'white')
   );
 
   // 主色系
@@ -76,6 +89,13 @@ $colors: ();
   --bg-ghost: #{color.adjust($bg, $alpha: -0.8)};
   --bg-transparent: #{color.adjust($bg, $alpha: -0.9)};
 
+  // 卡片色
+  --surface-base: #{$surface};
+  --surface-subtle: #{color.adjust($surface, $alpha: -0.2)};
+  --surface-weak: #{color.adjust($surface, $alpha: -0.6)};
+  --surface-ghost: #{color.adjust($surface, $alpha: -0.8)};
+  --surface-transparent: #{color.adjust($surface, $alpha: -0.9)};
+
   // 按钮色
   --interactive-base: #{$interactive};
   --interactive-subtle: #{color.adjust($interactive, $alpha: -0.2)};
@@ -93,9 +113,11 @@ $colors: ();
 }
 
 // 引用主题
-[data-theme="light"] {
+[data-theme='light'] {
   @include generate-theme(false);
+  --border-base: 1px solid var(--border-light-base);
 }
-[data-theme="dark"] {
+[data-theme='dark'] {
   @include generate-theme(true);
+  --border-base: 1px solid var(--border-dark-base);
 }

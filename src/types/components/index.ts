@@ -1,0 +1,7 @@
+export type * as Icon from './Icon'
+export type * as Footer from './Footer'
+export type * as Avatar from './Avatar'
+export type * as Home from './Home'
+export type * as Message from './Message'
+export type * as RightBar from './RightBar'
+export type * as Top from './Top'

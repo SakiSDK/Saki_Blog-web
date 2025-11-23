@@ -2,24 +2,25 @@
 // 导入全局组件
 import Avatar from "./Avatar.vue";
 import Icon from "./Icon.vue";
-import Footer from "./Footer.vue";
+import FooterBar from "./FooterBar.vue";
 import RightBar from "./RightBar.vue";
-import Top from './Top.vue'
+import TopBar from './TopBar.vue'
+import type { App } from 'vue';
 
 // 定义组件数组
 const components = [
   Avatar,
   Icon,
-  Footer,
+  FooterBar,
   RightBar,
-  Top
+  TopBar
 ];
 
 // 安装函数
-const install = (app: any) => {
+const install = (app: App) => {
   // 遍历组件数组，注册全局组件
   components.forEach(component => {
-    app.component(component.name, component);
+    app.component(component.name as string, component);
   });
 }
 
@@ -28,7 +29,7 @@ export default {
   install,
   Avatar,
   Icon,
-  Footer,
+  FooterBar,
   RightBar,
-  Top
+  TopBar
 }

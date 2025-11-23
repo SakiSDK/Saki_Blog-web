@@ -73,7 +73,7 @@
   $p: sm lg,
   $r: lg,
   $b: null,
-  $bg: null,
+  $bg: var(--surface-base),
   $s: null,
   $o: null,
 ){
@@ -119,10 +119,10 @@
   $ta: null,
   $wp: null,
   $wb: null,
-  $ow
+  $ow: null,
 ){
   @if $lh != null {
-    line-height: space-value($l);
+    line-height: $lh;
   }
   @if $td != null {
     text-decoration: $td;

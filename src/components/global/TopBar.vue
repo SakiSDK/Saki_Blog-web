@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'Top',
+  name: 'TopBar',
 });
 </script>
 
 <template>
-  <div>
-    
+  <div class="topbar">
+    <div class="topbar__container">
+      
+    </div>
   </div>
 </template>
 

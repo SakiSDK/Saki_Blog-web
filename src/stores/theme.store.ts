@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
+import type { Store } from "@/types";
 
 export const useThemeStore = defineStore('theme', () => {
-  const theme = ref<string>('light')
+  const theme = ref<Store.Theme.State>('light')
   const toggleTheme = () => {
     theme.value = theme.value === 'light' ? 'dark' : 'light'
   }

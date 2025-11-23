@@ -1,0 +1,6 @@
+export * as ALbum from './Album'
+export * as Comment from './Article'
+export * as Article from './Article'
+export * as Category from './Category'
+export * as Tag from './Tag'
+export * as User from './User'
