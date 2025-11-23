@@ -1,3 +1,28 @@
 {
-  "test": "测试数据"
+  "test": "测试数据",
+  "topbar": {
+    "name": "SakiSDK",
+    "nav": {
+      "home": "相册",
+      "article": {
+        "title": "文章",
+        "dropdown": [
+          "文章时间表",
+          "文章标签",
+          "文章分类"
+        ]
+      },
+      "about": "关于"
+    },
+    "options": {
+      "search": "搜索",
+      "login": "登录",
+      "register": "注册",
+      "menu": "菜单"
+    }
+  },
+  "home": {
+    "title": "SakiSDK",
+    "description": "欢迎来到我的个人博客，我会在这里分享一些技术文章，以及一些个人项目。"
+  }
 }

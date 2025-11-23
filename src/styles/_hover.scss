@@ -1,4 +1,4 @@
-@use './utils' as util;
+@use './utils' as *;
 @use './mixins' as *;
 @use './colors' as *;
 @use 'sass:color';
@@ -40,12 +40,12 @@
 }
 
 // 透明度变化
-@mixin opacity($opacity: 0.1, $include-transition: false){
+@mixin opacity($opacity: 0, $include-transition: false){
   @if($include-transition){
     @include transition(opacity);
   }
   &:hover {
-    opacity: util.opacity($opacity);
+    opacity: opacity-value($opacity);
   }
 }
 

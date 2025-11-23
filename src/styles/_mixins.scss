@@ -198,7 +198,7 @@
     left: space-value($l);
   }
   @if $z != null {
-    z-index: $z;
+    z-index: z-index-value($z);
   }
 }
 // 弹性盒子样式

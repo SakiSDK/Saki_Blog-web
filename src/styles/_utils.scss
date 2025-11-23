@@ -173,7 +173,7 @@
 
 /** ---------- 透明度 ---------- */
 @function opacity-value($o) {
-  @if(map.has($opacity, $o)){
+  @if map.has-key($opacity, $o){
     @return map.get($opacity, $o);
   } @else {
     @return $o;
@@ -185,7 +185,7 @@
 
 /** ---------- z-index ---------- */
 @function z-index-value($z) {
-  @if(map.has($z-index, $z)){
+  @if map.has-key($z-index, $z){
     @return map.get($z-index, $z);
   } @else {
     @return $z;
