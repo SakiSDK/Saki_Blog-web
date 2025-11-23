@@ -22,9 +22,11 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
+          @use "@/styles/colors.scss" as *;
           @use "@/styles/utils.scss" as util;
           @use "@/styles/mixins.scss" as mix;
           @use "@/styles/animations.scss" as anim;
+          @use "@/styles/hover.scss" as hov;
         `
           // @use "@/styles/main.scss" as *;
       }

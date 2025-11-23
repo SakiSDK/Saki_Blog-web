@@ -3,193 +3,197 @@
 @use "sass:meta";
 @use "sass:list";
 @use "sass:math";
+@use "sass:color";
 @use 'variables' as *;
 
 
-/** ---------- 辅助函数 ---------- */
-@function process-space-values($s) {
-  // 判断 $s 类型
-  $values: if(
-    meta.type-of($s) == 'string', 
-    string.split($s, ' '), 
-    if(
-      meta.type-of($s) == 'list', 
-      $s, 
-      ($s,)
-    )
-  );
-  
-  $result: (); // 存储结果 
-
-  @each $v in $values {
-    @if(has-space($v)) {
-      $result: list.append($result, space($v));
+/** ---------- 通用函数 ---------- */
+// 处理[映射键名/数字/带单位值]，支持默认值和错误提示
+@function resolve-value(
+  $map: (),
+  $input: null,
+  $name: ''
+){
+  //带单位的数字
+  @if meta.type-of($input) == number and math.is-unitless($input) == false{
+    @return $input;
+  }
+  // 不带单位
+  @if meta.type-of($input) == number and math.is-unitless($input) == true{
+    @return #{$input}px;
+  }
+  // 3. 处理字符串（优先从映射查找，找不到则返回原字符串）
+  @if meta.type-of($input) == 'string' {
+    @if map.has-key($map, $input) {
+      @return map.get($map, $input);
     } @else {
-      $result: list.append($result, $v);
+      @if $map-name != '' {
+        @error "#{$map-name}: 未找到键 `#{$input}`，请检查变量名";
+      }
+      @return $input; // 非映射场景（如 space 的 "1px" 直接返回）
     }
   }
 
+  // 4. 其他类型（如列表）直接返回，加警告
+  @warn "#{$map-name}: 不支持的类型 `#{meta.type-of($input)}`，返回原值";
+  @return $input;
+}
+
+// 列表/字符串处理：统一将输入的值转为列表，过滤空值
+@function to-clean-list($input){
+  $list: ();
+  // 按空格分隔
+  @if meta.type-of($input) == 'string' {
+    $list: string.split($input, ',');
+  }
+  // 假如是列表，则直接返回
+  @else if meta.type-of($input) == 'list' {
+    $list: $input;
+  }
+  // 单个值：列表化
+  @else {
+    $list: ($input,);
+  }
+
+  @return $list;
+}
+// 处理多值间距（支持 "sm"、"sm md"、"sm 1px" 等）
+@function process-values($map, $s) {
+  $values: to-clean-list($s);
+  $result: ();
+
+  @each $v in $values {
+    // 复用通用解析函数，映射为 $space，无错误提示（允许直接传 px/rem）
+    $processed-v: resolve-value($map, $v, 'space');
+    $result: list.append($result, $processed-v);
+  }
   @return $result;
 }
-@function generate-root-colors($color) { 
 
+/** ---------- 颜色相关 ---------- */
+// 颜色变体生成器：保持简洁
+@function generate-color-variant($base-color, $color-name) {
+  @return (
+    #{$color-name}-base: $base-color,
+    #{$color-name}-subtle: color.adjust($base-color, $alpha: -0.2), // 80% 透明度
+    #{$color-name}-weak: color.adjust($base-color, $alpha: -0.6),      // 40% 透明度
+    #{$color-name}-ghost: color.adjust($base-color, $alpha: -0.8),     // 20% 透明度
+    #{$color-name}-transparent: color.adjust($base-color, $alpha: -0.9) // 10% 透明度
+  )
 }
-@function generate-root-theme($theme){
-  
+
+
+
+
+
+// 解析transition属性
+@function transition-duration($key: 'base') {
+  @if map.has-key($transition-duration, $key) {
+    @return map.get($transition-duration, $key);
+  }
+  @warn "Transition duration `#{$key}` not found, using default";
+  @return $key;
+}
+
+@function transition-timing($key: 'ease') {
+  @if map.has-key($transition-timing-function, $key) {
+    @return map.get($transition-timing-function, $key);
+  }
+  @warn "Transition timing `#{$key}` not found, using default";
+  @return ease;
+}
+@function transition-delay($key: '0s') {
+  @if map.has-key($transition-delay, $key) {
+    @return map.get($transition-delay, $key);
+  }
+  @warn "Transition delay `#{$key}` not found, using default";
+  @return 0s;
+}
+
+@function transition-property($key: 'all') {
+
+  @if map.has-key($transition-property, $key) {
+    @return map.get($transition-property, $key);
+  }
+  @warn "Transition property `#{$key}` not found, using default";
+  @return $key;
+}
+
+@function has-transiton-property($key) {
+  @return map.has-key($transition-property, $key);
 }
 
 
-/** ---------- 获取变量 ---------- */
-@function get-color($colors, $v) {
-  @if map.has-key($colors, $v) {
-    @return map.get($colors, $v);
+
+
+/** ---------- 断点 ---------- */
+@function breakpoint-value($b) { 
+  @if has-breakpoint($b) {
+    @return map.get($breakpoints, $b);
   } @else {
-    @error "#{$colors}: 没有找到 `#{$v}`，请检查变量名";
-  }
-}
-
-@function get-sapce($s){
-  @if map.has-key($space, $s) {
-    @return map.get($space, $s);
-  } @else {
-    @error "space: 没有找到 `#{$s}`，请检查变量名";
-  }
-}
-@function space($s) {
-  @if meta.type-of($s) == 'number' and math.is-unitless($s) == false {
-    @return $s;
-  }
-  @if meta.type-of($s) == 'number' and math.is-unitless($s) {
-    @return #{$s}px;
-  }
-  @if meta.type-of($s) == 'string' {
-    @return get-sapce($s);
-  }
-  // 其他情况，返回原值
-  @warn "space: 不支持的类型 `#{$s}`";
-  @return $s;
-}
-@function has-space($s) {
-  @if map.has-key($space, $s) {
-    @return true;
-  } @else {
-    @return false;
-  }
-}
-
-@function get-breakpoints($b) {
-  @if map.has-key($breakpoints, $b) {
-    @return map.get($breakpoints, b);
-  } @else {
-    @error "breakpoints: 没有找到 `#{$b}`，请检查变量名";
-  }
-}
-@function breakpoints($b) {
-  @if meta.type-of($b) == 'number' and math.is-unitless($b) == false {
     @return $b;
   }
-  @if meta.type-of($b) == 'number' and math.is-unitless($b) {
-    @return #{$b}px;
-  }
-  @if meta.type-of($b) == 'string' {
-    @return get-breakpoints($b);
-  }
-  @warn "breakpoints: 不支持的类型 `#{$b}`";
-  @return $b;
 }
-@function has-breakpoints($b) {
-  @if map.has-key($breakpoints, $b) {
-    @return true;
-  } @else {
-    @return false;
-  }
+@function has-breakpoint($b) {
+  @return map.has-key($breakpoints, $b);
 }
 
-@function font-family($f: base) {
-  @if map.has-key($font-family, $f) {
+/** ---------- 字体样式 ---------- */
+@function font-family-value($f){
+  @if has-font-family($f) {
     @return map.get($font-family, $f);
   } @else {
-    @error "font-family: 没有找到 `#{$f}`，请检查变量名";
+    @return $f;
   }
 }
 @function has-font-family($f) {
-  @if map.has-key($font-family, $f) {
-    @return true;
-  } @else {
-    @return false;
-  }
+  @return map.has-key($font-family, $f);
 }
 
-@function get-z-index($z) {
-  @if map.has-key($z-index, $z) {
-    @return map.get($z-index, $z);
-  } @else {
-    @error "z-index: 没有找到 `#{$z}`，请检查变量名";
-  }
+/** ---------- 间距相关 ---------- */
+@function space-value($s) {
+  @return process-values($space, $s);
 }
-@function z-index($z) {
-  @return get-z-index($z);
-}
-@function has-z-index($z) {
-  @if map.has-key($z-index, $z) {
-    @return true;
-  } @else {
-    @return false;
-  }
+@function has-space($s) {
+  @return map.has-key($space, $s);
 }
 
-@function get-radius($r) {
-  @if map.has-key($radius, $r) {
-    @return map.get($radius, $r);
-  } @else {
-    @error "radius: 没有找到 `#{$r}`，请检查变量名";
-  }
-}
-@function radius($r) {
-  @if meta.type-of($r) == 'number' and math.is-unitless($r) == false {
-    @return $r;
-  }
-  @if meta.type-of($r) == 'number' and math.is-unitless($r) {
-    @return #{$r}px;
-  }
-  @if meta.type-of($r) == 'string' {
-    @return get-radius($r);
-  }
-  @warn "radius: 不支持的类型 `#{$r}`";
-  @return $r;
+/** ---------- 边框圆角 ---------- */
+@function radius-value($r) {
+  @return resolve-value($radius, $r);
 }
 @function has-radius($r) {
-  @if map.has-key($radius, $r) {
-    @return true;
-  } @else {
-    @return false;
-  }
+  @return map.has-key($radius, $r);
 }
 
-@function get-font-size($s) {
-  @if map.has-key($font-size, $s) {
-    @return map.get($font-size, $s);
-  } @else {
-    @error "font-size: 没有找到 `#{$s}`，请检查变量名";
-  }
-}
-@function font-size($s) {
-  @if meta.type-of($s) == 'number' and math.is-unitless($s) == false {
-    @return $s;
-  }
-  @if meta.type-of($s) == 'number' and math.is-unitless($s) {
-    @return #{$s}px;
-  }
-  @if meta.type-of($s) == 'string' {
-    @return get-font-size($s);
-  }
-  @warn "font-size: 不支持的类型 `#{$s}`";
-  @return $s;
+/** ---------- 文字大小 ---------- */
+@function font-size-value($s) {
+  @return resolve-value($font-size, $s);
 }
 @function has-font-size($s) {
-  @if map.has-key($font-size, $s) {
-    @return true;
+  @return map.has-key($font-size, $s);
+}
+
+/** ---------- 透明度 ---------- */
+@function opacity-value($o) {
+  @if(map.has($opacity, $o)){
+    @return map.get($opacity, $o);
   } @else {
-    @return false;
+    @return $o;
   }
+}
+@function has-opacity($o) {
+  @return map.has-key($opacity, $o);
+}
+
+/** ---------- z-index ---------- */
+@function z-index-value($z) {
+  @if(map.has($z-index, $z)){
+    @return map.get($z-index, $z);
+  } @else {
+    @return $z;
+  }
+}
+@function has-z-index($z) {
+  @return map.has-key($z-index, $z);
 }

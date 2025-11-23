@@ -1,45 +1,54 @@
 @use "sass:map";
-@use "utils" as util;
+@use "utils" as *;
 
 
 /** ---------- 单个样式封装 ---------- */
 // 间隔属性
 @mixin gap($v){
-  gap: util.space($v);
+  gap: space-value($v);
 }
 @mixin row-gap($v){
-  row-gap: util.space($v);
+  row-gap: space-value($v);
 }
 @mixin column-gap($v){
-  column-gap: util.space($v);
+  column-gap: space-value($v);
 }
 
 
 @mixin margin($v){
-  $process: util.process-space-values($v);
-  margin: $process;
+  margin: space-value($v);
 }
 @mixin margin-x($v){
-  $process: util.process-space-values($v);
-  margin-left: $process;
-  margin-right: $process;
+  margin-left: space-value($v);
+  margin-right: space-value($v);
+}
+@mixin margin-y($v){
+  margin-top: space-value($v);
+  margin-bottom: space-value($v);
 }
 
 @mixin padding($v){
-  $process: util.process-space-values($v);
-  padding: $process;
+  padding: space-value($v);
+}
+@mixin padding-x($v){
+  padding-left: space-value($v);
+  padding-right: space-value($v);
+}
+@mixin padding-y($v){
+  padding-top: space-value($v);
+  padding-bottom: space-value($v);
 }
 
 @mixin font-family($v){
-  font-family: util.font-family($v);
+  font-family: font-family-value($v);
 }
 
 @mixin font-size($v){
-  font-size: util.font-size($v);
+  font-size: font-size-value($v);
 }
 
 @mixin radius($v){
-  border-radius: util.radius($v);
+  border-radius: radius-value($v);
 }
 
 @mixin size($w, $h: $w){
@@ -68,8 +77,8 @@
   $s: null,
   $o: null,
 ){
-  padding: util.space($p);
-  border-radius: util.radius($r);
+  padding: space-value($p);
+  border-radius: radius-value($r);
   @if $b != null {
     border: $b;
   }
@@ -94,7 +103,7 @@
     font-family: $f;
   }
   @if $s != null {
-    font-size: util.font-size($s);
+    font-size: font-size-value($s);
   }
   @if $c != null {
     color: $c;
@@ -113,7 +122,7 @@
   $ow
 ){
   @if $lh != null {
-    line-height: util.space($l);
+    line-height: space-value($l);
   }
   @if $td != null {
     text-decoration: $td;
@@ -136,17 +145,17 @@
 /** ---------- 布局封装 ---------- */
 // 响应式布局
 @mixin response-down($w){
-  @media (max-width: util.breakpoints($w)) {
+  @media (max-width: breakpoint-value($w)) {
     @content;
   }
 }
 @mixin response-up($w){
-  @media (min-width: util.breakpoints($w)) {
+  @media (min-width: breakpoint-value($w)) {
     @content;
   }
 }
 @mixin response-between($min, $max){
-  @media (min-width: util.breakpoints($min)) and (max-width: util.breakpoints($max)) {
+  @media (min-width: breakpoint-value($min)) and (max-width: breakpoint-value($max)) {
     @content;
   }
 }
@@ -163,16 +172,16 @@
     position: $p;
   }
   @if $t != null {
-    top: util.space($t);
+    top: space-value($t);
   }
   @if $r != null {
-    right: util.space($r);
+    right: space-value($r);
   }
   @if $b != null {
-    bottom: util.space($b);
+    bottom: space-value($b);
   }
   @if $l != null {
-    left: util.space($l);
+    left: space-value($l);
   }
   @if $z != null {
     z-index: $z;
@@ -192,13 +201,13 @@
   justify-content: $jc;
   align-items: $ai;
   @if $g != null {
-    gap: util.space($g);
+    gap: space-value($g);
   }
   @if $rg != null {
-    row-gap: util.space($rg);
+    row-gap: space-value($rg);
   }
   @if $cg != null {
-    column-gap: util.space($cg);
+    column-gap: space-value($cg);
   }
 }
 // 网格盒子样式
@@ -215,13 +224,13 @@
   grid-template-columns: repeat($c, 1fr);
   grid-template-rows: repeat($r, 1fr);
   @if $g != null {
-    gap: util.space($g);
+    gap: space-value($g);
   }
   @if $rg != null {
-    row-gap: util.space($rg);
+    row-gap: space-value($rg);
   }
   @if $cg != null {
-    column-gap: util.space($cg);
+    column-gap: space-value($cg);
   }
   @if $ji != null {
     justify-items: $ji;

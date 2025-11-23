@@ -1,0 +1,57 @@
+@use './utils' as util;
+@use './colors' as *;
+@use 'sass:color';
+@use './animations' as *;
+@use './colors' as *;
+
+// 背景色变化
+@mixin bg($color: var(--primary-base), $include-transition: false){
+  @if($include-transition){
+    @include transition(background-color);
+  }
+  &:hover {
+    background-color: $color;
+  }
+  &:active {
+    @debug '#{$color}';
+    // 如果是 CSS 变量 → 使用透明度模拟变亮
+    // @if string.index(#{$color}, "var(") {
+    //   background-color: rgba(#{$color}, 0.9);
+    // } @else {
+    //   background-color: color.scale($color, $lightness: 10%);
+    // }
+  }
+}
+
+// 边框色变化
+@mixin border($color: var(--primary-base), $include-transition: false){
+  @if($include-transition){
+    @include transition(border-color);
+  }
+  &:hover {
+    border-color: $color;
+  }
+}
+
+// 颜色变化
+@mixin color($color: var(--primary-base), $include-transition: false){
+  @if($include-transition){
+    @include transition(color);
+  }
+  &:hover {
+    color: $color;
+  }
+}
+
+// 透明度变化
+@mixin opacity($opacity: 0.1, $include-transition: false){
+  @if($include-transition){
+    @include transition(opacity);
+  }
+  &:hover {
+    opacity: util.opacity($opacity);
+  }
+}
+
+
+

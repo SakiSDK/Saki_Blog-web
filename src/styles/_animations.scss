@@ -1,0 +1,33 @@
+@use './utils' as *;
+@use 'sass:meta';
+@use 'sass:list';
+
+// transition样式封装
+@mixin transition(
+  $p: "all",
+  $dr: 'base',
+  $tf: 'ease',
+  $dl: null,
+  $imp: false,
+){
+  $processed-propertys: to-clean-list($p);
+  $dur: transition-duration($dr);
+  $timing: transition-timing($tf);
+  $transition-value: ();
+
+  @each $prop in $processed-propertys {
+    $duration-property: transition-property($prop);
+    $transition-item: #{$duration-property} #{$dur} #{$timing} #{if($dl == null, 0s, transition-delay($dl))};
+    $transition-value: list.append(
+      $transition-value, 
+      $transition-item,
+      $separator: comma
+    );
+  }
+
+  @if $imp {
+    transition: $transition-value !important;
+  } @else {
+    transition: $transition-value;
+  }
+}

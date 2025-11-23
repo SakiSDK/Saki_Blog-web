@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 
+
 </script>
 
 <template>
@@ -22,8 +23,8 @@
 
 <style lang="scss" scoped>
 .home {
-    // @include mix.margin("lg sm");
-    // @include mix.font-family(base);
-    // @include mix.font-size(title);
+    &__hero {
+        
+    }
 }
 </style>

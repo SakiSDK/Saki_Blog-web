@@ -91,3 +91,48 @@ $z-index: (
   tooltip: 1070,
   navbar: 1080
 );
+
+/** ---------- opacity ---------- */
+$opacity: (
+  solid: 1,
+  subtle: 0.8,
+  weak: 0.4,
+  ghost: 0.2,
+  transparent: 0,
+  none: 0
+);
+
+/** ---------- transition相关属性变量 ---------- */
+$transition-duration: (
+  fast: 0.15s,
+  base: 0.25s,
+  slow: 0.4s,
+  slower: 0.5s
+);
+$transition-timing-function: (
+  ease: ease,
+  ease-in: ease-in,
+  ease-out: ease-out,
+  ease-in-out: ease-in-out,
+  linear: linear,
+  bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55),
+  smooth: cubic-bezier(0.4, 0, 0.2, 1)
+);
+$transition-property: (
+  all: all,
+  color: color,
+  bg: background-color,
+  opacity: opacity,
+  transform: transform,
+  shadow: box-shadow,
+  border: border-color,
+  size: (width, height),
+  fade: (opacity, visibility),
+  slide: (transform, opacity)
+);
+$transition-delay: (
+  fast: 0.1s,
+  base: 0.2s,
+  slow: 0.3s,
+  slower: 0.4s
+);
