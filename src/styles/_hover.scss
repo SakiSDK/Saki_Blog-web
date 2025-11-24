@@ -91,3 +91,28 @@
     filter: blur($px);
   }
 }
+
+@mixin shadow(
+  $hover-shadow: (0 4px 16px rgba(0, 0, 0, 0.16)),
+  $include-transition: false
+) {
+
+  // 如果需要，添加过渡效果
+  @if $include-transition {
+    @include transition(box-shadow);
+  }
+
+  // 设置 hover 状态的阴影
+  &:hover {
+    box-shadow: $hover-shadow;
+  }
+}
+
+@mixin card($s: -5px, $sd: var(--shadow-dark), $it: false) {
+  @if $it {
+    @include transition(box-shadow transform border-color);
+  }
+  @include move(0, $s);
+  @include shadow($sd);
+  @include border;
+}

@@ -4,7 +4,13 @@ defineOptions({
   name: 'Avatar',
 })
 
-defineProps<AvatarProps>();
+defineProps<{
+  style: {
+    size: string;
+    radius?: string;
+  }
+  src: string;
+}>();
 </script>
 
 <template>
@@ -12,10 +18,16 @@ defineProps<AvatarProps>();
     class="avatar"
     :style="{
       '--avatar-size': style.size,
-      '--avatar-radius': style.radius ?? '50%',
+      '--avatar-radius': style?.radius ?? '50%',
     }"  
   >
-    <img :src="src" alt="头像">
+    <img 
+      :src="src" 
+      v-lazy="{
+        src
+      }"
+      alt="头像"
+    >
   </div>
 </template>
 

@@ -35,39 +35,43 @@ const showMessage = (options: MessageOptions): string => {
 
 // 消息函数
 const message: MessageInstance = {
-  success: (title: string, content?: string, duration?: number) => {
+  success: (title: string, content?: string, duration?: number, closable?: boolean) => {
     return showMessage({
       type: 'success',
       title,
       content,
-      duration
+      duration,
+      closable: closable ?? true,
     })
   },
   
-  info: (title: string, content?: string, duration?: number) => {
+  info: (title: string, content?: string, duration?: number, closable?: boolean) => {
     return showMessage({
       type: 'info',
       title,
       content,
-      duration
+      duration,
+      closable: closable ?? true,
     })
   },
   
-  warning: (title: string, content?: string, duration?: number) => {
+  warning: (title: string, content?: string, duration?: number, closable?: boolean) => {
     return showMessage({
       type: 'warning',
       title,
       content,
-      duration
+      duration,
+      closable: closable ?? false,
     })
   },
   
-  error: (title: string, content?: string, duration?: number) => {
+  error: (title: string, content?: string, duration?: number, closable?: boolean) => {
     return showMessage({
       type: 'error',
       title,
       content,
-      duration: duration || 5000 // 错误消息默认显示时间长一些
+      duration: duration || 5000, // 错误消息默认显示时间长一些
+      closable: closable ?? false,
     })
   },
   

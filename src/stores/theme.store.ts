@@ -17,3 +17,5 @@ export const useThemeStore = defineStore('theme', () => {
 }, {
   persist: true
 })
+
+export type ThemeState = Store.Theme.State

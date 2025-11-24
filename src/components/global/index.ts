@@ -6,6 +6,7 @@ import FooterBar from "./FooterBar.vue";
 import RightBar from "./RightBar.vue";
 import TopBar from './TopBar.vue'
 import type { App } from 'vue';
+// import PageHeader from "./PageHeader.vue";
 
 // 定义组件数组
 const components = [
@@ -13,7 +14,8 @@ const components = [
   Icon,
   FooterBar,
   RightBar,
-  TopBar
+  TopBar,
+  // PageHeader,
 ];
 
 // 安装函数

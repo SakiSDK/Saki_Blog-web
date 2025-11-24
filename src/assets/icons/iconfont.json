@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7206122",
+      "name": "site",
+      "font_class": "site",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "15838547",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "4936685",
+      "name": "tag",
+      "font_class": "tag",
+      "unicode": "e86e",
+      "unicode_decimal": 59502
+    },
+    {
+      "icon_id": "5119390",
+      "name": "category",
+      "font_class": "category",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "17412950",
+      "name": "timeline",
+      "font_class": "timeline",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
       "icon_id": "11249820",
       "name": "rocket",
       "font_class": "rocket",
@@ -18,13 +53,6 @@
       "font_class": "book",
       "unicode": "e602",
       "unicode_decimal": 58882
-    },
-    {
-      "icon_id": "12025958",
-      "name": "categories",
-      "font_class": "categories",
-      "unicode": "e7a4",
-      "unicode_decimal": 59300
     },
     {
       "icon_id": "2348758",
@@ -349,13 +377,6 @@
       "unicode_decimal": 59047
     },
     {
-      "icon_id": "4766975",
-      "name": "tags",
-      "font_class": "tags",
-      "unicode": "e7e5",
-      "unicode_decimal": 59365
-    },
-    {
       "icon_id": "4893191",
       "name": "file",
       "font_class": "file",
@@ -655,13 +676,6 @@
       "font_class": "chevron-up",
       "unicode": "e697",
       "unicode_decimal": 59031
-    },
-    {
-      "icon_id": "43821172",
-      "name": "user",
-      "font_class": "user",
-      "unicode": "e69a",
-      "unicode_decimal": 59034
     },
     {
       "icon_id": "43823594",

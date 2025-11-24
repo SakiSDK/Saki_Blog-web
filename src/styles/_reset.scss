@@ -12,7 +12,8 @@ body {
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
   background: var(--bg-gradient);
-  @include font-style($f: base, $c: var(--text-base), $s: md);
+  @include font-style($c: var(--text-base), $s: md, $f: var(--font-numeric));
+  // font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* 现代浏览器方案 */
@@ -71,7 +72,7 @@ img {
   max-width: 100%;
   height: auto;
   vertical-align: middle;
-  filter: brightness(.8);
+  // filter: brightness(.8);
 }
 
 button {
@@ -100,5 +101,30 @@ textarea {
   &::placeholder {
     color: var(--text-subtle);
     opacity: 0.7;
+  }
+}
+
+
+/** ---------- v-tippy样式重置 ---------- */
+$placement: top,bottom,right,left;
+:deep(.tippy-box[data-theme='link']) {
+  font-weight: 600;
+  color: var(--text-base);
+  background-color: var(--surface-base);
+}
+@each $item in $placement {
+  :deep(.tippy-box[data-theme='link'][data-placement~=#{$item}] > .tippy-arrow::before)  {
+    border-#{$item}-color: var(--surface-base);
+  }
+}
+:deep(.tippy-box[data-theme='nav']) {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: white;
+  background-color: var(--interactive-base);
+}
+@each $item in $placement {
+  :deep(.tippy-box[data-theme='nav'][data-placement~=#{$item}] > .tippy-arrow::before)  {
+    border-#{$item}-color: var(--interactive-base);
   }
 }

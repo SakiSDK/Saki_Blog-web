@@ -1,5 +1,6 @@
 @use "sass:map";
 @use "utils" as *;
+@use './animations' as anim;
 
 
 /** ---------- 单个样式封装 ---------- */
@@ -37,7 +38,7 @@
 @mixin padding($v) {
   padding: space-value($v);
 }
-@mixin padding-d($v) {
+@mixin padding-d($d, $v) {
   @if is-direction-base($d) {
     padding-#{direction-base-value($d)}: space-value($v);
   } @else {
@@ -80,6 +81,11 @@
   max-height: $h;
 }
 
+@mixin z-index($v){
+  z-index: z-index-value($v);
+}
+
+
 
 /** ---------- 集合样式封装 ---------- */
 // 容器样式
@@ -89,6 +95,7 @@
   $b: null,
   $bg: var(--surface-base),
   $s: null,
+  $op: null,
   $o: null,
 ){
   padding: space-value($p);
@@ -102,8 +109,11 @@
   @if $s != null {
     box-shadow: $s;
   }
+  @if $op != null {
+    opacity: $op;
+  }
   @if $o != null {
-    opacity: $o;
+    overflow: $o;
   }
 }
 // 字体样式
@@ -158,17 +168,17 @@
 
 /** ---------- 布局封装 ---------- */
 // 响应式布局
-@mixin response-down($w){
+@mixin respond-down($w){
   @media (max-width: breakpoint-value($w)) {
     @content;
   }
 }
-@mixin response-up($w){
+@mixin respond-up($w){
   @media (min-width: breakpoint-value($w)) {
     @content;
   }
 }
-@mixin response-between($min, $max){
+@mixin respond-between($min, $max){
   @media (min-width: breakpoint-value($min)) and (max-width: breakpoint-value($max)) {
     @content;
   }
@@ -204,8 +214,8 @@
 // 弹性盒子样式
 @mixin flex-box(
   $d: row,
-  $jc: center,
-  $ai: center,
+  $j: center,
+  $a: center,
   $g: null,
   $rg: null,
   $cg: null,
@@ -213,8 +223,8 @@
 ){ 
   display: flex;
   flex-direction: $d;
-  justify-content: $jc;
-  align-items: $ai;
+  justify-content: $j;
+  align-items: $a;
   @if $g != null {
     gap: space-value($g);
   }
@@ -235,8 +245,8 @@
   $g: null,
   $rg: null,
   $cg: null,
-  $ji: null,
-  $ai: null,
+  $j: null,
+  $a: null,
 ){
   display: grid;
   grid-template-columns: repeat($c, 1fr);
@@ -250,10 +260,23 @@
   @if $cg != null {
     column-gap: space-value($cg);
   }
-  @if $ji != null {
-    justify-items: $ji;
+  @if $j != null {
+    justify-items: $j;
   }
-  @if $ai != null {
-    align-items: $ai;
+  @if $a != null {
+    align-items: $a;
+  }
+}
+
+@mixin underline-style($bt: -5px, $bg: var(--primary-base)) {
+  &::after {
+    content: "";
+    @include position-style($p: absolute, $l: 0, $b: $bt);
+    @include size(0, 1px);
+    background-color: $bg;
+    @include anim.transition($p: with);
+  }
+  &:hover::after {
+    width: 100%;
   }
 }

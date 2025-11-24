@@ -92,7 +92,7 @@ defineExpose({
       :class="['message', `message--${message.type}`]"
     >
       <div class="message-icon">
-        <Icon />
+        <Icon name="close"/>
       </div>
       <div class="message__content">
         <div class="message-title">
@@ -137,11 +137,12 @@ defineExpose({
 
 .message__container {
   // @include mix.size(fit-content);
-  @include mix.position-style($p: fixed, $t: lg, $r: lg, $z: fixed);
+  padding-top: 70px;
+  @include mix.position-style($p: fixed, $t: 0, $l: lg, $z: fixed);
   pointer-events: none;
 }
 .message {
-  @include mix.flex-box($ai: flex-start, $jc: flex-start);
+  @include mix.flex-box($a: flex-start, $j: flex-start);
   width: 300px;
   min-height: 30px;
   margin-bottom: 10px;

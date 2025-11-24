@@ -4,6 +4,7 @@ import { useThemeStore } from '@/stores/theme.store';
 import { storeToRefs } from 'pinia';
 import { useLangStore } from '@/stores/lang.store';
 import type { RightBarField, RightBarThemeIcon } from '@/types/components/RightBar';
+import { message } from '@/plugins/message';
 
 defineOptions({
   name: 'RightBar'
@@ -34,6 +35,7 @@ const rightBarFields = ref<RightBarField[]>([
     iconName: themeIcon.value,
     action: () => {
       toggleTheme()
+      message.info('主题切换成功')
     }
   },
 ])
@@ -70,25 +72,25 @@ const rightBarFields = ref<RightBarField[]>([
   @include anim.spin();
 }
 .right-bar {
-  @include mix.position-style($p: absolute, $b: 20px, $r: 20px);
+  @include mix.position-style($p: fixed, $b: 20px, $r: 20px);
   &__content {
     @include mix.flex-box($d: column, $g: xs);
     @include mix.margin-y(xs);
   }
   &-item {
     @extend %flex-center;
-    @include mix.size(25px);
-    @include mix.container-style($r: sm, $p: 0, $b: var(--border-base));
-    @include anim.transition;
+    @include mix.container-style($r: sm, $p: xs, $b: var(--border-base));
+    @include anim.transition(bg transform border-color);
     @include hov.bg(var(--primary-base));
     @include hov.move;
+    @include hov.border;
     &:hover {
       &>span {
         color: var(--white-base);
       }
     }
     &>span {
-      color: var(--text-subtle);
+      @include mix.font-style($s: lg, $c: var(--text-subtle));
     }
   }
 }

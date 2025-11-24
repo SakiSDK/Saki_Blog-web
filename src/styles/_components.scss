@@ -1,4 +1,5 @@
 @use './mixins' as *;
+@use './animations' as anim;
 
 %full-size {
   @include size(100%);
@@ -18,4 +19,38 @@
 
 %flex-center {
   @include flex-box;
+}
+
+%full-column-center {
+  @include flex-box($d: column);
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  @include anim.transition($p: max-width, $dr: 'slow');
+  @include respond-down('xl') {
+    max-width: 1200px;
+  }
+  @include respond-down('md') {
+    max-width: 700px;
+  }
+  @include respond-down('sm') {
+    max-width: 600px;
+  }
+  @include respond-down('xs') {
+    max-width: 400px;
+  }
+}
+
+/** ---------- about-me页面共用style ---------- */
+%aboutme-tag {
+    @include position-style(absolute, $l:20px, $t:10px);
+    @include font-style($s: sm, $c: var(--text-weak))
+}
+%aboutme-container {
+    position: relative;
+    height: 100%;
+    @include container-style( $r: md, $b: var(--border-base));
 }

@@ -88,7 +88,7 @@
   @if map.has-key($transition-duration, $key) {
     @return map.get($transition-duration, $key);
   }
-  @warn "Transition duration `#{$key}` not found, using default";
+  // @warn "Transition duration `#{$key}` not found, using default";
   @return $key;
 }
 
@@ -96,14 +96,14 @@
   @if map.has-key($transition-timing-function, $key) {
     @return map.get($transition-timing-function, $key);
   }
-  @warn "Transition timing `#{$key}` not found, using default";
+  // @warn "Transition timing `#{$key}` not found, using default";
   @return ease;
 }
 @function transition-delay($key: '0s') {
   @if map.has-key($transition-delay, $key) {
     @return map.get($transition-delay, $key);
   }
-  @warn "Transition delay `#{$key}` not found, using default";
+  // @warn "Transition delay `#{$key}` not found, using default";
   @return 0s;
 }
 
@@ -112,7 +112,7 @@
   @if map.has-key($transition-property, $key) {
     @return map.get($transition-property, $key);
   }
-  @warn "Transition property `#{$key}` not found, using default";
+  // @warn "Transition property `#{$key}` not found, using default";
   @return $key;
 }
 
@@ -200,7 +200,7 @@
   @if map.has-key($animation-duration, $key) {
     @return map.get($animation-duration, $key);
   }
-  @warn "Animation duration `#{$key}` not found";
+  // @warn "Animation duration `#{$key}` not found";
   @return 0.45s;
 }
 
@@ -208,7 +208,7 @@
   @if map.has-key($animation-timing-function, $key) {
     @return map.get($animation-timing-function, $key);
   }
-  @warn "Animation timing `#{$key}` not found";
+  // @warn "Animation timing `#{$key}` not found";
   @return ease;
 }
 
@@ -216,7 +216,7 @@
   @if map.has-key($animation-iteration, $key) {
     @return map.get($animation-iteration, $key);
   }
-  @warn "Animation iteration `#{$key}` not found";
+  // @warn "Animation iteration `#{$key}` not found";
   @return 1;
 }
 
@@ -224,14 +224,14 @@
   @if map.has-key($animation-fill-mode, $key) {
     @return map.get($animation-fill-mode, $key);
   }
-  @warn "Animation fill mode `#{$key}` not found";
+  // @warn "Animation fill mode `#{$key}` not found";
   @return none;
 }
 
 /** ---------- 判断基础方向是否输入正确 ---------- */
 @function is-direction-base($d) {
   @if map.has-key($direction-base, $d) == null {
-    @warn '请输入正确的基础方向: #{map.keys($direction-base)}';
+    // @warn '请输入正确的基础方向: #{map.keys($direction-base)}';
     @return false;
   }
   @return true;
@@ -240,7 +240,7 @@
 /** ---------- 判断四角方向是否输入正确 ---------- */
 @function is-direction-corner($d) {
   @if map.has-key($direction-corner, $d) == null {
-    @warn '请输入正确的四角方向: #{map.keys($direction-corner)}';
+    // @warn '请输入正确的四角方向: #{map.keys($direction-corner)}';
     @return false;
   }
   @return true;

@@ -1,28 +1,111 @@
 {
-  "test": "测试数据",
+  "common": {
+    "search": "搜索",
+    "login": "登录",
+    "register": "注册",
+    "logout": "登出",
+    "edit": "编辑",
+    "delete": "删除",
+    "cancel": "取消",
+    "save": "保存",
+    "confirm": "确定",
+    "loading": "加载中...",
+    "submit": "提交",
+    "viewAll": "查看全部",
+    "readMore": "阅读更多",
+    "confirmDelete": "确定要删除吗？",
+    "confirmLogout": "确定要登出吗？",
+    "confirmDeleteComment": "确定要删除此评论吗？"
+  },
   "topbar": {
-    "name": "SakiSDK",
-    "nav": {
-      "home": "相册",
-      "article": {
-        "title": "文章",
-        "dropdown": [
-          "文章时间表",
-          "文章标签",
-          "文章分类"
-        ]
-      },
-      "about": "关于"
+    "siteName": "SakiSDK",
+    "navigation": {
+      "order": ["album", "article", "about"],
+      "items": {
+        "album": {
+          "title": "相册",
+          "link": "/album"
+        },
+        "article": {
+          "title": "文章",
+          "dropdown": {
+            "order": ["timeline", "tags", "categories"],
+            "items": {
+              "timeline": {
+                "name": "文章时间表",
+                "icon": "timeline",
+                "link": "/timeline"
+              },
+              "tags": {
+                "name": "文章标签", 
+                "icon": "tag",
+                "link": "/tag"
+              },
+              "categories": {
+                "name": "文章分类",
+                "icon": "category",
+                "link": "/category"
+              }
+            }
+          }
+        },
+        "about": {
+          "title": "关于",
+          "dropdown": {
+            "order": ["aboutMe", "aboutSite"],
+            "items": {
+              "aboutMe": {
+                "name": "关于我",
+                "icon": "user",
+                "link": "/about"
+              },
+              "aboutSite": {
+                "name": "关于本站", 
+                "icon": "site",
+                "link": "/about-site"
+              }
+            }
+          }
+        }
+      }
     },
-    "options": {
-      "search": "搜索",
-      "login": "登录",
-      "register": "注册",
-      "menu": "菜单"
+    "option": {
+      "order": ["search", "login", "menu"],
+      "items": {
+        "search": {
+          "tip": "搜索",
+          "icon": "search"
+        },
+        "login": {
+          "tip": "登录",
+          "icon": "user",
+          "link": "/login"
+        },
+        "menu": {
+          "tip": "菜单",
+          "icon": "grid"
+        }
+      }
     }
   },
-  "home": {
+  "hero": {
     "title": "SakiSDK",
     "description": "欢迎来到我的个人博客，我会在这里分享一些技术文章，以及一些个人项目。"
+  },
+  "article": {
+    "title": "文章",
+    "readTime": "阅读时间",
+    "views": "阅读量",
+    "comments": "评论",
+    "publishedAt": "发布于",
+    "tags": "标签",
+    "category": "分类"
+  },
+  "album": {
+    "title": "相册",
+    "description": "我的照片和回忆",
+    "createAlbum": "创建相册",
+    "uploadPhotos": "上传照片",
+    "noAlbums": "暂无相册"
   }
 }

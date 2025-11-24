@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4889943 */
-  src: url('iconfont.woff2?t=1763883774474') format('woff2'),
-       url('iconfont.woff?t=1763883774474') format('woff'),
-       url('iconfont.ttf?t=1763883774474') format('truetype');
+  src: url('iconfont.woff2?t=1763966293890') format('woff2'),
+       url('iconfont.woff?t=1763966293890') format('woff'),
+       url('iconfont.ttf?t=1763966293890') format('truetype');
 }
 
 .iconfont {
@@ -13,16 +13,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-site:before {
+  content: "\e643";
+}
+
+.icon-user:before {
+  content: "\e685";
+}
+
+.icon-tag:before {
+  content: "\e86e";
+}
+
+.icon-category:before {
+  content: "\e64b";
+}
+
+.icon-timeline:before {
+  content: "\e70f";
+}
+
 .icon-rocket:before {
   content: "\e853";
 }
 
 .icon-book:before {
   content: "\e602";
-}
-
-.icon-categories:before {
-  content: "\e7a4";
 }
 
 .icon-wechat:before {
@@ -209,10 +225,6 @@
   content: "\e6a7";
 }
 
-.icon-tags:before {
-  content: "\e7e5";
-}
-
 .icon-file:before {
   content: "\ec17";
 }
@@ -383,10 +395,6 @@
 
 .icon-chevron-up:before {
   content: "\e697";
-}
-
-.icon-user:before {
-  content: "\e69a";
 }
 
 .icon-grid:before {
