@@ -32,7 +32,7 @@
     @include mix.margin-d(t, xxl);
     @include mix.font-style($s: lg, $f: 'accent', $l: 1.7);
     color: transparent;
-    background: linear-gradient(90deg, var(--color-blue-base), var(--color-orange-base), var(--color-red-base));
+    background: linear-gradient(90deg, var(--blue-base), var(--orange-base), var(--red-base));
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;

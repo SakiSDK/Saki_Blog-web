@@ -15,7 +15,6 @@
   column-gap: space-value($v);
 }
 
-
 @mixin margin($v){
   margin: space-value($v);
 }
@@ -88,6 +87,19 @@
 
 
 /** ---------- 集合样式封装 ---------- */
+// object封装
+@mixin object-style(
+  $p: null,
+  $f: null,
+){
+  @if $p !=null {
+    object-position: $p;
+  }
+  @if $f !=null {
+    object-fit: $f;
+  }
+}
+
 // 容器样式
 @mixin container-style(
   $p: sm lg,
@@ -144,6 +156,7 @@
   $wp: null,
   $wb: null,
   $ow: null,
+  $tw: null, 
 ){
   @if $lh != null {
     line-height: $lh;
@@ -152,7 +165,7 @@
     text-decoration: $td;
   }
   @if $ta != null {
-    text-align: $a;
+    text-align: $ta;
   }
   @if $wp != null {
     white-space: $wp;
@@ -162,6 +175,9 @@
   }
   @if $ow != null {
     overflow-wrap: $ow;
+  }
+  @if $tw != null {
+    text-wrap: $tw;
   }
 }
 
@@ -211,6 +227,33 @@
     z-index: z-index-value($z);
   }
 }
+
+// inline-flex 样式封装
+@mixin inline-flex-box(
+  $j: null,   // justify-content
+  $a: null,   // align-items
+  $g: null,   // gap
+  $d: null    // flex-direction（可选，增强灵活性）
+) {
+  display: inline-flex;
+
+  @if $d != null {
+    flex-direction: $d;
+  }
+
+  @if $j != null {
+    justify-content: $j;
+  }
+
+  @if $a != null {
+    align-items: $a;
+  }
+
+  @if $g != null {
+    gap: $g;
+  }
+}
+
 // 弹性盒子样式
 @mixin flex-box(
   $d: row,
@@ -268,15 +311,3 @@
   }
 }
 
-@mixin underline-style($bt: -5px, $bg: var(--primary-base)) {
-  &::after {
-    content: "";
-    @include position-style($p: absolute, $l: 0, $b: $bt);
-    @include size(0, 1px);
-    background-color: $bg;
-    @include anim.transition($p: with);
-  }
-  &:hover::after {
-    width: 100%;
-  }
-}

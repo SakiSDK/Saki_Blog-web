@@ -125,7 +125,7 @@ export const useLazyLoad = () => {
 }
 
 /** ---------- 导出一个指令对象 ---------- */
-export const vLazyImg: Directive<HTMLImageElement, string | LazyImgBindingValue> = {
+export const LazyDirective: Directive<HTMLImageElement, string | LazyImgBindingValue> = {
     mounted(el, binding) {
         const { observePhoto } = useLazyLoad();
 

@@ -1,5 +1,6 @@
 {
   "common": {
+    "siteName": "SakiSDK",
     "search": "搜索",
     "login": "登录",
     "register": "注册",
@@ -86,6 +87,119 @@
           "icon": "grid"
         }
       }
+    }
+  },
+  "home": {
+    "aboutmeCard": {
+      "name": "SakiSDK",
+      "detail": "这里是我的个人博客",
+      "content": "欢迎来到我的数字小窝，这里是我分享技术思考、创作灵感和生活碎片的角落。",
+      "innerContent": "一名大四在读的数字游民，把这里当作逃避现实、记录bug和假装很懂的地方。原本计划是学Vue，结果一不小心写成了人生。在这里，你会看到代码的优雅、设计的温度和生活的有趣。",
+      "tip": "🛠️ 正在折腾：Vue3 + TypeScript + 动画魔法",
+      "title": "你好啊，很高兴认识你",
+      "emoji": "👋",
+      "btns": {
+        "order": ["aboutme", "github", "contact"],
+        "items": {
+          "aboutme": {
+            "name": "关于我",
+            "icon": "book",
+            "link": "/aboutme",
+            "type": "primary",
+            "tip": "点击跳转详情"
+          },
+          "github": {
+            "name": "GitHub",
+            "icon": "github",
+            "link": "https://github.com/SakiSDK",
+            "tip": "点击跳转详情"
+          },
+          "contact": {
+            "name": "联系我",
+            "icon": "mail",
+            "link": "mailto:saki@example.com",
+            "type": "outline",
+            "tip": "点击跳转详情"
+          }
+        }
+      },
+      "stats": {
+        "articleUnit": "篇文章",
+        "projectsUnit": "个项目"
+      }
+    },
+    "pictureCard": {
+      "tip": "点击跳转到相册",
+      "content": "更多图片"
+    }
+  },
+  "aboutme": {
+    "title": "关于我",
+    "description": "这里是关于我的一些信息。",
+    "gameCard": {
+      "tag": "喜欢的游戏",
+      "title": "游戏",
+      "items": {
+        "blackMythWuKong": {
+          "name": "黑神话：悟空",
+          "link": "https://www.heishenhua.com"
+        },
+        "stellarBlade": {
+          "name": "剑星",
+          "link": "https://www.stellarblade.com"
+        },
+        "expedition33": {
+          "name": "33号远征队",
+          "link": "https://www.expedition33.com/"
+        },
+        "littleNightmare": {
+          "name": "小小噩梦",
+          "link": "https://www.bandainamcoent.com/games/little-nightmares"
+        },
+        "eldenRing": {
+          "name": "艾尔登法环",
+          "link": "https://eldenring.bn-ent.net/sc/"
+        }
+      }
+    },
+    "animeCard": {
+      "tag": "喜欢的动画",
+      "title": "番剧",
+      "items": { 
+        "mushokutensei": {
+          "name": "无职转生",
+          "key": "mushokutensei",
+          "webSite": "https://mushokutensei.jp" 
+        },
+        "furiren": {
+          "name": "葬送的芙莉莲",
+          "key": "furiren",
+          "webSite": "https://frieren-anime.jp"
+        },
+        "kimetsu": {
+          "name": "鬼灭之刃",
+          "key": "kimetsu",
+          "webSite": "https://kimetsu.com"
+        },
+        "shadow": {
+          "name": "想要成为影之实力者",
+          "key": "shadow",
+          "webSite": "https://www.shadow-garden-mog.jp"
+        }
+      }
+    },
+    "infoCard": {
+      "title": "我是SakiSDK",
+      "description": "一名专注于前端开发的创作者，热爱 Vue、设计、动画效果与技术研究。",
+      "welcome": "你好，很高兴认识你",
+      "emoji": "👋"
+    },
+    "smallJoyCard": {
+      "tag": "小确幸",
+      "title": "生活小确幸",
+      "prefix": "加油，生活会变得更加",
+      "default": "美好",
+      "words": ["温暖", "明亮", "踏实", "有趣", "丰盈", "轻盈", "安心", "自在"]
     }
   },
   "hero": {

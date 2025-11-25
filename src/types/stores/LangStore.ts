@@ -1,1 +1,1 @@
-export type State = 'zh-CN' | 'zh-TW' | 'en-US'
+export type State = 'zh-CN' | 'zh-TW' | 'en-US' | 'ja-JP'

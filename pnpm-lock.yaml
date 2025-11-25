@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
+      '@types/lodash':
+        specifier: ^4.17.21
+        version: 4.17.21
       '@vee-validate/zod':
         specifier: ^4.15.1
         version: 4.15.1(vue@3.5.24(typescript@5.9.3))(zod@4.1.12)
@@ -23,9 +29,9 @@ importers:
       axios:
         specifier: ^1.13.2
         version: 1.13.2
-      loadash:
-        specifier: ^1.0.0
-        version: 1.0.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
@@ -637,8 +643,14 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
+  '@types/crypto-js@4.2.2':
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/lodash@4.17.21':
+    resolution: {integrity: sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==}
 
   '@types/node@24.10.1':
     resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
@@ -1047,9 +1059,8 @@ packages:
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
 
-  loadash@1.0.0:
-    resolution: {integrity: sha512-xlX5HBsXB3KG0FJbJJG/3kYWCfsCyCSus3T+uHVu6QL6YxAdggmm3QeyLgn54N2yi5/UE6xxL5ZWJAAiHzHYEg==}
-    deprecated: Package is unsupport. Please use the lodash package instead.
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -1870,7 +1881,11 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@types/crypto-js@4.2.2': {}
+
   '@types/estree@1.0.8': {}
+
+  '@types/lodash@4.17.21': {}
 
   '@types/node@24.10.1':
     dependencies:
@@ -2313,7 +2328,7 @@ snapshots:
 
   kolorist@1.8.0: {}
 
-  loadash@1.0.0: {}
+  lodash@4.17.21: {}
 
   lru-cache@5.1.1:
     dependencies:

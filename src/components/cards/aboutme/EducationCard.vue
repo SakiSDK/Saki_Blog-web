@@ -1,4 +1,4 @@
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
 
 </script>
 
@@ -39,39 +39,34 @@
     @include mix.margin-d(b, lg);
 }
 .content {
-    @include mix.font-style($s: title, $f: 'accent', $c: var(--text-subtle));
+    @include mix.font-style($s: title, $f: 'title', $c: var(--text-subtle));
 }
 .education {
     height: 320px;
     &__container {
-        height: 100%;
-        @include mix.container-style(
-            $p: lg, $r: md,
-            $b: var(--border-base), 
-            $bg: var(--surface-base),
-        );
-        @include anim.card-hover;
+        @extend %aboutme-container;
+        @include mix.flex-box($d: column, $j: flex-start, $a: flex-start);
     }
     &-school {
         @include mix.margin-d(b, lg);
-        @include mix.underline-style($bg: var(--color-blue-base));
+        @include hov.underline-style($bg: var(--blue-base));
         &-content {
-            color: var(--color-blue-base);
+            color: var(--blue-base);
         }
     }
     &-major {
         @include mix.margin-d(b, lg);
-        @include mix.underline-style($bg: var(--color-red-base));
+        @include hov.underline-style($bg: var(--red-base));
         &-content {
-            color: var(--color-red-base);
+            color: var(--red-base);
         }
     }
     &-direction {
         @include mix.margin-d(b, lg);
-        @include mix.underline-style($bg: var(--color-orange-base));
+        @include hov.underline-style($bg: var(--yellow-base));
         &-content {
-            color: var(--color-orange-base);
+            color: var(--yellow-base);
         }
     }
 }
-</style> -->
+</style>

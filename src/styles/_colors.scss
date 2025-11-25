@@ -6,7 +6,7 @@
 $base-colors: (
   'blue': #1289f8,
   'yellow': #ffa726,
-  'purple': #7b1fa2,
+  'purple': #6a11cb,
   'red': #f44336,
   'white': #ffffff,
   'black': #272727,
@@ -34,7 +34,13 @@ $colors: ();
   }
 }
 @include generate-colors();
-
+:root {
+  --blue-strong: #0e6dc6;
+  --green-strong: #2f855a;
+  --yellow-strong: #dd7723;
+  --red-strong: #c53030;
+  --purple-strong: #5a0db3;
+}
 
 /** ---------- 主题色 ---------- */
 // 使用body的类名控制主题变化
@@ -77,6 +83,7 @@ $colors: ();
   // 文字色系
   --text-base: #{$text};
   --text-subtle: #{color.adjust($text, $alpha: -0.2)};
+  --text-subtler:#{color.adjust($text, $alpha: -0.4)};
   --text-weak: #{color.adjust($text, $alpha: -0.6)};
   --text-ghost: #{color.adjust($text, $alpha: -0.8)};
   --text-transparent: #{color.adjust($text, $alpha: -0.9)};
@@ -85,6 +92,7 @@ $colors: ();
   --bg-base: #{$bg};
   --bg-gradient: linear-gradient(180deg, #{$bg}, #{$bg-gradient});
   --bg-subtle: #{color.adjust($bg, $alpha: -0.2)};
+  --bg-subtler:#{color.adjust($bg, $alpha: -0.4)};
   --bg-weak: #{color.adjust($bg, $alpha: -0.6)};
   --bg-ghost: #{color.adjust($bg, $alpha: -0.8)};
   --bg-transparent: #{color.adjust($bg, $alpha: -0.9)};
@@ -116,8 +124,12 @@ $colors: ();
 [data-theme='light'] {
   @include generate-theme(false);
   --border-base: 1px solid var(--border-light-base);
+  --primary-strong: var(--blue-strong);
+  --bg-strong: rgb(216, 220, 228);
 }
 [data-theme='dark'] {
   @include generate-theme(true);
   --border-base: 1px solid var(--border-dark-base);
+  --primary-strong: var(--yellow-strong);
+  --bg-strong: rgb(45, 43, 43);
 }

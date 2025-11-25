@@ -2,6 +2,7 @@
 @use 'sass:meta';
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:string';
 
 // transition样式封装
 @function process-transition-inputs(
@@ -112,7 +113,7 @@
   $timing: 'ease-out',
   $distance: 20px
 ) {
-  $animation-name: slideInFrom#{string.to-upper-case(string.slice($direction, 1, 1))}#{string.slice($direction, 2)};
+  $animation-name: slideInFrom #{string.to-upper-case(string.slice($direction, 1, 1))} #{string.slice($direction, 2)};
   
   @include animation(
     $name: $animation-name,
@@ -251,6 +252,15 @@
     100% {
         transform: translate3d(85px,0,0);
     }
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 // 淡入

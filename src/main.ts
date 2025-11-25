@@ -47,10 +47,10 @@ app.use(VueTippy, {
   }, // => Global default options * see all props
 })
 
-// 注册指令
-app.use(directives)
-
 // 注册全局组件
 app.use(BaseComponents)
 app.use(message)
+
+// 注册指令
+app.use(directives)
 app.mount('#app')

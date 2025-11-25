@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { PictureCardData } from '@/types/components/Home';
+import { createI18nUtil } from '@/utils/i18n.util';
 // import { useAppRouter } from '@/utils/useAppRouter';
 
 
@@ -7,6 +9,9 @@
 
 
 /** ---------- 页面文案内容 ---------- */
+const { tObj } = createI18nUtil();
+
+const pictureCardData = tObj<PictureCardData>('home.pictureCard');
 const imgPaths: Record<string, string> = {
   white: new URL('../../../assets/imgs/album_bird-white.webp', import.meta.url).href,
   blue: new URL('../../../assets/imgs/album_bird-blue.webp', import.meta.url).href,
@@ -25,7 +30,12 @@ const imgPaths: Record<string, string> = {
           alt="picture"
         />
       </div>
-      <div class="picture-detail">more picture</div>
+      <div class="picture-detail" v-tippy="{
+        content: pictureCardData.tip,
+        theme: 'link',
+      }">
+        <VButton type="secondary">{{ pictureCardData.content }}</VButton>
+      </div>
     </div>
   </div>
 </template>
@@ -40,9 +50,7 @@ const imgPaths: Record<string, string> = {
   &__container {
     @include mix.flex-box(column, flex-end, center, 'sm');
     transform: translateZ(0);
-    @include mix.container-style($p: lg, $o: hidden, $b: var(--border-base));
-    @include hov.card($it: true);
-    cursor: pointer;
+    @extend %card-container-base;
     &:hover {
       $images: (
         (1, 20deg, 10px),
@@ -86,8 +94,8 @@ const imgPaths: Record<string, string> = {
   }
   &-detail {
     width: fit-content;
-    border-bottom: var(--border-base);
     @include anim.transition;
+    cursor: pointer;
   }
 }
 </style>

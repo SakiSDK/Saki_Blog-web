@@ -59,7 +59,7 @@ const postTippyConfig: TippyOptions = {
         @include mix.flex-box(row,flex-start);
         @include mix.container-style($o: hidden, $b: var(--border-base));
         @include mix.font-style($s:xl, $f:'title');
-        @include hov.card($it: true);
+        @include hov.card($t: true);
     }
     &__left {
         flex: 1;

@@ -1,21 +1,21 @@
 {
   "common": {
-    "search": "搜尋",
-    "login": "登入",
-    "register": "註冊",
-    "logout": "登出",
-    "edit": "編輯",
-    "delete": "刪除",
-    "cancel": "取消",
+    "search": "検索",
+    "login": "ログイン",
+    "register": "登録",
+    "logout": "ログアウト",
+    "edit": "編集",
+    "delete": "削除",
+    "cancel": "キャンセル",
     "save": "保存",
-    "confirm": "確定",
-    "loading": "加載中...",
-    "submit": "提交",
-    "viewAll": "查看全部",
-    "readMore": "閱讀更多",
-    "confirmDelete": "確定要刪除嗎？",
-    "confirmLogout": "確定要登出嗎？",
-    "confirmDeleteComment": "確定要刪除此評論嗎？"
+    "confirm": "確認",
+    "loading": "読み込み中...",
+    "submit": "送信",
+    "viewAll": "すべて表示",
+    "readMore": "続きを読む",
+    "confirmDelete": "削除してもよろしいですか？",
+    "confirmLogout": "ログアウトしてもよろしいですか？",
+    "confirmDeleteComment": "このコメントを削除してもよろしいですか？"
   },
   "topbar": {
     "siteName": "SakiSDK",
@@ -23,26 +23,26 @@
       "order": ["album", "article", "about"],
       "items": {
         "album": {
-          "title": "相冊",
+          "title": "アルバム",
           "link": "/album"
         },
         "article": {
-          "title": "文章",
+          "title": "記事",
           "dropdown": {
             "order": ["timeline", "tags", "categories"],
             "items": {
               "timeline": {
-                "name": "文章時間表",
+                "name": "記事タイムライン",
                 "icon": "timeline",
                 "link": "/timeline"
               },
               "tags": {
-                "name": "文章標籤", 
+                "name": "記事タグ", 
                 "icon": "tag",
                 "link": "/tag"
               },
               "categories": {
-                "name": "文章分類",
+                "name": "記事カテゴリー",
                 "icon": "category",
                 "link": "/category"
               }
@@ -50,17 +50,17 @@
           }
         },
         "about": {
-          "title": "關於",
+          "title": "について",
           "dropdown": {
             "order": ["aboutMe", "aboutSite"],
             "items": {
               "aboutMe": {
-                "name": "關於我",
+                "name": "私について",
                 "icon": "user",
                 "link": "/about"
               },
               "aboutSite": {
-                "name": "關於本站", 
+                "name": "本サイトについて", 
                 "icon": "site",
                 "link": "/about-site"
               }
@@ -73,101 +73,101 @@
       "order": ["search", "login", "menu"],
       "items": {
         "search": {
-          "tip": "搜尋",
+          "tip": "検索",
           "icon": "search"
         },
         "login": {
-          "tip": "登入",
+          "tip": "ログイン",
           "icon": "user",
           "link": "/login"
         },
         "menu": {
-          "tip": "選單",
+          "tip": "メニュー",
           "icon": "grid"
         }
       }
     }
   },
   "aboutme": {
-    "title": "關於我",
-    "description": "這裡是關於我的一些資訊。",
+    "title": "私について",
+    "description": "ここは私に関するいくつかの情報です。",
     "gameCard": {
-      "tag": "喜歡的遊戲",
-      "title": "遊戲",
+      "tag": "好きなゲーム",
+      "title": "ゲーム",
       "items": {
         "blackMythWuKong": {
-          "name": "黑神話：悟空",
+          "name": "黒神話：悟空",
           "link": "https://www.heishenhua.com"
         },
         "stellarBlade": {
-          "name": "劍星",
+          "name": "スティラーブレイド",
           "link": "https://www.stellarblade.com"
         },
         "expedition33": {
-          "name": "33號遠征隊",
+          "name": "エクスペディション33",
           "link": "https://www.expedition33.com/"
         },
         "littleNightmare": {
-          "name": "小小噩夢",
+          "name": "リトルナイトメア",
           "link": "https://www.bandainamcoent.com/games/little-nightmares"
         },
         "eldenRing": {
-          "name": "艾爾登法環",
+          "name": "エルデンリング",
           "link": "https://eldenring.bn-ent.net/sc/"
         }
       }
     },
     "animeCard": {
-      "tag": "喜歡的動畫",
-      "title": "番劇",
+      "tag": "好きなアニメ",
+      "title": "アニメ",
       "items": { 
         "mushokutensei": {
-          "name": "無職轉生",
+          "name": "無職転生",
           "key": "mushokutensei",
           "webSite": "https://mushokutensei.jp" 
         },
         "furiren": {
-          "name": "葬送的芙莉蓮",
+          "name": "葬送のフリーレン",
           "key": "furiren",
           "webSite": "https://frieren-anime.jp"
         },
         "kimetsu": {
-          "name": "鬼滅之刃",
+          "name": "鬼滅の刃",
           "key": "kimetsu",
           "webSite": "https://kimetsu.com"
         },
         "shadow": {
-          "name": "想要成為影之實力者",
+          "name": "陰の実力者になりたくて",
           "key": "shadow",
           "webSite": "https://www.shadow-garden-mog.jp"
         }
       }
     },
     "infoCard": {
-      "title": "我是SakiSDK",
-      "description": "一名專注於前端開發的創作者，熱愛 Vue、設計、動畫效果與技術研究。",
-      "welcome": "你好，很高興認識你",
+      "title": "私はSakiSDKです",
+      "description": "フロントエンド開発に特化したクリエイターで、Vue、デザイン、アニメーション効果、技術研究を愛しています。",
+      "welcome": "こんにちは、お会いできて嬉しいです",
       "emoji": "👋"
     }
   },
   "hero": {
     "title": "SakiSDK",
-    "description": "歡迎來到我的個人部落格，我會在這裡分享一些技術文章，以及一些個人專案。"
+    "description": "私の個人ブログへようこそ。ここでは技術記事や個人プロジェクトを共有します。"
   },
   "article": {
-    "title": "文章",
-    "readTime": "閱讀時間",
-    "views": "閱讀量",
-    "comments": "評論",
-    "publishedAt": "發佈於",
-    "tags": "標籤",
-    "category": "分類"
+    "title": "記事",
+    "readTime": "読了時間",
+    "views": "閲覧数",
+    "comments": "コメント",
+    "publishedAt": "公開日",
+    "tags": "タグ",
+    "category": "カテゴリー"
   },
   "album": {
-    "title": "相冊",
-    "description": "我的照片和回憶",
-    "createAlbum": "建立相冊",
-    "uploadPhotos": "上傳照片",
-    "noAlbums": "暫無相冊"
+    "title": "アルバム",
+    "description": "私の写真と思い出",
+    "createAlbum": "アルバム作成",
+    "uploadPhotos": "写真をアップロード",
+    "noAlbums": "アルバムはまだありません"
   }
 }

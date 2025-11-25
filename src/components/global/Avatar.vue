@@ -5,9 +5,9 @@ defineOptions({
 })
 
 defineProps<{
-  style: {
+  style?: {
     size: string;
-    radius?: string;
+    radius: string;
   }
   src: string;
 }>();
@@ -17,7 +17,7 @@ defineProps<{
   <div 
     class="avatar"
     :style="{
-      '--avatar-size': style.size,
+      '--avatar-size': style?.size ?? '50px',
       '--avatar-radius': style?.radius ?? '50%',
     }"  
   >

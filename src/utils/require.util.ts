@@ -1,7 +1,6 @@
-import { useUserStore } from './../stores/useUserStore';
+// import { useUserStore } from './../stores/useUserStore';
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { showMessage } from './message'
 import { AuthApi } from '@/api/AuthApi';
 import { useAppRouter } from './useAppRouter';
 import { useToken } from './useToken';
@@ -130,9 +129,15 @@ service.interceptors.response.use(
                     requestQueue.forEach(callback => callback(newToken))
                     requestQueue = []
                     // 重试当前请求
-                    originalRequest.headers.Authorization = `Bearer ${newToken}`
+                    if (originalRequest.headers) {
+                        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                    } else {
+                        originalRequest.headers = {
+                            Authorization: `Bearer ${newToken}`
+                        };
+                    }
                     return service(originalRequest)
-                } catch (error) {
+                } catch (error: any) {
                     return Promise.reject(error.response.data||error.message||error)
                 } finally {
                     isRefreshing = false;
@@ -141,7 +146,13 @@ service.interceptors.response.use(
                 // 正在刷新中：加入队列等待
                 return new Promise(resolve => {
                     requestQueue.push(newToken => {
-                        originalRequest.headers.Authorization = `Bearer ${newToken}`
+                        if (originalRequest.headers) {
+                            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                        } else {
+                            originalRequest.headers = {
+                                Authorization: `Bearer ${newToken}`
+                            };
+                        }
                         resolve(service(originalRequest))
                     })
                 })

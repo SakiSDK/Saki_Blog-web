@@ -122,12 +122,12 @@ onMounted( async () => {
             @include mix.position-style($p: absolute, $b: 80px, $r: 50px);
             @include mix.container-style(
                 $p: sm md, $r: sm,
-                $bg: var(--color-white-base),
+                $bg: var(--white-base),
             );
             @include mix.flex-box($g: xs);
             cursor: pointer;
             backdrop-filter: blur(15px);
-            @include mix.font-style($c: var(--color-primary-base));
+            @include mix.font-style($c: var(--primary-base));
             letter-spacing: 3px;
             @include anim.button-hover;
             &>span {
@@ -163,19 +163,19 @@ onMounted( async () => {
             @include mix.flex-box($d: column, $g: lg);
         }
         &-title {
-            @include mix.font-style($s: logo, $f: 'accent', $c: var(--color-primary-base));
+            @include mix.font-style($s: logo, $f: 'accent', $c: var(--primary-base));
         }
         &-detail {
             width: 300px;
         }
         &-btn {
-            @include mix.container-style($bg: var(--color-primary-base), $r: sm);
+            @include mix.container-style($bg: var(--primary-base), $r: sm);
             @include mix.flex-box($g: xs);
-            color: var(--color-white-base);
+            color: var(--white-base);
             cursor: pointer;
             @include anim.button-hover;
             &>span{
-                @include mix.underline-style($bt: -1px, $bg: var(--color-white-base));
+                @include mix.underline-style($bt: -1px, $bg: var(--white-base));
             }
         }
     }

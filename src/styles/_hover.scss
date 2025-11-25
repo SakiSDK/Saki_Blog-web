@@ -71,6 +71,18 @@
     transform: translate($x, $y);
   }
 }
+// 上下唯一
+@mixin move-y($y: -2px, $include-transition: false) {
+  @if $include-transition {
+    @include transition(transform);
+  }
+  &:hover {
+    transform: translateY($y);
+  }
+  &:active {
+    transform: translateY(0px);
+  }
+}
 
 // 旋转
 @mixin rotate($deg: 90deg, $include-transition: false) {
@@ -108,11 +120,25 @@
   }
 }
 
-@mixin card($s: -5px, $sd: var(--shadow-dark), $it: false) {
-  @if $it {
+@mixin card($s: -5px, $sd: var(--shadow-dark), $t: false) {
+  @if $t {
     @include transition(box-shadow transform border-color);
   }
   @include move(0, $s);
   @include shadow($sd);
   @include border;
+}
+
+@mixin underline-style($bt: -5px, $bg: var(--primary-base)) {
+  position: relative;
+  &::after {
+    content: "";
+    @include position-style($p: absolute, $l: 0, $b: $bt);
+    @include size(0, 1px);
+    background-color: $bg;
+    @include transition(width);
+  }
+  &:hover::after {
+    width: 100%;
+  }
 }

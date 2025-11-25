@@ -1,64 +1,68 @@
-<!-- <script lang="ts" setup>
-import WuKongImg from '@/assets/images/games/BlackMythWuKong.webp'
-import StarBladeImg from '@/assets/images/games/StellaBlade.webp'
-import ExpeditionImg from '@/assets/images/games/Expedition33.webp'
-import NightmareImg from '@/assets/images/games/LittleNightmare.webp'
-import EldenRingImg from '@/assets/images/games/EldenRing.webp'
+<script lang="ts" setup>
+import BlackMythWukongImg from '@/assets/imgs/game_BlackMythWukong.webp'
+import StellarBladeImg from '@/assets/imgs/game_stellarblade.webp'
+import Expedition33Img from '@/assets/imgs/game_Expedition33.webp'
+import LittleNightmareImg from '@/assets/imgs/game_LittleNightmare.webp'
+import EldenRingImg from '@/assets/imgs/game_EldenRing.webp';
+import { createI18nUtil } from '@/utils/i18n.util';
+import type { CardBaseInfo, GameCardField } from '@/types/components/Aboutme';
 
 
-const gameFields = [
+const { tWithPrefix } = createI18nUtil();
+const gameT = tWithPrefix('aboutme.gameCard');
+const gameItems = tWithPrefix('aboutme.gameCard.items');
+const gameCardInfo: CardBaseInfo = {
+  title: gameT('title'),
+  tag: gameT('tag'),
+}
+const gameFields: GameCardField[] = [
   {
-    img: WuKongImg,
-    text: 'BlackMythWuKong',
-    officialWebsite: 'https://www.heishenhua.com',
-    chineseName: '黑神话：悟空'
+    image: BlackMythWukongImg,
+    name: gameItems('blackMythWuKong.name'),
+    webSite: gameItems('blackMythWuKong.webSite'),
   },
   {
-    img: StarBladeImg,
-    text: 'StarBlade',
-    officialWebsite: 'https://www.stellarblade.com',
-    chineseName: '剑星'
+    image: StellarBladeImg,
+    name: gameItems('stellarBlade.name'),
+    webSite: gameItems('stellarBlade.webSite'),
   },
   {
-    img: ExpeditionImg,
-    text: 'Expedition33',
-    officialWebsite: 'https://www.expeditionsgame.com',
-    chineseName: '33号远征队'
+    image: Expedition33Img,
+    name: gameItems('expedition33.name'),
+    webSite: gameItems('expedition33.webSite'),
   },
   {
-    img: NightmareImg,
-    text: 'LittleNightmare',
-    officialWebsite: 'https://www.bandainamcoent.com/games/little-nightmares',
-    chineseName: '小小梦魇'
+    image: LittleNightmareImg,
+    name: gameItems('littleNightmare.name'),
+    webSite: gameItems('littleNightmare.webSite'),
   },
   {
-    img: EldenRingImg,
-    text: 'EldenRing',
-    officialWebsite: 'https://www.eldenring.com',
-    chineseName: '艾尔登法环'
+    image: EldenRingImg,
+    name: gameItems('eldenRing.name'),
+    webSite: gameItems('eldenRing.webSite'),
   },
 ]
 </script>
 
 <template>
   <div class="game">
-    <div class="game-tag">喜欢的游戏</div>
-    <div class="game-title">游戏</div>
-    <div class="game__content">
-      <div class="game__wrapper">
-        <a
-          class="game-link"
-          v-for="game, index in gameFields"
-          :key="index"
-          :href="game.officialWebsite"
-        >
-          <div class="game-item">
-            <img
-              :src="game.img"
-              :alt="game.chineseName"
-            >
-          </div>
-        </a>
+    <div class="game__container">
+      <div class="game-tag">{{ gameCardInfo.tag }}</div>
+      <div class="game-title">{{ gameCardInfo.title }}</div>
+      <div class="game__content">
+        <div class="game__wrapper">
+          <a
+            class="game-link"
+            v-for="game, index in gameFields"
+            :key="index"
+            :href="game.webSite"
+          >
+            <div class="game-item" v-lazy="{
+              src: game.image
+            }">
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -67,44 +71,34 @@ const gameFields = [
 <style lang="scss" scoped>
 .game {
   position: relative;
-  height: 200px;
-  @include mix.container-style($p: 0,
-    $b: var(--border-base),
-    $o: hidden,
-  );
-
+  height: 340px;
+  &__container {
+    @extend %aboutme-container;
+  }
   &-tag {
-    @include mix.position-style(absolute, $l: 20px, $t: 10px, $z: base);
-    @include mix.font-style($s: xs, $c: var(--text-weak))
+    @extend %aboutme-tag;
   }
-
   &-title {
-    @include mix.position-style(absolute, $l: 20px, $t: 40px, $z: base);
-    @include mix.font-style($s: xxl);
+    @extend %aboutme-title;
   }
-
   &__content {
     height: 100%;
   }
 
   &__wrapper {
-    @include mix.position-style(absolute, $t: 0, $l: -10%);
-    width: 120%;
-    height: 100%;
-    @include mix.flex-box;
+    @extend %flex-center;
+    @include mix.position-style($p: absolute, $t: 0, $l: -10%);
+    @include mix.size(120%, 100%);
   }
-
   &-link {
+    @include mix.size(20%, 100%);
     position: relative;
-    width: 20%;
-    height: 100%;
     overflow: hidden;
     transform: skew(-10deg);
-    @include anim.transition($duration: 1s);
-
+    background-color: var(--black-base);
+    @include anim.transition($dr: 1s);
     &:hover {
       width: 44%;
-
       .game-item {
         transform: skew(10deg) scale(1.3);
       }
@@ -112,17 +106,12 @@ const gameFields = [
   }
 
   &-item {
-    @include mix.position-style(absolute, $t: 0, $l: -20px);
-    width: 200px;
-    height: 100%;
-    object-fit: cover;
-    transform: skew(10deg);
-    @include anim.transition($duration: 1s);
-
-    &>img {
-      @extend %full-size;
-      @include mix.object(center, cover);
-    }
+    @include mix.position-style($p: absolute, $t: 0, $l: -20px);
+    @include mix.size(300px, 100%);
+    transform: skew(10deg) translateX(-40px);
+    @include anim.transition($p: with transform, $dr: 1s);
+    background-position: center;
+    background-color: var(--black-base);
   }
 }
-</style> -->
+</style>

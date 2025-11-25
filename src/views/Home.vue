@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import HeroSection from '@/components/sections/HeroSection.vue';
 import AboutCard from '@/components/cards/home/AboutCard.vue';
-// import NoticeCard from '@/components/cards/NoticeCard.vue';
+import AnnouncementCard from '@/components/cards/home/AnnouncementCard.vue';
 import PictureCard from '@/components/cards/home/PictureCard.vue';
 import HelloCard from '@/components/cards/home/HelloCard.vue';
 // import NonsenseCard from '@/components/cards/NonsenseCard.vue';
@@ -34,24 +34,26 @@ onMounted(async () => {
 </script>
 
 <template>
+    <TopBar ref="topBarRef"/>
     <div class="home">
-        <TopBar ref="topBarRef"/>
         <HeroSection/>
         <div class="home__content container">
-            <div class="home__intro">
-                <div class="home__about">
-                    <AboutCard v-reveal/>
+            <div class="home__wrapper">
+                <div class="home-aboutme">
+                    <AboutCard/>
                 </div>
-                <!-- <NoticeCard v-reveal/> -->
-                <div class="home__picture">
+                <div class="home-picture">
                     <PictureCard/>
                 </div>
-                <div class="home__hello">
-                    <HelloCard v-reveal/>
+                <div class="home-hello">
+                    <HelloCard/>
                 </div>
-                <div class="home__intro-content">
+                <div class="home-group">
                     <!-- <NonsenseCard v-reveal/> -->
                     <!-- <StatsPanel v-reveal/> -->
+                </div>
+                <div class="home-announcement">
+                    <AnnouncementCard/>
                 </div>
             </div>
             <!-- <ArticleSection/> -->
@@ -67,53 +69,56 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @use 'sass:map';
 .home {
-    &__content,
-    &__intro {
+    &__content{
         @include mix.margin-d(b, lg);
     }
     &__content {
         min-height: calc(100vh - 293px);
         padding: 40px;
         @include mix.margin-d(t, 50px);
-        @include mix.respond-down('sm') {
-            @include mix.padding(lg);
-        }
     }
-    &__intro {
-        @include mix.grid-box($c: 18, $g: lg, $j: center);
-        @include mix.respond-down(xl){
+    &__wrapper {
+        @include mix.grid-box($c: 18, $g: lg);
+        @include mix.respond-down(md){
             grid-template-columns: 1fr !important;
         };
-        &-content {
-            @include mix.flex-box($a:stretch, $g: lg);
-            width: 100%;
-            @include mix.respond-up(xl){
-                grid-row: 2;
-                grid-column: 10/19;
-            }
-        }
     }
-    &__about,
-    &__picture,
-    &__hello {
-        @include mix.size(100%, fit-content);
+    &-aboutme,
+    &-picture,
+    &-hello,
+    &-group, 
+    &-announcement {
+        @extend %full-width;
     }
-    &__about { 
-        @include mix.respond-up('xl') {
+
+    &-aboutme {
+        @include mix.respond-up(md) {
             grid-row: 1;
-            grid-column: 1/9;
+            grid-column: 1 / 9;
         }
     }
-    &__picture {
-        @include mix.respond-up('xl') {
+    &-picture {
+        @include mix.respond-up(md) {
             grid-row: 1;
-            grid-column: 9/19;
+            grid-column: 9 / 19;
         }
     }
-    &__hello {
-        @include mix.respond-up('xl'){
+    &-hello {
+        @include mix.respond-up(md) {
             grid-row: 2;
-            grid-column: 1/10;
+            grid-column: 1 / 10;
+        }
+    }
+    &-group {
+        @include mix.respond-up(md) {
+            grid-row: 2;
+            grid-column: 1 / 9;
+        }
+    }
+    &-announcement {
+        @include mix.respond-up(md) {
+            grid-row: 3;
+            grid-column: 1 / 19;
         }
     }
 }

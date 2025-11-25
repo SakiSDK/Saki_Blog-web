@@ -1,3 +1,173 @@
 {
-  "test": "test data"
+  "common": {
+    "search": "Search",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "viewAll": "View All",
+    "readMore": "Read More",
+    "confirmDelete": "Are you sure you want to delete?",
+    "confirmLogout": "Are you sure you want to log out?",
+    "confirmDeleteComment": "Are you sure you want to delete this comment?"
+  },
+  "topbar": {
+    "siteName": "SakiSDK",
+    "navigation": {
+      "order": ["album", "article", "about"],
+      "items": {
+        "album": {
+          "title": "Album",
+          "link": "/album"
+        },
+        "article": {
+          "title": "Articles",
+          "dropdown": {
+            "order": ["timeline", "tags", "categories"],
+            "items": {
+              "timeline": {
+                "name": "Article Timeline",
+                "icon": "timeline",
+                "link": "/timeline"
+              },
+              "tags": {
+                "name": "Article Tags",
+                "icon": "tag",
+                "link": "/tag"
+              },
+              "categories": {
+                "name": "Article Categories",
+                "icon": "category",
+                "link": "/category"
+              }
+            }
+          }
+        },
+        "about": {
+          "title": "About",
+          "dropdown": {
+            "order": ["aboutMe", "aboutSite"],
+            "items": {
+              "aboutMe": {
+                "name": "About Me",
+                "icon": "user",
+                "link": "/about"
+              },
+              "aboutSite": {
+                "name": "About This Site",
+                "icon": "site",
+                "link": "/about-site"
+              }
+            }
+          }
+        }
+      }
+    },
+    "option": {
+      "order": ["search", "login", "menu"],
+      "items": {
+        "search": {
+          "tip": "Search",
+          "icon": "search"
+        },
+        "login": {
+          "tip": "Login",
+          "icon": "user",
+          "link": "/login"
+        },
+        "menu": {
+          "tip": "Menu",
+          "icon": "grid"
+        }
+      }
+    }
+  },
+  "aboutme": {
+    "title": "About Me",
+    "description": "Here is some information about me.",
+    "gameCard": {
+      "tag": "Favorite Games",
+      "title": "Games",
+      "items": {
+        "blackMythWuKong": {
+          "name": "Black Myth: Wukong",
+          "link": "https://www.heishenhua.com"
+        },
+        "stellarBlade": {
+          "name": "Stellar Blade",
+          "link": "https://www.stellarblade.com"
+        },
+        "expedition33": {
+          "name": "Expedition 33",
+          "link": "https://www.expedition33.com/"
+        },
+        "littleNightmare": {
+          "name": "Little Nightmares",
+          "link": "https://www.bandainamcoent.com/games/little-nightmares"
+        },
+        "eldenRing": {
+          "name": "Elden Ring",
+          "link": "https://eldenring.bn-ent.net/sc/"
+        }
+      }
+    },
+    "animeCard": {
+      "tag": "Favorite Anime",
+      "title": "Anime",
+      "items": {
+        "mushokutensei": {
+          "name": "Mushoku Tensei",
+          "key": "mushokutensei",
+          "webSite": "https://mushokutensei.jp"
+        },
+        "furiren": {
+          "name": "Frieren: Beyond Journey's End",
+          "key": "furiren",
+          "webSite": "https://frieren-anime.jp"
+        },
+        "kimetsu": {
+          "name": "Demon Slayer",
+          "key": "kimetsu",
+          "webSite": "https://kimetsu.com"
+        },
+        "shadow": {
+          "name": "The Eminence in Shadow",
+          "key": "shadow",
+          "webSite": "https://www.shadow-garden-mog.jp"
+        }
+      }
+    },
+    "infoCard": {
+      "title": "I am SakiSDK",
+      "description": "A creator focused on front-end development, passionate about Vue, design, animation effects, and technical research.",
+      "welcome": "Hello, nice to meet you",
+      "emoji": "👋"
+    }
+  },
+  "hero": {
+    "title": "SakiSDK",
+    "description": "Welcome to my personal blog, where I share technical articles and personal projects."
+  },
+  "article": {
+    "title": "Articles",
+    "readTime": "Read Time",
+    "views": "Views",
+    "comments": "Comments",
+    "publishedAt": "Published on",
+    "tags": "Tags",
+    "category": "Category"
+  },
+  "album": {
+    "title": "Album",
+    "description": "My photos and memories",
+    "createAlbum": "Create Album",
+    "uploadPhotos": "Upload Photos",
+    "noAlbums": "No albums yet"
+  }
 }

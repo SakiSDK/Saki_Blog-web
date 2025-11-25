@@ -1,5 +1,6 @@
 @use './mixins' as *;
 @use './animations' as anim;
+@use './hover' as hov;
 
 %full-size {
   @include size(100%);
@@ -40,17 +41,30 @@
     max-width: 600px;
   }
   @include respond-down('xs') {
-    max-width: 400px;
+    max-width: 500px;
   }
+}
+
+
+/** ---------- 公共style ---------- */
+%card-container-base {
+  position: relative;
+  height: 100%;
+  @include container-style ($p: lg, $r: md, $b: var(--border-base), $o: hidden);
+  @include hov.card($t: true);
 }
 
 /** ---------- about-me页面共用style ---------- */
 %aboutme-tag {
-    @include position-style(absolute, $l:20px, $t:10px);
-    @include font-style($s: sm, $c: var(--text-weak))
+    @include position-style(absolute, $l: lg, $t: sm, $z: base);
+    @include font-style($s: sm, $c: var(--white-subtle));
+    @include z-index(base);
 }
 %aboutme-container {
-    position: relative;
-    height: 100%;
-    @include container-style( $r: md, $b: var(--border-base));
+  @extend %card-container-base;
+  @include padding(sm lg);
+}
+%aboutme-title {
+  @include position-style($p: absolute, $t: 40px, $l: lg, $z: base);
+  @include font-style($s: title, $f: 'title', $c: var(--white-base));
 }

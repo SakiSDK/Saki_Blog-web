@@ -9,7 +9,7 @@ export const useLangStore = defineStore(
     const lang = ref<Store.Lang.State>('zh-CN');
 
     // 支持的语言列表
-    const languages = ['zh-CN', 'zh-TW', 'en-US'] as const;
+    const languages = ['zh-CN', 'zh-TW', 'en-US', 'ja-JP'] as const;
 
     // 循环切换语言
     const toggleLang = () => {

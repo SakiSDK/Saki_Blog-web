@@ -5,39 +5,54 @@ import KimetsuImg from '@/assets/imgs/anime_kimetsu.webp'
 import ShadowImg from '@/assets/imgs/anime_TheEminenceInShadow.webp'
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useTimeoutFn } from '@vueuse/core'
+import { createI18nUtil } from '@/utils/i18n.util'
+import type { AnimeCardField, CardBaseInfo } from '@/types/components/Aboutme'
 
 
+/** ---------- Anime State ---------- */
 const currentIndex = ref<number>(0)
 const autoplaySpeed = 5000; // 5秒
 let timer: number | null = null
 const isTransitionEnabled = ref<boolean>(true)
 
 
-const animeFields = [
+/** ---------- Anime text ---------- */
+const { tWithPrefix } = createI18nUtil();
+const animeT = tWithPrefix('aboutme.animeCard');
+const animeItemsT = tWithPrefix('aboutme.animeCard.items');
+const animeCardInfo: CardBaseInfo = {
+    title: animeT('title'),
+    tag: animeT('tag'),
+}
+const animeFields: AnimeCardField[] = [
     {
-        img: mushokuImg,
-        tip: '无职转生',
-        key: 'mushoku',
+        name: animeItemsT('mushokutensei.name'),
+        webSite: animeItemsT('mushokutensei.webSite'),
+        key: animeItemsT('mushokutensei.key'),
+        image: mushokuImg,
     },
     {
-        img: FurirenImg,
-        tip: '葬送的芙丽莲',
-        key: 'furiren',
+        name: animeItemsT('furiren.name'),
+        webSite: animeItemsT('furiren.webSite'),
+        key: animeItemsT('furiren.key'),
+        image: FurirenImg,
     },
     {
-        img: KimetsuImg,
-        tip: '鬼灭之刃',
-        key: 'kimetsu',
+        name: animeItemsT('shadow.name'),
+        webSite: animeItemsT('shadow.webSite'),
+        key: animeItemsT('shadow.key'),
+        image: ShadowImg,
     },
     {
-        img: ShadowImg,
-        tip: '想要成为影之实力者',
-        key: 'shadow',
+        name: animeItemsT('kimetsu.name'),
+        webSite: animeItemsT('kimetsu.webSite'),
+        key: animeItemsT('kimetsu.key'),
+        image: KimetsuImg,
     },
 ]
 
+/** ---------- 逻辑方法 ---------- */
 const totalOrigin = animeFields.length // 原数组长度（4）
-const totalCopied = totalOrigin * 2 // 复制后数组长度（8）
 // 切换下一张
 const next = async () => {
     if (!isTransitionEnabled.value) return
@@ -60,13 +75,11 @@ const next = async () => {
         }
     }, 600)
 }
-
 // 启动自动播放
 const startAutoplay = () => {
     stopAutoplay()
     timer = window.setInterval(next, autoplaySpeed)
 }
-
 // 停止自动播放
 const stopAutoplay = () => {
     if (timer) {
@@ -74,7 +87,6 @@ const stopAutoplay = () => {
         timer = null
     }
 }
-
 // 优化：鼠标悬停停止自动播放，离开继续（提升用户体验）
 const handleMouseEnter = () => stopAutoplay()
 const handleMouseLeave = () => startAutoplay()
@@ -88,8 +100,8 @@ onUnmounted(stopAutoplay)
 <template>
     <div class="anime">
         <div class="anime__container">
-            <div class="anime-tag">喜欢的动漫</div>
-            <div class="anime-title">番剧</div>
+            <div class="anime-tag">{{ animeCardInfo.tag }}</div>
+            <div class="anime-title">{{ animeCardInfo.title }}</div>
             <div class="anime__content" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                 <div 
                     class="anime__wrapper" 
@@ -101,9 +113,9 @@ onUnmounted(stopAutoplay)
                     <div class="anime-img"
                         v-for="anime,index in [...animeFields, ...animeFields]" 
                         :key="index"
-                        :title="anime.tip"
+                        :title="anime.name"
                     >
-                        <img :src="anime.img" alt="">
+                        <img :src="anime.image" :alt="anime.name">
                     </div>
                 </div>
             </div>
@@ -121,12 +133,9 @@ onUnmounted(stopAutoplay)
     }
     &-tag {
         @extend %aboutme-tag;
-        color: var(--white-subtle);
-        @include mix.z-index(base);
     }
     &-title {
-        @include mix.position-style($p: absolute, $t: 40px, $l: 20px, $z: base);
-        @include mix.font-style($s: title, $f: 'title', $c: var(--white-base));
+        @extend %aboutme-title;
     }
     &__content {
         @extend %full-size;
@@ -136,17 +145,15 @@ onUnmounted(stopAutoplay)
         @include mix.flex-box($j: flex-start, $w: nowrap);
     }
     &-img { 
-        height: 100%;
-        width: 100%;
+        @extend %full-size;
         flex-shrink: 0;
-        @include anim.transition($dr: slow);
+        @include anim.transition($dr: 1s);
         &:hover {
             transform: scale(1.2);
         }
         &>img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            @extend %full-size;
+            @include mix.object-style(center, cover);
         }
     }
 }

@@ -177,12 +177,12 @@ const handleAtUserClick = (e: MouseEvent) => {
 
 <style lang="scss" scoped>
 .reply-item-hightlight{
-    border: 1px solid var(--color-primary-base)!important;
+    border: 1px solid var(--primary-base)!important;
 }
 :deep(.reply-at-user) {
     @include mix.margin-d(r, xs);
     @include mix.underline-style;
-    color: var(--color-primary-base);
+    color: var(--primary-base);
     cursor: pointer;
 }
 .reply-item {
@@ -207,9 +207,9 @@ const handleAtUserClick = (e: MouseEvent) => {
         position: relative;
         height: fit-content;
         @include mix.flex-box;
-        @include mix.font-style($s: sm, $c: var(--color-primary-base));
+        @include mix.font-style($s: sm, $c: var(--primary-base));
         cursor: pointer;
-        @include mix.underline-style(-3px, var(--color-primary-base));
+        @include mix.underline-style(-3px, var(--primary-base));
     }
     &__body,
     &-content {
@@ -229,7 +229,7 @@ const handleAtUserClick = (e: MouseEvent) => {
             content: '';
             @include mix.position-style($p: absolute, $l: 0, $t: 0);
             @include mix.size(4px, 100%);
-            background: linear-gradient(to bottom, var(--color-primary-base), var(--color-primary-soft));
+            background: linear-gradient(to bottom, var(--primary-base), var(--primary-soft));
             border-radius: 2px;
         }
     }
