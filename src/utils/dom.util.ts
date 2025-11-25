@@ -6,5 +6,17 @@
  */
 // 类型定义
 export class DomUtil {
-
+  static scrollToNextView = () => {
+    const target = window.innerHeight; // = 100vh
+    window.scrollTo({
+      top: target,
+      behavior: 'smooth'
+    });
+  }
+  static scrollToTop = () => [
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  ]
 }

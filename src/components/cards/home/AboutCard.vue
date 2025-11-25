@@ -3,19 +3,11 @@ import { ref } from 'vue'
 import { useMutationObserver } from '@vueuse/core';
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
+import type { AboutCardData } from '@/types/components/Home';
 
 /** ---------- AboutCard text ---------- */
 const { t, tObj } = createI18nUtil();
-const aboutCardData = tObj<{
-  name: string;
-  detail: string;
-  content: string;
-  innerContent: string;
-  tip: string;
-  title: string;
-  emoji: string;
-  btns: any
-}>('home.aboutmeCard')
+const aboutCardData = tObj<AboutCardData>('home.aboutmeCard')
 const aboutBtnOrder: string[] = aboutCardData.btns.order;
 const aboutBtns = aboutBtnOrder.map(itemKey => {
   return aboutCardData.btns.items[itemKey];
@@ -53,7 +45,7 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
           {{ aboutCardData.innerContent }}
         </div>
         <div class="aboutme-btns">
-          <div class="aboutme-btn" v-for="item,index in aboutBtns">
+          <div class="aboutme-btn" v-for="item,index in aboutBtns" :key="index">
             <div 
               class="aboutme-btn__wrapper"
               v-tippy="{

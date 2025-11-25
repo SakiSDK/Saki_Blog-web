@@ -8,28 +8,28 @@ import HelloCard from '@/components/cards/home/HelloCard.vue';
 // import StatsPanel from '@/components/cards/StatsPanel.vue';
 // import ArticleSection from '@/components/sections/ArticleSection.vue';
 // import useDomControl from '@/utils/useDomControl';
+import { DomUtil } from '@/utils/dom.util';
 import { useThrottleFn, useEventListener, useWindowScroll, useTimeoutFn} from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
 
-// const {scrollToArticle,scrollToHero} = useDomControl()
 const { directions } = useWindowScroll()
 
 
 
 onMounted(async () => {
-    // const throlledScroll = useThrottleFn(() => {
-    //     if (directions.bottom) {
-    //         if (window.scrollY < window.innerHeight) {
-    //             scrollToArticle();
-    //         }
-    //     } else {
-    //         if (window.scrollY < window.innerHeight) {
-    //             scrollToHero()
-    //         }
-    //     }
-    // },100)
-    // useEventListener(window, 'scroll', throlledScroll)
+    const throlledScroll = useThrottleFn(() => {
+        if (directions.bottom) {
+            if (window.scrollY < window.innerHeight) {
+                DomUtil.scrollToNextView();
+            }
+        } else {
+            if (window.scrollY < window.innerHeight) {
+                DomUtil.scrollToTop()
+            }
+        }
+    },100)
+    useEventListener(window, 'scroll', throlledScroll)
 })
 </script>
 
