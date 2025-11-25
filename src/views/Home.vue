@@ -7,17 +7,13 @@ import HelloCard from '@/components/cards/home/HelloCard.vue';
 // import NonsenseCard from '@/components/cards/NonsenseCard.vue';
 // import StatsPanel from '@/components/cards/StatsPanel.vue';
 // import ArticleSection from '@/components/sections/ArticleSection.vue';
-// import useDomControl from '@/utils/useDomControl';
 import { DomUtil } from '@/utils/dom.util';
-import { useThrottleFn, useEventListener, useWindowScroll, useTimeoutFn} from '@vueuse/core'
+import { useThrottleFn, useEventListener, useWindowScroll} from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
 
-const { directions } = useWindowScroll()
-
-
-
 onMounted(async () => {
+    const { directions } = useWindowScroll()
     const throlledScroll = useThrottleFn(() => {
         if (directions.bottom) {
             if (window.scrollY < window.innerHeight) {
@@ -39,20 +35,20 @@ onMounted(async () => {
         <HeroSection/>
         <div class="home__content container">
             <div class="home__wrapper">
-                <div class="home-aboutme">
+                <div class="home-aboutme" v-reveal>
                     <AboutCard/>
                 </div>
-                <div class="home-picture">
+                <div class="home-picture" v-reveal>
                     <PictureCard/>
                 </div>
-                <div class="home-hello">
+                <div class="home-hello" v-reveal>
                     <HelloCard/>
                 </div>
-                <div class="home-group">
+                <div class="home-group" v-reveal>
                     <!-- <NonsenseCard v-reveal/> -->
                     <!-- <StatsPanel v-reveal/> -->
                 </div>
-                <div class="home-announcement">
+                <div class="home-announcement" v-reveal>
                     <AnnouncementCard/>
                 </div>
             </div>

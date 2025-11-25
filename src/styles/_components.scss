@@ -44,7 +44,18 @@
     max-width: 500px;
   }
 }
-
+.reveal-transition {
+  @include anim.transition($dr: 1s, $p: opacity transform visibility);
+}
+.reveal-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+}
+.reveal-visible {
+  opacity: 1;
+  visibility: visible;
+}
 
 /** ---------- 公共style ---------- */
 %card-container-base {
