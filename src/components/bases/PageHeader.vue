@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { PageHeaderField } from '@/types/components/PageHead';
+import type { PageHeaderField } from '@/types/components/Base';
 import Wave from './Wave.vue';
 
 

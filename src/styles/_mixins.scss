@@ -263,6 +263,7 @@
   $rg: null,
   $cg: null,
   $w: null,
+  $s: null,
 ){ 
   display: flex;
   flex-direction: $d;
@@ -279,6 +280,9 @@
   }
   @if $w != null {
     flex-wrap: $w;
+  }
+  @if $s != null {
+    flex-shrink: $s;
   }
 }
 // 网格盒子样式

@@ -34,7 +34,7 @@ const imgPaths: Record<string, string> = {
         content: pictureCardData.tip,
         theme: 'link',
       }">
-        <VButton type="secondary">{{ pictureCardData.content }}</VButton>
+        <VButton type="secondary" border>{{ pictureCardData.content }}</VButton>
       </div>
     </div>
   </div>

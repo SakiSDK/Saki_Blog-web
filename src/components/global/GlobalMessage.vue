@@ -45,45 +45,11 @@ defineExpose({
   removeMessage,
   clearAll
 })
-
-// import { message } from '@/plugins/message'
-
-// const showSuccess = () => {
-//   const messageId = message.success('操作成功', '您的数据已成功保存', 3000)
-//   console.log('消息ID:', messageId)
-// }
-
-// const showError = () => {
-//   message.error('操作失败', '请检查网络连接后重试')
-// }
-
-// const showWarning = () => {
-//   message.warning('请注意', '此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据此操作将删除重要数据')
-// }
-
-// const showInfo = () => {
-//   message.info('提示', '系统将在5分钟后维护')
-// }
-
-// const clearMessages = () => {
-//   message.clearAll()
-// }
-
-// // 或者使用 show 方法
-// const showCustomMessage = () => {
-//     message.show({
-//         type: 'success',
-//         title: '自定义消息',
-//         content: '这是一个自定义配置的消息',
-//         duration: 5000,
-//         closable: false
-//     })
-// }
 </script>
 
 <template>
   <TransitionGroup 
-    name="message-slide"
+    name="slide-from-left"
     tag="div"
     class="message__container"
   >
@@ -114,27 +80,6 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-/* 动画效果 */
-.message-slide-enter-active,
-.message-slide-leave-active {
-  transition: all 0.3s ease;
-}
-
-.message-slide-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.message-slide-leave-to {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.message-slide-move {
-  transition: transform 0.3s ease;
-}
-
-
 .message__container {
   // @include mix.size(fit-content);
   padding-top: 70px;

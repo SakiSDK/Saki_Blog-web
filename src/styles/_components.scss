@@ -6,11 +6,11 @@
   @include size(100%);
 }
 
-%full-height {
+%full-width {
   @include size(100%, auto);
 }
 
-%full-width {
+%full-height {
   @include size(auto, 100%);
 }
 
@@ -41,7 +41,10 @@
     max-width: 600px;
   }
   @include respond-down('xs') {
-    max-width: 500px;
+    max-width: 450px;
+  }
+  @include respond-down('xxs'){
+    max-width: 350px;
   }
 }
 .reveal-transition {

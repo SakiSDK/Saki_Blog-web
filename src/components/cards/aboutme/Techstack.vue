@@ -1,26 +1,30 @@
-<!-- <script lang="ts" setup>
-import htmlSvg from '@/assets/svgs/greet/icon-html.svg'
-import cssSvg from '@/assets/svgs/greet/icon-css3.svg'
-import sassSvg from '@/assets/svgs/greet/icon-sass.svg'
-import jsSvg from '@/assets/svgs/greet/icon-js.svg'
-import tsSvg from '@/assets/svgs/greet/icon-ts.svg'
-import vueSvg from '@/assets/svgs/greet/icon-vue-js.svg'
-import viteSvg from '@/assets/svgs/greet/icon-vite.svg'
-import piniaSvg from '@/assets/svgs/greet/icon-pinia.svg'
-import gitSvg from '@/assets/svgs/greet/icon-git.svg'
-import pnpmSvg from '@/assets/svgs/greet/icon-pnpm.svg'
-import nodejsSvg from '@/assets/svgs/greet/icon-nodejs.svg'
-import redisSvg from '@/assets/svgs/greet/icon-redis.svg'
-import mysqlSvg from '@/assets/svgs/greet/icon-mysql.svg'
-import pythonSvg from '@/assets/svgs/greet/icon-python.svg'
-import sequlizeSvg from '@/assets/svgs/greet/icon-sequelize.svg'
-import dockerSvg from '@/assets/svgs/greet/icon-docker.svg'
-import npmSvg from '@/assets/svgs/greet/icon-npm.svg'
-import elementPlusSvg from '@/assets/svgs/greet/icon-element-plus.svg'
+<script lang="ts" setup>
+import htmlSvg from '@/assets/svgs/icon-html.svg'
+import cssSvg from '@/assets/svgs/icon-css.svg'
+import sassSvg from '@/assets/svgs/icon-sass.svg'
+import jsSvg from '@/assets/svgs/icon-js.svg'
+import tsSvg from '@/assets/svgs/icon-typescript.svg'
+import vueSvg from '@/assets/svgs/icon-vue-js.svg'
+import viteSvg from '@/assets/svgs/icon-vite.svg'
+import piniaSvg from '@/assets/svgs/icon-pinia.svg'
+import gitSvg from '@/assets/svgs/icon-git.svg'
+import pnpmSvg from '@/assets/svgs/icon-pnpm.svg'
+import nodejsSvg from '@/assets/svgs/icon-nodejs.svg'
+import redisSvg from '@/assets/svgs/icon-redis.svg'
+import mysqlSvg from '@/assets/svgs/icon-mysql.svg'
+import pythonSvg from '@/assets/svgs/icon-python.svg'
+import sequlizeSvg from '@/assets/svgs/icon-sequelize.svg'
+import dockerSvg from '@/assets/svgs/icon-docker.svg'
+import npmSvg from '@/assets/svgs/icon-npm.svg'
+import elementPlusSvg from '@/assets/svgs/icon-element-plus.svg'
+
+import Carousel from '@/components/bases/Carousel.vue'
+import { useDomUtil } from '@/utils/dom.util'
 
 
 
 
+const { brightColorByHash } = useDomUtil();
 const skills: { svg: string, text: string }[] = [
   { svg: htmlSvg, text: 'HTML' },
   { svg: cssSvg, text: 'CSS' },
@@ -50,13 +54,23 @@ const skills: { svg: string, text: string }[] = [
       <div class="techstack-title">我的技术栈</div>
       <div class="techstack__content">
         <div class="techstack__wrapper">
-          <SvgCarousel />
+          <Carousel />
         </div>
         <div class="techstack__detail">
           <div
             class="techstack-item"
             v-for="skill, index in skills"
             :key="index"
+            :style="{
+              '--tag-bgcolor': brightColorByHash({
+                key: skill.text,
+                alpha: 0.2
+              }),
+              '--tag-color': brightColorByHash({
+                key: skill.text,
+              })
+            }"
+            v-ripple
           >
             <div class="techstack-item-icon">
               <img
@@ -77,75 +91,69 @@ const skills: { svg: string, text: string }[] = [
 <style lang="scss" scoped>
 .techstack {
   height: 320px;
-
   &-tag,
   &-content {
     display: inline-block;
   }
-
   &-tag {
-    @include mix.position-style($p: absolute, $t: 10px, $l: 20px, $z: base);
-    @include mix.font-style($c: var(--text-subtle), $s: sm);
+    @extend %aboutme-tag;
+    @include mix.font-style($c: var(--text-subtler));
   }
-
   &-title {
-    @include mix.position-style($p: absolute, $t: 40px, $l: 20px, $z: base);
-    @include mix.font-style($f: 'accent', $s: title, $c: var(--primary-base));
+    @extend %aboutme-title;
+    @include mix.font-style($c: var(--text-base));
   }
-
   &__container,
   &__content,
   &__wrapper {
     position: relative;
     height: 100%;
   }
-
   &__container {
     @include mix.container-style($p: lg, $r: md,
       $b: var(--border-base),
       $bg: var(--surface-base),
       $o: hidden,
     );
-    @include anim.card-hover;
-
+    @include hov.card($t: true);
     &:hover {
       .techstack__wrapper {
         opacity: 0;
       }
-
       .techstack__detail {
         opacity: 1;
+        transform: scale(1);
       }
     }
   }
-
   &__content {
     @include mix.padding-d(l, 50%);
   }
-
   &__wrapper {
     height: 100%;
     transform: rotate(75deg);
     @include anim.transition;
   }
-
   &__detail {
     @include mix.position-style($p: absolute, $t: 0, $l: 0);
     @extend %full-size;
     @include mix.padding-d(t, 80px);
-    @include mix.flex-box($a: flex-start, $w: wrap $ac: flex-start);
-    opacity: 1;
-    @include anim.transition;
+    @include mix.flex-box($j: flex-start, $a: flex-start, $w: wrap, $g: sm);
+    align-content: flex-start;
+    opacity: 0;
+    transform: scale(0.3);
+    transform-origin: bottom center;
+    @include anim.transition(opacity transform);
   }
-
   &-item {
-    display: inline-block;
-    width: fit-content;
-    @include mix.flex-box;
-
+    @include mix.flex-box($w: nowrap);
+    @include mix.container-style($p: xs md, $r: sm, $bg: var(--tag-bgcolor));
+    @include mix.font-style($c: var(--tag-color), $w: bold, $s: sm);
+    letter-spacing: 1px;
     &-icon {
       @include mix.size(20px);
+      @include mix.margin-d(r, xs);
     }
   }
 }
-</style> -->
+</style>

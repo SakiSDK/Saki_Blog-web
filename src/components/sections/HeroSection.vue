@@ -23,7 +23,7 @@ onMounted(() => {
       contentActive.value += item
     }, index * 150);
   })
-  animate('.hero-avatar', {
+  animate(['.hero-avatar','.logo-svg'], {
     scale: [
       { to: 1.25, ease: 'inOut(3)', duration: 200 },
       { to: 1, ease: createSpring({ stiffness: 300 }) }
@@ -31,7 +31,7 @@ onMounted(() => {
     loop: true,
     loopDelay: 250,
   });
-  createDraggable('.hero-avatar', {
+  createDraggable(['.hero-avatar','.logo-svg'], {
     container: [0, 0, 0, 0],
     releaseEase: createSpring({ stiffness: 200 })
   });

@@ -7,7 +7,8 @@ $space: (
   lg: 20px,
   md: 15px,
   sm: 10px,
-  xs: 5px
+  xs: 5px,
+  xxs: 3px
 );
 
 /** ---------- 字体大小 ---------- */
@@ -27,6 +28,7 @@ $font-size: (
 
 /** ---------- 页面断点 ---------- */
 $breakpoints: (
+  xxs: 450px,
   xs: 560px,
   sm: 700px,
   md: 900px,

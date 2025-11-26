@@ -1,4 +1,4 @@
-import type { AddMessage, MessageType } from "../components/Message";
+import type { AddMessage, MessageType } from "../components/Base"
 
 export type MessageOptions = AddMessage & {
   type?: MessageType

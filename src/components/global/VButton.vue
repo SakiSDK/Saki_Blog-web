@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ButtonEmits, ButtonProps } from '@/types/components/Button';
+import type { ButtonEmits, ButtonProps } from '@/types/components/Base';
 import { computed } from 'vue'
 defineOptions({
   name: 'VButton',

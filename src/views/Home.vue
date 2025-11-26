@@ -1,27 +1,30 @@
 <script lang="ts" setup>
 import HeroSection from '@/components/sections/HeroSection.vue';
 import AboutCard from '@/components/cards/home/AboutCard.vue';
-import AnnouncementCard from '@/components/cards/home/AnnouncementCard.vue';
 import PictureCard from '@/components/cards/home/PictureCard.vue';
 import HelloCard from '@/components/cards/home/HelloCard.vue';
+import Annuncement from '@/components/cards/home/Annuncement.vue';
+import SocialFooter from '@/components/cards/home/SocialFooter.vue';
 // import NonsenseCard from '@/components/cards/NonsenseCard.vue';
 // import StatsPanel from '@/components/cards/StatsPanel.vue';
-// import ArticleSection from '@/components/sections/ArticleSection.vue';
-import { DomUtil } from '@/utils/dom.util';
+import ArticleSection from '@/components/sections/ArticleSection.vue';
+import { useDomUtil } from '@/utils/dom.util';
 import { useThrottleFn, useEventListener, useWindowScroll} from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
+import BlessingCard from '@/components/cards/home/BlessingCard.vue';
 
 
+const { scrollToNextView, scrollToTop } = useDomUtil();
 onMounted(async () => {
     const { directions } = useWindowScroll()
     const throlledScroll = useThrottleFn(() => {
         if (directions.bottom) {
             if (window.scrollY < window.innerHeight) {
-                DomUtil.scrollToNextView();
+                scrollToNextView();
             }
         } else {
             if (window.scrollY < window.innerHeight) {
-                DomUtil.scrollToTop()
+                scrollToTop()
             }
         }
     },100)
@@ -44,17 +47,18 @@ onMounted(async () => {
                 <div class="home-hello" v-reveal>
                     <HelloCard/>
                 </div>
-                <div class="home-group" v-reveal>
-                    <!-- <NonsenseCard v-reveal/> -->
-                    <!-- <StatsPanel v-reveal/> -->
+                <div class="home-blessing" v-reveal>
+                    <BlessingCard/>
                 </div>
                 <div class="home-announcement" v-reveal>
-                    <AnnouncementCard/>
+                    <Annuncement/>
                 </div>
             </div>
-            <!-- <ArticleSection/> -->
+            <div class="home__article">
+                <ArticleSection/>
+            </div>
             <div class="home__info-line">
-                
+                <SocialFooter/>
             </div>
         </div>
         <FooterBar/>
@@ -72,21 +76,29 @@ onMounted(async () => {
         min-height: calc(100vh - 293px);
         padding: 40px;
         @include mix.margin-d(t, 50px);
+        @include mix.respond-down(xxs){
+            padding: 0;
+        }
     }
     &__wrapper {
+        width: 100%;
         @include mix.grid-box($c: 18, $g: lg);
         @include mix.respond-down(md){
-            grid-template-columns: 1fr !important;
+            display: block;
+            grid-template-columns: none !important;
+            @include mix.flex-box($d: column, $g: lg);
         };
     }
     &-aboutme,
     &-picture,
     &-hello,
     &-group, 
-    &-announcement {
+    &-announcement,
+    &-blessing,
+    &-article {
         @extend %full-width;
+        // width: 200px;
     }
-
     &-aboutme {
         @include mix.respond-up(md) {
             grid-row: 1;
@@ -105,10 +117,10 @@ onMounted(async () => {
             grid-column: 1 / 10;
         }
     }
-    &-group {
+    &-blessing {
         @include mix.respond-up(md) {
             grid-row: 2;
-            grid-column: 1 / 9;
+            grid-column: 10 / 19;
         }
     }
     &-announcement {

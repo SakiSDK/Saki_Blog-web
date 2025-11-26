@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import PageHeader from '@/components/bases/PageHeader.vue';
-import type { PageHeaderField } from '@/types/components/PageHead';
+import type { PageHeaderField } from '@/types/components/Base';
 import GameCard from '@/components/cards/aboutme/GameCard.vue';
 import InfoCard from '@/components/cards/aboutme/InfoCard.vue';
 import SmallJoyCard from '@/components/cards/aboutme/SmallJoyCard.vue';
 import EducationCard from '@/components/cards/aboutme/EducationCard.vue';
 import AnimeCard from '@/components/cards/aboutme/AnimeCard.vue';
 import { createI18nUtil } from '@/utils/i18n.util';
+import NonsenceCard from '@/components/cards/aboutme/NonsenceCard.vue';
+import Techstack from '@/components/cards/aboutme/Techstack.vue';
 
 /** ---------- 静态数据 ---------- */
 const { t } = createI18nUtil();
@@ -37,11 +39,17 @@ const aboutmeField: PageHeaderField = {
           <div class="aboutme-education">
             <EducationCard />
           </div>
+          <div class="aboutme-techstack">
+            <Techstack/>
+          </div>
           <div class="aboutme-game">
             <GameCard />
           </div>
           <div class="aboutme-anime">
             <AnimeCard />
+          </div>
+          <div class="aboutme-nonsence">
+            <NonsenceCard/>
           </div>
         </div>
       </div>
@@ -96,6 +104,12 @@ const aboutmeField: PageHeaderField = {
       grid-column: 1 / 9;
     }
   }
+  &-techstack {
+    @include mix.respond-up(md) {
+      grid-row: 2;
+      grid-column: 9 / 19;
+    }
+  }
   &-game {
     @include mix.respond-up(md) {
       grid-row: 3;
@@ -106,6 +120,12 @@ const aboutmeField: PageHeaderField = {
     @include mix.respond-up(md) {
       grid-row: 3;
       grid-column: 10 / 19;
+    }
+  }
+  &-nonsence {
+    @include mix.respond-up(md) {
+      grid-row: 4;
+      grid-column: 1 / 19;
     }
   }
 }

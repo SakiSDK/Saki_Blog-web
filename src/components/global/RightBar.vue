@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useThemeStore } from '@/stores/theme.store';
 import { storeToRefs } from 'pinia';
 import { useLangStore } from '@/stores/lang.store';
-import type { RightBarField, RightBarThemeIcon } from '@/types/components/RightBar';
+import type { RightBarField, RightBarThemeIcon } from '@/types/components/Base'
 import { message } from '@/plugins/message';
 
 defineOptions({
@@ -35,7 +35,11 @@ const rightBarFields = ref<RightBarField[]>([
     iconName: themeIcon.value,
     action: () => {
       toggleTheme()
-      message.info('主题切换成功')
+      message.show({
+        type: 'info',
+        title: '主题已切换',
+        duration: 3000
+      });
     }
   },
 ])

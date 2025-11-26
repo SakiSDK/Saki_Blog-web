@@ -39,6 +39,30 @@
   }
 }
 
+// 间距变化
+@mixin gap($gap: 0, $include-transition: false){
+  @if($include-transition){
+    @include transition(gap);
+  }
+  &:hover {
+    gap: space-value($gap);
+  }
+}
+
+// margin变化
+@mixin margin($direction: all, $margin: 0, $include-transition: false){
+  @if($include-transition){
+    @include transition(margin);
+  }
+  &:hover {
+    @if $direction == 'all' {
+      margin: space-value($margin);
+    } @else {
+      margin-#{direction-base-value($direction)}: space-value($margin);
+    }
+  }
+}
+
 // 透明度变化
 @mixin opacity($opacity: 0, $include-transition: false){
   @if($include-transition){
@@ -129,8 +153,10 @@
   @include border;
 }
 
-@mixin underline-style($bt: -5px, $bg: var(--primary-base)) {
-  position: relative;
+@mixin underline-style($bt: -5px, $bg: var(--primary-base), $ip: true) {
+  @if $ip {
+    position: relative;
+  }
   &::after {
     content: "";
     @include position-style($p: absolute, $l: 0, $b: $bt);

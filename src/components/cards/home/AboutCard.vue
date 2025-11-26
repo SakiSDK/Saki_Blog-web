@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useMutationObserver } from '@vueuse/core';
+import { ref, watch } from 'vue'
+import { useWindowSize } from '@vueuse/core';
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
 import type { AboutCardData } from '@/types/components/Home';
+import { useDomUtil } from '@/utils/dom.util';
 
 /** ---------- AboutCard text ---------- */
 const { t, tObj } = createI18nUtil();
@@ -11,6 +12,24 @@ const aboutCardData = tObj<AboutCardData>('home.aboutmeCard')
 const aboutBtnOrder: string[] = aboutCardData.btns.order;
 const aboutBtns = aboutBtnOrder.map(itemKey => {
   return aboutCardData.btns.items[itemKey];
+})
+
+const avatarSize = ref<string>('130px')
+const { respondDown, respondUp } = useDomUtil();
+
+const { width } = useWindowSize()
+watch(width, () => {
+    respondDown('lg', () => {
+      avatarSize.value = '55px';
+    });
+    respondUp('lg', () => {
+      avatarSize.value = '130px';
+    });
+    respondDown('md', () => {
+      avatarSize.value = '130px';
+    }) 
+}, {
+  immediate: true
 })
 </script>
 
@@ -23,15 +42,18 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
         <Avatar 
           :src="AvatarImg" 
           :style="{
-            size: '130px',
+            size: avatarSize,
           }"
         />
-        <div class="aboutme-name">
-          {{ aboutCardData.name }}
+        <div class="aboutme-info">
+          <div class="aboutme-name">
+            {{ aboutCardData.name }}
+          </div>
+          <div class="aboutme-detail">
+            {{ aboutCardData.detail }}
+          </div>
         </div>
-        <div class="aboutme-detail">
-          {{ aboutCardData.detail }}
-        </div>
+
       </div>
       <div class="aboutme__right">
         <div class="aboutme-title">
@@ -69,6 +91,22 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
     @extend %card-container-base;
     padding: 0;
     @include mix.flex-box($j: flex-start);
+    @include mix.respond-between(md, lg){
+      flex-direction: column;
+      align-items: flex-start;
+      .aboutme__left {
+        flex: 1;
+        @include mix.size(100%, fit-content);
+        flex-direction: row;
+        @include mix.padding(sm);
+      }
+      .aboutme__right {
+        flex: 7;
+      }
+      .aboutme-innercontent {
+        top: 130px;
+      }
+    }
     &:hover {
       .aboutme-clip  {
         transform: rotate(90deg);

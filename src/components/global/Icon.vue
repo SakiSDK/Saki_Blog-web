@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type {IconProps} from '@/types/components/Icon';
+import type { IconProps } from '@/types/components/Base';
 import type { CSSProperties } from 'vue';
 
 defineOptions({
