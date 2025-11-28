@@ -11,10 +11,6 @@ import testImg from '@/assets/imgs/home_bg.webp';
           src: testImg
         }"
       >
-      <div class="article-card-date">
-        <Icon name="date"/>
-        <span>1145-14-19</span>
-      </div>
       </div>
       <div class="article-card__body">
         <div class="article-card-categories">
@@ -29,6 +25,10 @@ import testImg from '@/assets/imgs/home_bg.webp';
           <div class="article-card-tags-item" v-for="_ in 30">
             测试
           </div>
+        </div>
+        <div class="article-card-date">
+          <Icon name="date"/>
+          <span>1145-14-19</span>
         </div>
       </div>
     </div>
@@ -71,19 +71,20 @@ import testImg from '@/assets/imgs/home_bg.webp';
     }
   }
   &-date {
-    @include mix.position-style($p: absolute, $b: sm, $r: lg);
+    @include mix.position-style($p: absolute, $t: 20px, $r: lg);
     @include mix.flex-box;
-    @include mix.font-style($c: var(--white-subtle));
+    @include mix.font-style($c: var(--text-subtler));
     &>span {
       @include mix.margin-d(l, xs);
-      @include mix.font-style($s: xs);
+      @include mix.font-style($s: xxs);
     }
   }
   &__body {
+    position: relative;
     flex: 2;
     width: 100%;
     @include mix.container-style($p: lg);
-    @include mix.flex-box($d: column, $j: space-between, $a: flex-start);
+    @include mix.flex-box($d: column, $j: space-between, $a: flex-start, $g: md);
     @include mix.respond-down(md){
       height: 100%;
       flex: 3;
@@ -92,7 +93,6 @@ import testImg from '@/assets/imgs/home_bg.webp';
   &-title {
     width: 100%;
     @include mix.font-style($f: title, $s: md);
-    @include mix.margin-y(xs);
   }
   &-categories,
   &-tags {
@@ -100,13 +100,9 @@ import testImg from '@/assets/imgs/home_bg.webp';
     @include mix.flex-box($g: xs, $j: flex-start, $w: wrap);
     @include mix.font-style($f: base, $c: var(--text-subtler), $s: xs);
   }
-  &-categories {
-    @include mix.margin-d(b, sm);
-  }
   &-tags {
     height: 35px;
     overflow: hidden;
-    @include mix.margin-d(t, xs);
     &-item {
       text-wrap: nowrap;
       &::before {

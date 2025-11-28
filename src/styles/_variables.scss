@@ -13,6 +13,7 @@ $space: (
 
 /** ---------- 字体大小 ---------- */
 $font-size: (
+  logo: 100px,
   xxl-title: 56px,
   xl-title: 48px,
   lg-title: 40px,
@@ -48,6 +49,12 @@ $font-family: (
     url('../assets/fonts/title-FZG.woff2') format('woff2'),
     url('../assets/fonts/title-FZG.woff') format('woff'),
     url('../assets/fonts/title-FZG.ttf') format('truetype'),
+  ),
+  pixel: (
+    url('../assets/fonts/pixel-ChangBanDianSong-12.woff2') format('woff2'),
+    url('../assets/fonts/pixel-ChangBanDianSong-12.woff') format('woff'),
+    url('../assets/fonts/pixel-ChangBanDianSong-12.ttf') format('truetype'),
+
   )
 );
 /** ---------- 字体注册 ---------- */

@@ -1,6 +1,11 @@
 import Home from '../views/Home.vue';
 import Aboutme from '../views/Aboutme.vue';
+import ArticleDetail from '@/views/ArticleDetail.vue';
 import type { RouteRecordRaw } from 'vue-router';
+import ArticleTags from '@/views/ArticleTags.vue';
+import ArticleCategories from '@/views/ArticleCategories.vue';
+import NotFound from '@/views/NotFound.vue';
+import Login from '@/views/Login.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,6 +17,34 @@ const routes: RouteRecordRaw[] = [
     path: '/aboutme',
     name: 'Aboutme',
     component: Aboutme
+  },
+  {
+    path: '/article/:shortId',
+    name: 'ArticleDetail',
+    component: () => ArticleDetail,
+    beforeEnter: async (to, from, next) => { 
+    }
+  },
+  {
+    path: '/article/tags',
+    name: 'ArticleTags',
+    component: ArticleTags
+  },
+  {
+    path: '/article/categories',
+    name: 'ArticleCategories',
+    component: ArticleCategories
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  // 其他未定义的路由，自动跳转到notfound页
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Notfound',
+    component: NotFound,
   },
 ]
 

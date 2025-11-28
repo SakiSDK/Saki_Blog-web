@@ -132,12 +132,14 @@ $colors: ();
 [data-theme='light'] {
   @include generate-theme(false);
   --border-base: 1px solid var(--border-light-base);
+  --border-base-color: var(--border-light-base);
   --primary-strong: var(--blue-strong);
   --bg-strong: rgb(216, 220, 228);
 }
 [data-theme='dark'] {
   @include generate-theme(true);
   --border-base: 1px solid var(--border-dark-base);
+  --border-base-color: var(--border-dark-base);
   --primary-strong: var(--yellow-strong);
   --bg-strong: rgb(45, 43, 43);
 }

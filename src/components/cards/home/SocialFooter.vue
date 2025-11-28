@@ -19,12 +19,15 @@ const SocialFooterFields = [
 const avatarSize = ref<string>('70px')
 const { respondDown, respondUp } = useDomUtil();
 onMounted(() => { 
-  useEventListener(window, 'resize', (e) => { 
-    respondDown('xs', () => {
-      avatarSize.value = '35px';
+  // 初始化头像大小
+  respondDown('xxs', () => {
+    avatarSize.value = '45px';
+  });
+  useEventListener(window, 'resize', () => { 
+    respondDown('xxs', () => {
+      avatarSize.value = '45px';
     });
-
-    respondUp('xs', () => {
+    respondUp('xxs', () => {
       avatarSize.value = '70px';
     });
   })
@@ -58,6 +61,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .social {
+  width: 100%;
   &__container {
     position: relative;
     height: fit-content;

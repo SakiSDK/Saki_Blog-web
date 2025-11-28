@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6851465",
+      "name": "注册",
+      "font_class": "zhuce",
+      "unicode": "e6d6",
+      "unicode_decimal": 59094
+    },
+    {
+      "icon_id": "44063453",
+      "name": "login",
+      "font_class": "login",
+      "unicode": "ea1a",
+      "unicode_decimal": 59930
+    },
+    {
+      "icon_id": "1199117",
+      "name": "pen",
+      "font_class": "pen",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "13304064",
+      "name": "sequelize",
+      "font_class": "sequelize",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
       "icon_id": "38345000",
       "name": "copyright",
       "font_class": "copyright",

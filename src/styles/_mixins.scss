@@ -250,7 +250,7 @@
   }
 
   @if $g != null {
-    gap: $g;
+    @include gap($g);
   }
 }
 

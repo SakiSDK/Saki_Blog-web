@@ -1,4 +1,5 @@
 @use './mixins' as *;
+@use './components' as *;
 
 *,
 *::before,
@@ -126,5 +127,156 @@ $placement: top,bottom,right,left;
 @each $item in $placement {
   :deep(.tippy-box[data-theme='nav'][data-placement~=#{$item}] > .tippy-arrow::before)  {
     border-#{$item}-color: var(--interactive-base);
+  }
+}
+
+
+/** ---------- markdown样式重置 ---------- */
+//======== highlight样式重置 ========
+.markdown {
+  :deep(h1) {
+    font-size: font-size(xl);
+  }
+
+  :deep(code) {
+    color: var(--yellow-base);
+    background-color: var(--bg-base);
+  }
+
+  :deep(blockquote) {
+    padding-left: 10px;
+    background-color: var(--secondary-base);
+    color: var(--primary-base);
+    border-left: 3px solid var(--primary-base);
+  }
+
+  :deep(p) {
+    margin-bottom: 20px !important;
+    line-height: 1.75;
+    text-align: justify;
+
+    code {
+      padding: 1px 3px;
+      border-radius: 5px;
+      background-color: var(--interactive-strong);
+    }
+  }
+
+  :deep(hr) {
+    margin: 20px 0;
+    border: 1px dashed var(--text-weak);
+  }
+
+  :deep(table) {
+    margin-bottom: 20px;
+    font-size: font-size('lg');
+    border-collapse: collapse;
+    /* 合并边框，避免双线 */
+    width: 100%;
+    /* 可选：设置表格宽度 */
+  }
+
+  :deep(li) {
+    margin-bottom: 20px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      @include size(10px);
+      @include container-style($p: 0, $b: 2px solid var(--primary-base), $r: 50%);
+      margin-right: space(sm);
+    }
+  }
+
+  :deep(thead) {
+    background: var(--secondary-base);
+    border-bottom: 1px solid;
+
+    tr {
+      th {
+        padding: 5px 10px;
+        text-align: start;
+        color: var(--primary-base);
+        border: 1px solid var(--primary-subtle);
+
+      }
+    }
+  }
+
+  :deep(tbody) {
+    tr {
+      text-align: start;
+
+      td {
+        padding: 5px 10px;
+        text-align: start;
+        border: 1px solid var(--primary-subtle);
+      }
+    }
+  }
+
+  :deep(pre) {
+    padding: 1em;
+    border-radius: 6px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    overflow-x: auto;
+    background: #282c34 !important;
+    /* 黑色背景 */
+    margin-bottom: 20px;
+  }
+
+  :deep(strong) {
+    font-weight: bolder;
+    color: var(--primary-base) !important;
+    // background-color: var(--secondary);
+  }
+
+  :deep(a) {
+    color: var(--primary-base);
+  }
+
+  :deep(details) {
+    position: relative;
+    @extend %card-container-base;
+    @include padding-d(b, 0);
+    border: var(--border-base);
+    background: linear-gradient(to bottom,
+        var(--surface-weaker) 0px,
+        /* 顶部 80px 红色 */
+        var(--surface-weaker) 64px,
+        var(--surface-base) 64px,
+        /* 剩余部分蓝色 */
+      );
+
+    summary {
+      @include padding-d(b, lg);
+      @include font-size(xl);
+    }
+  }
+
+  @for $i from 1 through 6 {
+    :deep(h#{$i}) {
+      position: relative;
+      width: fit-content;
+      @include margin(xl 0);
+      @include font-family(title);
+
+      &::after {
+        content: "";
+        @include position-style($p: absolute, $b: 0, $l: 0);
+        width: 100%;
+        height: .3rem;
+        border-radius: 3px 8px 10px 6px;
+        transform: skew(-35deg);
+        background: linear-gradient(45deg, transparent, var(--primary-base));
+        z-index: -1;
+      }
+
+      &::before {
+        color: var(--primary-base);
+      }
+
+    }
   }
 }

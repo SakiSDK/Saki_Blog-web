@@ -1,20 +1,3 @@
-<template>
-  <button
-    :class="buttonClasses"
-    :disabled="disabled || loading"
-    @click="handleClick"
-    v-ripple
-  >
-    <i v-if="loading" class="fas fa-spinner fa-spin"></i>
-    <i v-else-if="icon">
-      <Icon :name="icon"/>
-    </i>
-    <span v-if="$slots.default">
-      <slot></slot>
-    </span>
-  </button>
-</template>
-
 <script setup lang="ts">
 import type { ButtonEmits, ButtonProps } from '@/types/components/Base';
 import { computed } from 'vue'
@@ -60,6 +43,23 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 </script>
+
+<template>
+  <button
+    :class="buttonClasses"
+    :disabled="disabled || loading"
+    @click="handleClick"
+    v-ripple
+  >
+    <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+    <i v-else-if="icon">
+      <Icon :name="icon"/>
+    </i>
+    <span v-if="$slots.default">
+      <slot></slot>
+    </span>
+  </button>
+</template>
 
 <style lang="scss" scoped>
 @keyframes ripple {

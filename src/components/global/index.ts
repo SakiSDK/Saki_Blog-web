@@ -7,6 +7,7 @@ import RightBar from "./RightBar.vue";
 import TopBar from './TopBar.vue'
 import type { App } from 'vue';
 import VButton from "./VButton.vue";
+import Tag from "./Tag.vue";
 
 // 定义组件数组
 const components = [
@@ -16,6 +17,7 @@ const components = [
   RightBar,
   TopBar,
   VButton,
+  Tag
 ];
 
 // 安装函数

@@ -2,12 +2,13 @@ import { useStringUtil } from "./string.util";
 
 /** ---------- 常量 ---------- */
 export const breakpoints = {
+  xxs: 450,
   xs: 560,
   sm: 700,
   md: 900,
   lg: 1200,
   xl: 1400,
-  xxl: 1536
+  xxl: 1536,
 }
 export type BreakpointKey = keyof typeof breakpoints;
 

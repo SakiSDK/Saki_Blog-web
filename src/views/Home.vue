@@ -5,14 +5,23 @@ import PictureCard from '@/components/cards/home/PictureCard.vue';
 import HelloCard from '@/components/cards/home/HelloCard.vue';
 import Annuncement from '@/components/cards/home/Annuncement.vue';
 import SocialFooter from '@/components/cards/home/SocialFooter.vue';
-// import NonsenseCard from '@/components/cards/NonsenseCard.vue';
-// import StatsPanel from '@/components/cards/StatsPanel.vue';
 import ArticleSection from '@/components/sections/ArticleSection.vue';
 import { useDomUtil } from '@/utils/dom.util';
 import { useThrottleFn, useEventListener, useWindowScroll} from '@vueuse/core'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import BlessingCard from '@/components/cards/home/BlessingCard.vue';
+// import renderMarkdown from '@/utils/markdown.util';
 
+// const raw = ref(`# 一级标题
+// ## 二级标题
+// 这是一些 markdown 内容
+
+// \`\`\`js
+// console.log("hello")
+// \`\`\`
+// `)
+// // ⭐ 使用你封装的 markdown 渲染器
+// const { html, toc, tocTree, activeSlug } = renderMarkdown(raw)
 
 const { scrollToNextView, scrollToTop } = useDomUtil();
 onMounted(async () => {
@@ -61,6 +70,9 @@ onMounted(async () => {
                 <SocialFooter/>
             </div>
         </div>
+        <!-- <div class="markdown" v-html="html">
+
+        </div> -->
         <FooterBar/>
     </div>
     <RightBar/>
@@ -74,7 +86,7 @@ onMounted(async () => {
     }
     &__content {
         min-height: calc(100vh - 293px);
-        padding: 40px;
+        @include mix.padding(title);
         @include mix.margin-d(t, 50px);
         @include mix.respond-down(xxs){
             padding: 0;

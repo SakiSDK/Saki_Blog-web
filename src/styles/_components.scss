@@ -22,7 +22,7 @@
   @include flex-box;
 }
 
-%full-column-center {
+%flex-column-center {
   @include flex-box($d: column);
 }
 
@@ -30,6 +30,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  @include padding( 0 xxl );
   @include anim.transition($p: max-width, $dr: 'slow');
   @include respond-down('xl') {
     max-width: 1200px;

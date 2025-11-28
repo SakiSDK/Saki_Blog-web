@@ -1,323 +1,363 @@
-<!-- <script lang="ts" setup>
-import useDateFormat from '@/utils/useDateFormat';
-import CommentUserInfo from '../comments/CommentUserInfo.vue';
-import ReplyInput from '../comments/ReplyInput.vue';
-import ReplyItem from '../comments/ReplyItem.vue';
-import { useToggle } from '@vueuse/core';
-import { useUserStore } from '@/stores/useUserStore';
-import { storeToRefs } from 'pinia';
-import { useCommentStore } from '@/stores/useCommentStore';
-import { showMessage } from '../message/message';
+<script lang="ts" setup>
+import CommentCard from '../cards/CommentCard.vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import CommentMask from '../comments/CommentMask.vue'
+import { useCommentStore } from '@/stores/useCommentStore'
+import { usePostStore } from '@/stores/usePostStore'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/useUserStore'
+import { showMessage } from '../message/message'
+import loadingImg from '@/assets/images/loading-dark.gif'
 
 
-/** ---------- 类型定义 ---------- */
-export interface Comment {
-  user: {
-    avatar: string,
-    shortId: string,
-    nickname: string,
-    [key: string]: any,
-  },
-  id: number,
-  parentId: number,
-  content: string,
-  isAuthor: boolean,
-  userDevice: string,
-  userBrowser: string,
-  userRegion: string,
-  createdAt: string,
-  postShortId: string,
-  [key: string]: any,
-}
-export interface CommentWithReplies extends Comment {
-  replies?: CommentWithReplies[];
-}
-export interface CommentCardField extends Comment {
-  comment: CommentWithReplies,
-  shortId: string,
-}
-
-/** ---------- props ---------- */
-const props = defineProps<CommentCardField>()
-
+// 限制输入长度
+const LIMIT_INPUT: number = 1000
 
 /** ---------- 状态管理 ---------- */
+const { fetchComments, submitComment } = useCommentStore()
+const { commentCount, comments, isLoading, hasMore } = storeToRefs(useCommentStore());
+const { currentPost } = storeToRefs(usePostStore())
 const { user } = storeToRefs(useUserStore());
-const { submitComment } = useCommentStore();
 
 
-// 时间格式化
-const { formatRelativeDate } = useDateFormat();
+//页面动态数据
+const inputContent = ref<string>('')
 
 
-// 文案页面内容
-const avatarPath = new URL('@/assets/images/avatar.webp', import.meta.url).href
+/** ---------- 计算属性 ---------- */
+const inputContentCount = computed<number>(() => inputContent.value.length);
+const commentCountContent = computed<string>(() => '共 ' + commentCount.value + ' 条评论')
 
+/** ---------- 元素绑定 ---------- */
+const scrollContainer = ref(null);
 
-const [isShowReplies, toggleIsShowReplies] = useToggle(false);
-const [isShowReplyInput, toggleIsShowReplyInput] = useToggle(false);
+// 页面文案内容
+const commentTitle: { iconName: string, content: string } = {
+  iconName: 'message',
+  content: '发布评论'
+}
+const commentFormText: {
+  type: string,
+  placeholder: string,
+  wordLimit: number,
+} = {
+  type: 'text',
+  placeholder: '请输入内容',
+  wordLimit: 500
+}
+const wordLimit: string = '/' + commentFormText.wordLimit;//字数限制
+
 
 /** ---------- 逻辑方法 ---------- */
-const handleShowReplies = () => toggleIsShowReplies();
-const hanldeShowReplyInput = () => toggleIsShowReplyInput();
-
-// 处理回复
-const handleReply = async (input: string) => {
+const clearInputContent = () => {
+  inputContent.value = '';
+};
+// 提交评论逻辑
+const handleSubmitComment = async () => {
   try {
-    await submitComment(props.shortId, {
-      parentId: props.comment.id,
-      content: input,
-    })
+    if (!currentPost.value?.shortId) return;
+    const newComment = await submitComment(currentPost.value.shortId, {
+      content: inputContent.value,
+    });
+
     showMessage({
       type: 'primary',
-      content: '回复成功',
+      content: '评论成功',
     })
-  } catch (error: any) {
-    console.log(error);
+  } catch (error) {
     showMessage({
       type: 'error',
-      content: '评论失败，请稍后再重试',
-    })
+      content: error.message,
+    });
   } finally {
-    toggleIsShowReplyInput(false);
+    // 提交完成后重置输入框
+    inputContent.value = '';
   }
 }
+
+// 加载更多评论
+const handleLoadMore = async () => {
+  try {
+    if (hasMore.value) {
+      console.log('加载更多评论')
+      await fetchComments(currentPost.value.shortId, true);
+    } else {
+      console.log('没有更多数据了')
+      await fetchComments(currentPost.value.shortId);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// 处理用户输入
+const onInput = (e: Event) => {
+  const target = e.target as HTMLTextAreaElement;
+  if (inputContentCount.value > LIMIT_INPUT) {
+    inputContent.value = inputContent.value.slice(0, LIMIT_INPUT);
+  }
+  target.style.height = 'auto'   // 先重置
+  target.style.height = target.scrollHeight + 'px' // 再根据内容调整
+}
+
+/** ---------- 监听变量 ---------- */
+
+
+onMounted(async () => {
+  // 获取评论列表
+  try {
+    await fetchComments(currentPost.value.shortId);
+  } catch (error) {
+    console.log(error)
+  }
+})
 </script>
 
 <template>
-  <div class="comment">
-
-    <div class="comment__container">
-      <div
-        class="comment__wrapper"
-        :data-nickname="comment.user.nickname"
-        :id="`comment-${comment.id}`"
-      >
-        <div class="comment__header">
-          <div class="comment__header-content">
-            <Avatar
-              :src="comment.user.avatar"
-              :size="'55px'"
-            />
-            <div class="comment-username">
-              {{ comment.user.nickname }}
+  <div
+    class="comment"
+    ref="scrollContainer"
+  >
+    <div class="comment__wrapper">
+      <CommentMask />
+      <CardHeader
+        :iconName="commentTitle.iconName"
+        :title="commentTitle.content"
+      />
+      <div class="comment-form">
+        <div class="comment-form__wrapper">
+          <div class="comment-form__box">
+            <div class="commtent-form__avatar-wrapper">
+              <Avatar
+                :src="user.avatar"
+                :size="'55px'"
+              />
+            </div>
+            <div class="comment-form__text">
+              <textarea
+                :type="commentFormText.type"
+                :placeholder="commentFormText.placeholder"
+                v-model="inputContent"
+              />
+              <div class="comment-form__text-limit">
+                <span>{{ inputContentCount }}</span><span>{{ wordLimit }}</span>
+              </div>
             </div>
           </div>
-          <div
-            class="comment-reply"
-            @click="hanldeShowReplyInput"
-          >
-            <Icon name="reply" />
-            <span>回复</span>
-          </div>
-        </div>
-        <div class="comment__body">
-          <div class="comment-content">
-            {{ comment.content }}
-          </div>
-          <div class="comment__detail">
-            <CommentUserInfo
-              :device="comment.userDevice"
-              :browser="comment.userBrowser"
-              :region="comment.userRegion"
-            />
-            <div class="user-info-date">
-              {{ formatRelativeDate(comment.createdAt) }}
-            </div>
+          <div class="comment-form__actions">
+            <button
+              class="comment-form__cancel"
+              @click="clearInputContent"
+            >清空</button>
+            <button
+              class="comment-form__submit"
+              @click="handleSubmitComment"
+            >发布</button>
           </div>
         </div>
       </div>
-      <ReplyInput
-        v-if="isShowReplyInput"
-        :avatarPath="user.avatar"
-        :parentId="comment.id"
-        :defaultContent="comment.user.nickname"
-        @reply="handleReply"
-      />
-      <Transition name="reply-fade">
-        <div
-          class="replies"
-          v-if="isShowReplies"
-        >
-          <div class="replies__container">
-            <ReplyItem
-              v-for="(reply, index) in comment.replies"
-              :key="index"
-              :comment="reply"
-              :userAvatar="user.avatar"
-              :shortId="shortId"
-              :mainCommentId="comment.id"
-            />
-          </div>
-        </div>
-      </Transition>
+    </div>
+    <div class="comment__list">
       <div
-        class="replies-holder"
-        @click="handleShowReplies"
+        class="comment__list__header"
+        v-reveal
       >
-        <span v-if="comment.replies && comment.replies.length">
-          {{ isShowReplies ? '收起回复' : `共有${comment.replies.length}条评论，点击展开回复` }}
-          <span
-            class="replies-holder-icon"
-            :class="{
-              'replies--expanded': isShowReplies
-            }"
-          >
-            <Icon :name="'reply-expand'" />
-          </span>
+        <span class="comment__list__header-stat">{{ commentCountContent }}</span>
+        <span
+          class="comment__list__header-refresh"
+          v-tippy="{
+            content: '刷新评论列表',
+            theme: 'link',
+            appentTo: 'parent'
+          }"
+        >
+          <Icon name="refresh" />
         </span>
+      </div>
+      <div class="comment__list__content">
+        <div
+          class="comment__list__content-item"
+          v-for="item in comments"
+          :key="item.id"
+        >
+          <CommentCard
+            v-reveal
+            :comment="item"
+          />
+        </div>
+        <img
+          v-if="isLoading"
+          :src="loadingImg"
+          alt="加载评论中..."
+        >
+        <div
+          class="comment__list-loadmore"
+          @click="handleLoadMore"
+        >
+          <span>{{ hasMore ? '更多评论' : '收起评论' }}</span>
+          <span
+            class="comment__list-loadmore-icon"
+            :class="{ 'comment__list--expanded': hasMore }"
+          >
+            <Icon name="reply-fold" />
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.reply-item-hightlight {
-  border: 1px solid var(--primary-base) !important;
-}
-
-// 展开/隐藏动画核心样式（Transition 名称对应 name="reply-fade"）
-.reply-fade {
-
-  // 进入动画（展开）
-  &-enter-from {
-    max-height: 0; // 初始高度 0
-    opacity: 0; // 初始透明
-    overflow: hidden; // 避免内容溢出
-  }
-
-  &-enter-active {
-    max-height: 1000px; // 足够大的固定值（覆盖实际最大高度）
-    opacity: 1;
-    transition:
-      max-height 0.3s ease-in-out, // 高度过渡
-      opacity 0.3s ease-in-out; // 透明度过渡
-    overflow: hidden;
-  }
-
-  &-enter-to {
-    max-height: auto; // 最终高度自适应（可选，也可以保留 1000px）
-  }
-
-  // 离开动画（隐藏）
-  &-leave-from {
-    max-height: 1000px; // 初始高度为最大固定值
-    opacity: 1;
-    overflow: hidden;
-  }
-
-  &-leave-active {
-    max-height: 0; // 过渡到高度 0
-    opacity: 0;
-    transition:
-      max-height 0.3s ease-in-out,
-      opacity 0.3s ease-in-out;
-    overflow: hidden;
-  }
-
-  &-leave-to {
-    max-height: 0;
-    opacity: 0;
-  }
-}
-
-.user-info {
-  &-date {
-    @include mix.font-style($s: sm, $c: var(--text-weak));
-  }
-}
-
 .comment {
-  &__container {
-    @include mix.container-style($p: lg, $b: var(--border-base), $r: md);
-    @include mix.flex-box($d: column, $j: flex-start, $a: stretch, $g: lg);
+  &__wrapper {
+    position: relative;
+    @include mix.container-style($p: 40px 60px, $b: var(--border-base), $o: hidden);
     @include anim.transition;
     @include anim.border-color;
     @include anim.translateY;
-  }
-
-  &__wrapper {
-    @include mix.transition;
-    border: 1px solid transparent;
-  }
-
-  &__header {
-    @include mix.flex-box($j: space-between, $g: sm);
-    border-bottom: var(--border-base);
-    @include mix.padding-d(b, md);
-
-    &-content {
-      @include mix.flex-box($g: sm);
-    }
-  }
-
-  &-username {
-    $font-size: fun.font-size(md) + 1;
-    @include mix.font-style($w: bolder, $s: $font-size);
-  }
-
-  &-reply {
-    @include mix.flex-box;
-    color: var(--primary-base);
-    cursor: pointer;
-    @include mix.underline-style(-3px, var(--primary-base));
-  }
-
-  &__body {
-    flex: 1;
-    @include mix.flex-box($d: column, $j: space-between);
-    @include anim.transition;
-  }
-
-  &-content {
-    @include mix.padding-d(l, md);
     @include mix.margin-d(b, lg);
-    color: var(--text-weak);
-    line-height: 1.7;
-
-    &::before {
-      content: '';
-      @include mix.position-style($p: absolute, $l: 0, $t: 0);
-      @include mix.size(4px, 100%);
-      background: linear-gradient(to bottom, var(--primary-base), var(--primary-soft));
-      border-radius: 2px;
-    }
   }
 
-  &__detail {
-    @include mix.flex-box($j: space-between);
+  &-title {
+    display: inline-flex;
+    @include mix.flex-box($j: flex-start, $g: sm);
+    @include mix.margin-d(b, lg);
+    font-weight: normal;
   }
 
-  &-reply,
-  &-content {
-    position: relative;
-  }
+  &-form {
+    @include mix.margin-d(b, xl);
+    @include mix.margin-d(t, md);
 
-  &__detail,
-  &-content {
-    width: 100%;
-  }
-}
-
-.replies {
-  &-holder {
-    text-align: center;
-    @include mix.font-style($s: sm, $c: var(--primary-base));
-
-    &>span {
-      @include mix.underline-style;
+    &__box {
+      @include mix.size(100%);
+      @include mix.flex-box($a: flex-start, $g: lg);
     }
 
-    &-icon {
-      display: inline-block;
-      @include mix.margin-d(l, xs);
+    &__actions {
+      @include mix.margin-d(t, md);
+      @include mix.flex-box($j: flex-end, $g: md);
+    }
+
+    &__submit,
+    &__cancel {
+      @include mix.container-style($p: sm md, $b: var(--border-base), $r: md);
       @include anim.transition;
-      rotate: 0deg;
+      @include anim.translateY(-2px, none);
+    }
+
+    &__submit {
+      background-color: var(--color-primary-base);
+      @include anim.bgcolor(var(--color-primary-strong));
+    }
+
+    &__cancel {
+      background-color: var(--interactive-base);
+      @include anim.bgcolor(var(--interactive-strong));
+    }
+
+    &__info {
+      @include mix.flex-box($j: flex-start, $g: sm);
+
+      &-item {
+        flex: 1;
+        @include mix.flex-box($j: flex-start);
+        @include mix.container-style($b: var(--border-base), $r: md, $p: 0, $o: hidden);
+        @include mix.margin-d(b, lg);
+        font-size: fun.font-size(sm);
+
+        &>span {
+          @include mix.container-style($p: sm md, $r: 0, $bg: var(--interactive-base));
+          border-right: var(--border-base);
+        }
+
+        &>input {
+          flex: 1;
+          @include mix.container-style($p: 0 md, $r: md);
+          @include mix.radius-d(tl bl, 0);
+        }
+      }
+
+      &-send {
+        @include mix.margin-d(b, lg);
+        @include mix.container-style($p: sm md, $b: var(--border-base), $r: md, $bg: var(--interactive-base));
+        font-size: fun.font-size(sm);
+        @include anim.transition;
+        @include anim.translateY(-2px, none);
+        @include anim.bgcolor(var(--interactive-strong))
+      }
+    }
+
+    &__text {
+      position: relative;
+      width: 100%;
+      @include mix.margin-d(b, sm);
+
+      &>textarea {
+        @include mix.container-style($p: sm md, $b: var(--border-base), $r: md);
+        width: 100%;
+        min-height: 150px;
+        font-size: fun.font-size(sm);
+        line-height: 1.7;
+        resize: none;
+      }
+
+      &-limit {
+        @include mix.position(absolute, $b: 15px, $r: 10px);
+        @include mix.font-style($s: xs, $c: var(--text-subtle));
+      }
     }
   }
 
-  &--expanded {
-    rotate: 180deg;
+  &__list {
+    @include mix.container-style($p: lg 60px, $b: var(--border-base));
+
+    &--expanded {
+      rotate: 180deg;
+    }
+
+    &__header {
+      @include mix.flex-box($j: space-between);
+      @include mix.container-style($p: sm lg, $b: var(--border-base), $r: md);
+      @include mix.margin(lg 0);
+
+      &-stat,
+      &-refresh {
+        font-size: fun.font-size(lg);
+      }
+
+      &-refresh {
+        cursor: pointer;
+        @include anim.transition;
+
+        &:hover {
+          color: var(--color-primary-base);
+        }
+      }
+    }
+
+    &-loadmore {
+      @include mix.margin-d(t, sm);
+      text-align: center;
+      @include mix.font-style($c: var(--color-primary-base));
+      @include mix.underline-style;
+
+      &-icon {
+        display: inline-block;
+        @include mix.margin-d(l, xs);
+        @include anim.transition;
+        rotate: 0;
+      }
+    }
+
+    &__content {
+      @include mix.flex-box(column);
+
+      &-item {
+        width: 100%;
+        @include mix.margin-d(b, lg);
+      }
+    }
   }
 }
-</style> -->
+</style>

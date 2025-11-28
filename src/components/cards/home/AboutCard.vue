@@ -1,36 +1,16 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-import { useWindowSize } from '@vueuse/core';
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
 import type { AboutCardData } from '@/types/components/Home';
-import { useDomUtil } from '@/utils/dom.util';
 
 /** ---------- AboutCard text ---------- */
-const { t, tObj } = createI18nUtil();
+const { tObj } = createI18nUtil();
 const aboutCardData = tObj<AboutCardData>('home.aboutmeCard')
 const aboutBtnOrder: string[] = aboutCardData.btns.order;
 const aboutBtns = aboutBtnOrder.map(itemKey => {
   return aboutCardData.btns.items[itemKey];
 })
 
-const avatarSize = ref<string>('130px')
-const { respondDown, respondUp } = useDomUtil();
-
-const { width } = useWindowSize()
-watch(width, () => {
-    respondDown('lg', () => {
-      avatarSize.value = '55px';
-    });
-    respondUp('lg', () => {
-      avatarSize.value = '130px';
-    });
-    respondDown('md', () => {
-      avatarSize.value = '130px';
-    }) 
-}, {
-  immediate: true
-})
 </script>
 
 <template>
@@ -42,7 +22,7 @@ watch(width, () => {
         <Avatar 
           :src="AvatarImg" 
           :style="{
-            size: avatarSize,
+            size: '100px'
           }"
         />
         <div class="aboutme-info">
@@ -87,11 +67,14 @@ watch(width, () => {
 <style lang="scss" scoped>
 .aboutme {
   height: 330px;
+  @include mix.respond-down(xxs){
+    height: 400px;
+  }
   &__container {
     @extend %card-container-base;
     padding: 0;
     @include mix.flex-box($j: flex-start);
-    @include mix.respond-between(md, lg){
+    @include mix.respond-down(lg){
       flex-direction: column;
       align-items: flex-start;
       .aboutme__left {
@@ -119,18 +102,19 @@ watch(width, () => {
       }
     }
   }
+  &__left,
+  &__right {
+    height: 100%;
+    @include mix.padding(lg);
+  }
   &__left {
     flex: 2;
-    height: 100%;
     background: linear-gradient(0deg, var(--primary-base), var(--secondary-subtle));
     @include mix.flex-box($d: column, $g: lg);
-    @include mix.padding(lg);
   }
   &__right {
     flex: 3;
-    height: 100%;
     @include mix.flex-box($d: column, $j: space-between, $a: flex-start, $g: lg);
-    @include mix.padding(lg);
   }
   &-name {
     @include mix.font-style($s: lg-title, $f: title, $c: var(--white-base));
@@ -144,7 +128,6 @@ watch(width, () => {
   }
   &-clip {
     display: inline-block;
-    @include mix.position-style($p: absolute, $r: xxs);
     @include anim.transition(transform);
   }
   &-btns {
@@ -160,6 +143,9 @@ watch(width, () => {
   &-innercontent {
     @include mix.padding-d(r, xs);
     @include mix.position-style($p: absolute, $t: 70px);
+    @include mix.respond-down(xxs){
+      top: 170px !important;
+    }
     transform: scale(0);
   }
 }

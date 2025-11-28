@@ -3,12 +3,16 @@ import type { PageHeaderField } from '@/types/components/Base';
 import Wave from './Wave.vue';
 
 
-defineProps<{
+withDefaults(defineProps<{
     field: PageHeaderField
     wave?: {
         height: string,
     }
-}>();
+}>(), {
+    wave: () => ({
+        height: '50px',
+    })
+})
 
 </script>
 
@@ -22,7 +26,7 @@ defineProps<{
                 <div class="page-info-value">{{ info.value }}</div>
             </div>
         </div>
-        <Wave :height="wave?.height"/>
+        <Wave :height="wave.height"/>
     </div>
 </template>
 
@@ -44,7 +48,7 @@ defineProps<{
     }
     &-title {
         @include mix.margin-d(b, sm);
-        @include mix.font-style($s: xxl-title, $c: inherit, $f: title);
+        @include mix.font-style($s: xl-title, $c: inherit, $f: title);
     }
     &-desc {
         @include mix.font-style($s: md, $c: inherit);

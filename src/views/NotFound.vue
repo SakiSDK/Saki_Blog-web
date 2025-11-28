@@ -1,16 +1,7 @@
-<!-- <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue';
-import NotFoundImg from '@/assets/images/notfound.gif'
-import { storeToRefs } from 'pinia';
-import { usePostStore } from '@/stores/usePostStore';
-import { showMessage } from '@/components/message/message';
+<script lang="ts" setup>
+import { onMounted, reactive } from 'vue';
+import NotFoundImg from '@/assets/imgs/notfound.gif'
 
-
-/** ---------- 状态管理 ---------- */
-const postStore = usePostStore();
-const { recentLoading } = storeToRefs(postStore)
-const { getRecentPosts } = postStore;
-const recentPosts = ref([]);
 
 
 /** ---------- 页面文案内容 ---------- */
@@ -20,21 +11,12 @@ const notFoundField = reactive({
 })
 
 onMounted( async () => {
-    try {
-        const res = await getRecentPosts();
-        recentPosts.value = res;
 
-    } catch (error) {
-        showMessage({
-            type: 'error',
-            content: error.message,
-        });
-    }
 })
 </script>
 
 <template>
-    <Topbar/>
+    <TopBar/>
     <div class="notfound">
         <div class="notfound__container">
             <div class="notfound__header">
@@ -44,57 +26,37 @@ onMounted( async () => {
                     <span>返回首页</span>
                 </div>
             </div>
-            <div class="notfound__body">
+            <div class="notfound__body container">
                 <div class="notfound__wrapper">
                     <div class="notfound__card">
                         <div class="notfound__card-img">
                             <img 
-                                v-lazy-img="{ src: NotFoundImg }"
+                                v-lazy="{
+                                    src: NotFoundImg
+                                }"
                                 alt="notfound"
                             />
                         </div>
                         <div class="notfound__card-content">
                             <h2 class="notfound__card-title">404</h2>
                             <p class="notfound__card-detail">未查询到任何可展示的数据。请检查你的访问路径或尝试重新加载页面。</p>
-                            <div class="notfound__card-btn">
-                                <Icon name="rocket"/>
-                                <span>返回首页</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent-post">
-                        <div 
-                            class="post-card" 
-                            v-for="post, index in recentPosts" 
-                            :key="index"
-                        >
-                            <div>
-                                <div 
-                                    v-lazy-img="{
-                                        src: post.coverPath
-                                    }" 
-                                    alt="文章图片"
-                                    class="post-card-cover"
-                                />
-                            </div>
-                            <div class="post-card-title">{{ post.title }}</div>
-                            <p class="post-card-date"></p>
+                            <VButton icon="rocket">返回首页</VButton>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="notfound__footer">
-                <Footer/>
+                <FooterBar/>
             </div>
         </div>
     </div>
-    <RightSideBar/>
+    <RightBar/>
 </template>
 
 <style lang="scss" scoped>
 .recent-post {
     @include mix.container-style($b: var(--border-base));
-    @include anim.card-hover;
+    @include hov.card($t: true);
     @include mix.grid-box($c: 2, $g: xl);
 }
 .post-card {
@@ -102,7 +64,7 @@ onMounted( async () => {
     &-cover {
         flex: 2;
         height: 60px;
-        @include mix.object;
+        @include mix.object-style(center,cover);
         overflow: hidden;
         transform: translateZ(0);
         @include mix.radius(lg);
@@ -113,7 +75,8 @@ onMounted( async () => {
     &__container,
     &__header,
     &__body,
-    &__footer {
+    &__footer,
+    &__card {
         width: 100%;
     }
     &__header {
@@ -129,55 +92,46 @@ onMounted( async () => {
             backdrop-filter: blur(15px);
             @include mix.font-style($c: var(--primary-base));
             letter-spacing: 3px;
-            @include anim.button-hover;
+            @include anim.transition($p: transform);
+            @include hov.move-y(-2px);
             &>span {
-                @include mix.underline-style($bt: -3px);
+                @include hov.underline-style($bt: -3px);
             }
         }
     }
     &__body {
         min-height: calc(100vh - 520px);
         @include mix.margin-d(t, 20px);
-        @include mix.flex-box;
+        @extend %flex-center;
     }
     &__wrapper {
-        width: 800px;
+        max-width: 800px;
         @include mix.flex-box($d: column, $g: xl);
     }
     &__card {
         @include mix.flex-box($g: xxl);
         @include mix.container-style($p: lg xl,$b: var(--border-base));
-        @include anim.card-hover;
+        @include hov.card($t: true);
         @include mix.respond-down(md) {
             flex-direction: column;
         }
         &-img {
             height: 100%;
-            @include mix.size(350px);
-            @include mix.radius(sm);
-            border: var(--border-base);
-            overflow: hidden;
+            // @include mix.size(350px);
+            @include mix.container-style($p: 0, $r: sm, $b: var(--border-base), $o: hidden);
+            @include mix.flex-box;
         }
         &-content {
             height: 100%;
             @include mix.flex-box($d: column, $g: lg);
         }
         &-title {
-            @include mix.font-style($s: logo, $f: 'accent', $c: var(--primary-base));
+            @include mix.font-style($s: logo, $f: title, $c: var(--primary-base));
         }
         &-detail {
             width: 300px;
-        }
-        &-btn {
-            @include mix.container-style($bg: var(--primary-base), $r: sm);
-            @include mix.flex-box($g: xs);
-            color: var(--white-base);
-            cursor: pointer;
-            @include anim.button-hover;
-            &>span{
-                @include mix.underline-style($bt: -1px, $bg: var(--white-base));
-            }
+            @include mix.font-style($s: md, $c: var(--text-subtle));
         }
     }
 }
-</style> -->
+</style>
