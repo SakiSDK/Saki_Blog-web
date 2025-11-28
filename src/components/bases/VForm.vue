@@ -36,7 +36,7 @@ const defaultFormItems = computed<FormItemConfig[]>(() => {
       prefixIcon: 'email',
       placeholder: 'your@emial.com',
       required: true,
-      validation: usernameSchema
+      validation: emailSchema
     },
     {
       name: 'password',
@@ -50,19 +50,17 @@ const defaultFormItems = computed<FormItemConfig[]>(() => {
   ]
   if (props.formType === 'register') {
     return [
-      ...baseItems,
       {
-        name: 'confirmPassword',
-        label: '确认密码',
-        type: 'password',
-        prefixIcon: 'password',
-        placeholder: '请输入确认密码',
+        name: 'nickname',
+        label: '用户名',
+        type: 'text',
+        placeholder: '请输入用户名',
         required: true,
-        validation: z.string().min(6, '密码长度不能小于6位').max(20, '密码长度不能大于20位'),
+        validation: usernameSchema
       },
       {
         name: 'email',
-        label: '邮箱',
+        label: '邮箱地址',
         type: 'email',
         prefixIcon: 'email',
         placeholder: '请输入邮箱',
@@ -79,6 +77,23 @@ const defaultFormItems = computed<FormItemConfig[]>(() => {
           .length(6, '验证码必须是6位')
           .regex(/^\d+$/, '验证码只能是数字'),
         colSpan: 1,
+      },
+      {
+        name: 'password',
+        label: '密码',
+        type: 'tel',
+        placeholder: '请输入密码',
+        required: true,
+        validation: passwordSchema
+      },
+      {
+        name: 'confirmPassword',
+        label: '确认密码',
+        type: 'password',
+        prefixIcon: 'password',
+        placeholder: '请输入确认密码',
+        required: true,
+        validation: z.string().min(6, '密码长度不能小于6位').max(20, '密码长度不能大于20位'),
       },
       {
         name: 'agreement',
@@ -594,21 +609,14 @@ defineExpose({
     <div v-if="config.showSubmit || config.showReset" class="form-base__actions">
       <VButton 
         v-if="config.showSubmit"
+        size="large"
         :disabled="disabled || loading || !meta.valid"
         border
+        block="true"
       >
         <span v-if="loading" class="form-base__loading"></span>
         {{ config.submitText || (formType === 'login' ? '登录' : formType === 'register' ? '注册' : '提交') }}
       </VButton>
-      <!-- <button
-        v-if="config.showSubmit"
-        type="submit"
-        class="form-base__submit"
-        :disabled="disabled || loading || !meta.valid"
-      >
-        <span v-if="loading" class="form-base__loading"></span>
-        {{ config.submitText || (formType === 'login' ? '登录' : formType === 'register' ? '注册' : '提交') }}
-      </button> -->
       <VButton 
         v-if="config.showReset"
         type="secondary" 
@@ -617,14 +625,6 @@ defineExpose({
       >
         {{ config.resetText || '重置' }}
       </VButton>
-      <!-- <button
-        v-if="config.showReset"
-        type="reset"
-        class="form-base__reset"
-        :disabled="disabled || loading"
-      >
-        {{ config.resetText || '重置' }}
-      </button> -->
     </div>
   </form>
 </template>
@@ -635,12 +635,42 @@ defineExpose({
   &__fields {
     width: 100%;
     @include mix.flex-box($d: column, $a: flex-start, $g: lg);
+    @include mix.margin-d(b, xxl);
+    @include mix.respond-down(xs) {
+      @include mix.gap(0);
+    }
+    &--grid {
+      display: grid;
+      @include mix.gap(md);
+    }
   }
   &__field {
     position: relative;
     width: 100%;
-    @include mix.margin-d(b, md);
     @include mix.padding-d(b, xl);
+    &--require {
+      .form-base__label::after {
+        content: '*';
+        @include mix.margin-d(l, xs);
+        @include mix.font-style($c: var(--text-subtler));
+      }
+    }
+    &--disabled {
+      opacity: .6;
+      pointer-events: none;
+    }
+    &--error {
+      .form-base__input,
+      .form-base__textarea,
+      .form-base__select,
+      .form-base__date {
+        border-color: var(--red-base);
+        &:focus {
+          border-color: var(--red-base);
+          box-shadow: 0 0 0 2px rgba(var(--red-rgb), 0.1);
+        }
+      }
+    }
   }
   &__label {
     display: inline-block;
@@ -652,6 +682,11 @@ defineExpose({
     @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
     @include mix.flex-box($g: sm);
     @include mix.font-style($s: lg, $c: var(--text-subtle));
+    @include anim.transition($p: border-color box-shadow);
+    &:focus-within {
+      border-color: var(--primary-base);
+      box-shadow: 0 0 0 4px var(--primary-weak);
+    }
   }
   &__input {
 
@@ -679,387 +714,315 @@ defineExpose({
       @include mix.size(20px);
     }
   }
+  &__textarea {
+    width: 100%;
+    @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
+    @include mix.padding(sm);
+    @include mix.font-style($s: lg, $c: var(--text-base));
+    resize: vertical;
+    min-height: 80px;
+    border: none;
+    outline: none;
+    &:focus {
+      outline: none;
+      border-color: var(--primary-base);
+    }
+  }
+  &__date {
+    width: 100%;
+    @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
+    @include mix.padding(sm);
+    @include mix.font-style($s: lg, $c: var(--text-base));
+    border: none;
+    outline: none;
+    
+    &:focus {
+      outline: none;
+      border-color: var(--primary-base);
+    }
+  }
+  
+  &__file {
+    width: 100%;
+    @include mix.padding(sm);
+    @include mix.font-style($s: lg, $c: var(--text-base));
+  }
+  
+  &__code-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    @include mix.container-style($b: none, $r: sm, $bg: var(--primary-base));
+    @include mix.padding(xs sm);
+    @include mix.font-style($s: sm, $c: white, $w: 500);
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+    
+    &:disabled {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+  }
+  
+  &__checkbox {
+    @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
+    
+    &-label {
+      text-wrap: nowrap;
+      @include mix.font-style($s: lg, $c: var(--text-subtle));
+      @include hov.color(var(--primary-base), true);
+    }
+    
+    &-input {
+      @include mix.size(20px);
+      accent-color: var(--primary-base);
+    }
+  }
+  
+  &__radio-group {
+    @include mix.flex-box($d: column, $a: flex-start, $g: sm);
+  }
+  
+  &__radio {
+    @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
+    
+    &-label {
+      text-wrap: nowrap;
+      @include mix.font-style($s: lg, $c: var(--text-subtle));
+      @include hov.color(var(--primary-base), true);
+    }
+    
+    &-input {
+      @include mix.size(20px);
+      accent-color: var(--primary-base);
+    }
+  }
+  
+  &__switch {
+    @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
+    position: relative;
+    cursor: pointer;
+    
+    &-input {
+      display: none;
+      
+      &:checked + .form-base__switch-slider {
+        background-color: var(--primary-base);
+        
+        &::before {
+          transform: translateX(20px);
+        }
+      }
+      
+      &:disabled + .form-base__switch-slider {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+    
+    &-slider {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background-color: var(--border-base);
+      border-radius: 24px;
+      transition: all 0.3s;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        transition: all 0.3s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    &-label {
+      @include mix.font-style($s: lg, $c: var(--text-subtle));
+      @include hov.color(var(--primary-base), true);
+    }
+  }
+  &__help {
+    @include mix.margin-d(t, sm);
+    @include mix.font-style($s: sm, $c: var(--text-weak));
+    line-height: 1.4;
+  }
+  
+  &__actions {
+    @include mix.margin-d(t, xl);
+    @include mix.padding-d(t, md);
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid var(--border-base);
+    
+    @include mix.respond-down(sm) {
+      flex-direction: column;
+    }
+  }
+  
+  &__loading {
+    @include mix.size(16px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+  }
+  
+  // ---------- layout ----------
+  &--vertical {
+    .form-base__field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .form-base__label {
+      @include mix.font-style($w: 500, $c: var(--text-base));
+    }
+  }
+  
+  &--horizontal {
+    .form-base__field {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      
+      @include mix.respond-down(sm) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+    }
+    
+    .form-base__label {
+      @include mix.font-style($w: 500, $c: var(--text-base));
+      flex-shrink: 0;
+      text-align: v-bind('config.labelAlign || "right"');
+      padding-top: 8px;
+      width: v-bind('config.labelWidth || "auto"');
+      
+      @include mix.respond-down(sm) {
+        text-align: left;
+        padding-top: 0;
+        width: auto;
+      }
+    }
+    
+    .form-base__control {
+      flex: 1;
+    }
+  }
+  
+  &--inline {
+    .form-base__fields {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    
+    .form-base__field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0;
+      flex: 1;
+      min-width: 200px;
+      
+      @include mix.respond-down(md) {
+        min-width: 150px;
+      }
+      
+      @include mix.respond-down(sm) {
+        min-width: 100%;
+      }
+    }
+    
+    .form-base__label {
+      flex-shrink: 0;
+      @include mix.font-style($w: 500, $c: var(--text-base));
+      white-space: nowrap;
+    }
+  }
+  
+  // ---------- size ----------
+  &--small {
+    font-size: 12px;
+    
+    .form-base__input,
+    .form-base__textarea,
+    .form-base__select,
+    .form-base__date {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    
+    .form-base__label {
+      font-size: 12px;
+    }
+  }
+  
+  &--medium {
+    font-size: 14px;
+    .form-base__input,
+    .form-base__textarea,
+    .form-base__select,
+    .form-base__date {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    .form-base__label {
+      font-size: 14px;
+    }
+  }
+  
+  &--large {
+    font-size: 16px;
+    .form-base__input,
+    .form-base__textarea,
+    .form-base__select,
+    .form-base__date {
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+    .form-base__label {
+      font-size: 16px;
+    }
+  }
+  // ---------- state ----------
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  &--loading {
+    .form-base__submit {
+      position: relative;
+      pointer-events: none;
+    }
+  }
+  &--hidden {
+    display: none;
+  }
+  &--visible {
+    display: block;
+  }
 }
-// .form-base {
-//   width: 100%;
-//   &--vertical {
-//     .form-base__field {
-//       display: flex;
-//       flex-direction: column;
-//       gap: 8px;
-//       margin-bottom: 16px;
-//     }
-//     .form-base__label {
-//       @include mix.font-style($w: 500, $c: var(--text-base));
-//     }
-//   }
-  
-//   &--horizontal {
-//     .form-base__field {
-//       display: flex;
-//       align-items: flex-start;
-//       gap: 12px;
-//       margin-bottom: 16px;
-//     }
-    
-//     .form-base__label {
-//       @include mix.font-style($w: 500, $c: var(--text-base));
-//       flex-shrink: 0;
-//       text-align: v-bind('config.labelAlign || "right"');
-//       padding-top: 8px;
-//     }
-    
-//     .form-base__control {
-//       flex: 1;
-//     }
-//   }
-  
-//   &--inline {
-//     .form-base__fields {
-//       display: flex;
-//       flex-wrap: wrap;
-//       align-items: flex-end;
-//       gap: 16px;
-//     }
-    
-//     .form-base__field {
-//       display: flex;
-//       align-items: center;
-//       gap: 8px;
-//       margin-bottom: 0;
-//     }
-    
-//     .form-base__label {
-//       flex-shrink: 0;
-//       @include mix.font-style($w: 500, $c: var(--text-base));
-//       white-space: nowrap;
-//     }
-//   }
-  
-//   &--small {
-//     font-size: 12px;
-    
-//     .form-base__input,
-//     .form-base__textarea,
-//     .form-base__select,
-//     .form-base__date {
-//       padding: 6px 10px;
-//       font-size: 12px;
-//     }
-//   }
-  
-//   &--medium {
-//     font-size: 14px;
-    
-//     .form-base__input,
-//     .form-base__textarea,
-//     .form-base__select,
-//     .form-base__date {
-//       padding: 8px 12px;
-//       font-size: 14px;
-//     }
-//   }
-  
-//   &--large {
-//     font-size: 16px;
-    
-//     .form-base__input,
-//     .form-base__textarea,
-//     .form-base__select,
-//     .form-base__date {
-//       padding: 12px 16px;
-//       font-size: 16px;
-//     }
-//   }
-//   &--disabled {
-//     opacity: 0.6;
-//     pointer-events: none;
-//   }
-//   &--loading {
-//     .form-base__submit {
-//       position: relative;
-//       pointer-events: none;
-//     }
-//   }
-//   &__fields {
-//     &--grid {
-//       display: grid;
-//       gap: 16px;
-//     }
-//   }
-//   &__field {
-//     &--required {
-//       .form-base__label::after {
-//         content: '*';
-//         color: var(--error-base);
-//         margin-left: 4px;
-//       }
-//     }
-//     &--error {
-//       .form-base__input,
-//       .form-base__textarea,
-//       .form-base__select,
-//       .form-base__date {
-//         border-color: var(--error-base);
-        
-//         &:focus {
-//           border-color: var(--error-base);
-//           box-shadow: 0 0 0 2px rgba(var(--error-rgb), 0.1);
-//         }
-//       }
-//     }
-//     &--disabled {
-//       opacity: 0.6;
-//       pointer-events: none;
-//     }
-//   }
-  
-//   &__input-wrapper {
-//     position: relative;
-//     display: flex;
-//     align-items: center;
-//   }
-  
-//   &__prefix-icon,
-//   &__suffix-icon {
-//     position: absolute;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     color: var(--text-muted);
-//     z-index: 1;
-//   }
-  
-//   &__prefix-icon {
-//     left: 12px;
-//   }
-  
-//   &__suffix-icon {
-//     right: 12px;
-//   }
-//   &__label {
-//     @include mix.font-style($s: lg);
-//   }
-//   &__input,
-//   &__textarea,
-//   &__select,
-//   &__date,
-//   &__file {
-//     width: 100%;
-//     border: 1px solid var(--border-base);
-//     border-radius: 4px;
-//     font-size: inherit;
-//     transition: all 0.2s;
-//     background-color: var(--bg-base);
-//     color: var(--text-base);
-    
-//     &:focus {
-//       outline: none;
-//       border-color: var(--primary-base);
-//       box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
-//     }
-    
-//     &:disabled {
-//       background-color: var(--bg-subtle);
-//       color: var(--text-muted);
-//       cursor: not-allowed;
-//     }
-//   }
-//   &__input {
-//     width: 300px;
-//     height: 45px;
-//     @include mix.padding(sm lg);
-//     // padding: 8px 12px;
-//     &.has-prefix {
-//       padding-left: 36px;
-//     }
-//     &.has-suffix {
-//       padding-right: 36px;
-//     }
-//   }
-  
-//   &__textarea {
-//     padding: 12px;
-//     min-height: 80px;
-//     resize: vertical;
-//   }
-  
-//   &__select {
-//     padding: 8px 12px;
-//   }
-  
-//   &__date,
-//   &__file {
-//     padding: 8px 12px;
-//   }
-  
-//   &__code-btn {
-//     @include mix.position-style($p: absolute, $r: 8px, $t: 50%);
-//     transform: translateY(-50%);
-//     padding: 4px 8px;
-//     border: none;
-//     border-radius: 3px;
-//     background: var(--primary-base);
-//     color: white;
-//     font-size: 12px;
-//     cursor: pointer;
-//     transition: all 0.2s;
-    
-//     &:hover:not(:disabled) {
-//       background: var(--primary-dark);
-//     }
-    
-//     &:disabled {
-//       background: var(--bg-subtle);
-//       color: var(--text-muted);
-//       cursor: not-allowed;
-//     }
-//   }
-  
-//   &__checkbox,
-//   &__radio,
-//   &__switch {
-//     display: flex;
-//     align-items: center;
-//     gap: 8px;
-//     cursor: pointer;
-//     font-size: inherit;
-    
-//     &:hover {
-//       color: var(--primary-base);
-//     }
-//   }
-//   &__checkbox-input,
-//   &__radio-input,
-//   &__switch-input {
-//     cursor: pointer;
-    
-//     &:disabled {
-//       cursor: not-allowed;
-//       opacity: 0.6;
-//     }
-//   }
-//   &__checkbox {
-//     @include mix.font-style($s: lg, $c: var(--text-subtler));
-//     &-input {
-//       width: fit-content;
-//     }
-//   }
-//   &__radio-group {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 8px;
-//   }
-  
-//   &__switch {
-//     .form-base__switch-input {
-//       display: none;
-      
-//       &:checked + .form-base__switch-slider {
-//         background-color: var(--primary-base);
-        
-//         &::before {
-//           transform: translateX(16px);
-//         }
-//       }
-      
-//       &:disabled + .form-base__switch-slider {
-//         opacity: 0.6;
-//         cursor: not-allowed;
-//       }
-//     }
-    
-//     &-slider {
-//       position: relative;
-//       width: 40px;
-//       height: 20px;
-//       background-color: var(--border-base);
-//       border-radius: 20px;
-//       transition: all 0.3s;
-      
-//       &::before {
-//         content: '';
-//         position: absolute;
-//         top: 2px;
-//         left: 2px;
-//         width: 16px;
-//         height: 16px;
-//         background-color: white;
-//         border-radius: 50%;
-//         transition: all 0.3s;
-//       }
-//     }
-    
-//     &-label {
-//       font-size: inherit;
-//       color: var(--text-base);
-//     }
-//   }
-  
-//   &__error {
-//     display: block;
-//     @include mix.margin-d(t, sm);
-//     @include mix.font-style($s: xs, $c: var(--red-subtle));
-//     line-height: 1.4;
-//   }
-  
-//   &__help {
-//     @include mix.margin-d(t, sm);
-//     @include mix.font-style($s: sm, $c: var(--text-weak));
-//     line-height: 1.4;
-//   }
-  
-//   &__actions {
-//     @include mix.margin-d(t, xl);
-//     @include mix.padding-d(t, md);
-//     display: flex;
-//     gap: 12px;
-//     border-top: 1px solid var(--border-base);
-//   }
-  
-//   &__submit,
-//   &__reset {
-//     @include mix.container-style($p: sm lg, $b: none, $r: sm, $bg: none);
-//     @include mix.font-style($s: inherit, $w: 500);
-//     cursor: pointer;
-//     transition: all 0.2s;
-//     display: flex;
-//     align-items: center;
-//     gap: 8px;    
-//     &:disabled {
-//       opacity: 0.6;
-//       cursor: not-allowed;
-//     }
-//   }
-  
-//   &__submit {
-//     background-color: var(--primary-base);
-//     color: white;
-//     &:hover:not(:disabled) {
-//       background-color: var(--primary-dark);
-//     }
-//   }
-  
-//   &__reset {
-//     background-color: transparent;
-//     border: var(--border-base);
-//     color: var(--text-base);
-//     &:hover:not(:disabled) {
-//       background-color: var(--bg-subtle);
-//     }
-//   }
-  
-//   &__loading {
-//     @include mix.size(16px);
-//     border: 2px solid rgba(255, 255, 255, 0.3);
-//     border-radius: 50%;
-//     border-top-color: white;
-//     animation: spin 1s linear infinite;
-//   }
-// }
 
-// @keyframes spin {
-//   to {
-//     transform: rotate(360deg);
-//   }
-// }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>

@@ -1,8 +1,48 @@
 <script lang="ts" setup>
 import CatSVG from '@/assets/imgs/login_cat.svg'
+import GoogleSVG from '@/assets/imgs/auth_google.svg'
+import GithubSVG from '@/assets/imgs/auth_github.svg'
+import WeChatSVG from '@/assets/imgs/auth_wechat.svg'
+import QQSVG from '@/assets/imgs/auth_qq.svg'
 import VForm from '@/components/bases/VForm.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
+
+const thirdLoginField = [
+  {
+    icon: GoogleSVG,
+    label: 'Google',
+    acticon: () => {
+      console.log('google')
+    }
+  },
+  {
+    icon : GithubSVG,
+    label: 'Github',
+    acticon: () => {
+      console.log('google')
+    }
+  },
+  {
+    icon : WeChatSVG,
+    label: 'WeChat',
+    acticon: () => {
+      console.log('google')
+    }
+  },
+  {
+    icon : QQSVG,
+    label: 'QQ',
+    acticon: () => {
+      console.log('google')
+    }
+  }
+]
+
+const computeThirdLoginClass = (label: string) => {
+  if (label) return [`login__third-${label}`, 'login__third-item']
+  return ['login__third-item']
+}
 // 登录表单使用
 const handleLogin = async (values: any, { setErrors }: any) => {
   console.log('登录数据:', values)
@@ -43,7 +83,7 @@ const handleLogin = async (values: any, { setErrors }: any) => {
           <span class="login-title-icon">
             <Icon name="login"/>
           </span>
-          <span>登录</span>
+          <span>登录账号</span>
         </div>
         <div class="login-subtitle">请登录您的账户继续访问</div>
         <!-- 登录表单 -->
@@ -52,6 +92,23 @@ const handleLogin = async (values: any, { setErrors }: any) => {
             form-type="login"
             :on-submit="handleLogin"
           />
+        </div>
+        <div class="login__third">
+          <div class="login__third-title">
+            <span>第三方登录（首次登录将自动创建账号）</span>
+          </div>
+          <div class="login__third-content">
+            <div 
+              v-ripple
+              v-for="item, index in thirdLoginField" 
+              @click.prevent="item.acticon()" 
+              :class="computeThirdLoginClass(item.label)"
+              :key="index"
+            >
+              <img :src="item.icon" :alt="item.label"/>
+              <span>{{ item.label }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -91,9 +148,13 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     }
   }
   &__body {
-    width: 500px;
+    min-width: 500px;
     @include mix.flex-box($d: column, $a: flex-start);
     @include mix.padding(70px);
+    @include mix.respond-down(md) {
+      min-width: 380px;
+      @include mix.padding(30px);
+    }
   }
   &-logo {
     @include mix.flex-box($g: lg);
@@ -121,7 +182,7 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     }
   }
   &-copyright {
-    @include mix.font-style($c: var(--text-subtler));
+    @include mix.font-style($c: var(--white-weak));
   }
   &__form {
     width: 100%;
@@ -129,10 +190,9 @@ const handleLogin = async (values: any, { setErrors }: any) => {
   }
   &-title {
     width: 100%;
-    text-align: start;
     @include mix.font-style($s: title);
     @include mix.margin-d(b, xxl);
-    @extend %flex-center;
+    @include mix.flex-box($j: flex-start);
     &-icon {
       @include mix.inline-flex-box($a: center, $j: center);
       @include mix.margin-d(r, lg);
@@ -141,8 +201,66 @@ const handleLogin = async (values: any, { setErrors }: any) => {
   }
   &-subtitle {
     width: 100%;
-    @include mix.margin-d(b, xl);
+    @include mix.margin-d(b, 50px);
     @include mix.font-style($s: lg, $c: var(--text-subtler));
+  }
+  &__third {
+    width: 100%;
+    @include mix.margin-d(t, xxl);
+    &-title {
+      @include mix.font-style($s: sm, $c: var(--text-subtler));
+      @include mix.margin-d(b, sm);
+    }
+    &-content {
+      width: 100%;
+      @include mix.flex-box($g: sm);
+      @include mix.grid-box($c: 4);
+      @include mix.respond-down(lg) {
+        @include mix.grid-box($c: 3);
+      }
+      @include mix.respond-down(sm) {
+        @include mix.grid-box($c: 2);
+      }
+    }
+    &-item {
+      width: 100%;
+      @include mix.flex-box($j: flex-start);
+      @include mix.container-style($p: sm, $b: var(--border-base));
+      @include anim.transition($p: transform box-shadow bg);
+      @include hov.move-y(-2px);
+      &>img {
+        @include mix.size(30px);
+        @include mix.margin-d(r, sm);
+      }
+    }
+    &-QQ {
+      background: var(--blue-base);
+      color: var(--white-base);
+      :active {
+        background: var(--blue-strong);
+      }
+    }
+    &-WeChat {
+      background: var(--green-base);
+      color: var(--white-base);
+      :active {
+        background: var(--green-strong);
+      }
+    }
+    &-Github {
+      background: var(--black-base);
+      color: var(--white-base);
+      :active {
+        background: var(--black-strong);
+      }
+    }
+    &-Google {
+      background: var(--white-base);
+      color: var(--black-base);
+      :active {
+        background: var(--white-strong);
+      }
+    }
   }
 }
 </style>

@@ -163,8 +163,10 @@ $button-sizes: (
     @each $k,$v in $value {
       @if $k == 'padding'{
         @include mix.padding($v);
-      } @else {
+      } @else if $k == 'font-size' {
         @include mix.font-size($v);
+      } @else {
+        #{$k}: $v;
       }
     }
   }
