@@ -7,16 +7,24 @@ import testImg from '@/assets/imgs/home_bg.webp';
     <div class="article-card__container" v-ripple>
       <div 
         class="article-card__header"
+      >
+      <div 
+        class="article-card__header-cover"
         v-lazy="{
           src: testImg
         }"
       >
+      </div>
       </div>
       <div class="article-card__body">
         <div class="article-card-categories">
           <div class="article-card-categories-item">
             测试
           </div>
+        </div>
+        <div class="article-card-date">
+          <Icon name="date"/>
+          <span>1145-14-19</span>
         </div>
         <div class="article-card-title">
           测试标题
@@ -25,10 +33,6 @@ import testImg from '@/assets/imgs/home_bg.webp';
           <div class="article-card-tags-item" v-for="_ in 30">
             测试
           </div>
-        </div>
-        <div class="article-card-date">
-          <Icon name="date"/>
-          <span>1145-14-19</span>
         </div>
       </div>
     </div>
@@ -51,7 +55,7 @@ import testImg from '@/assets/imgs/home_bg.webp';
     &:hover {
       backdrop-filter: blur(15px);
       .article-card__header {
-        &>img {
+        &-cover {
           transform: scale(1.2);
         }
       }
@@ -66,12 +70,13 @@ import testImg from '@/assets/imgs/home_bg.webp';
       flex: 2;
       height: 100%;
     }
-    &>img {
+    &-cover {
+      @extend %full-size;
       @include anim.transition($p: transform, $dr: slower);
     }
   }
   &-date {
-    @include mix.position-style($p: absolute, $t: 20px, $r: lg);
+    // @include mix.position-style($p: absolute, $t: 20px, $r: lg);
     @include mix.flex-box;
     @include mix.font-style($c: var(--text-subtler));
     &>span {

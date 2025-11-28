@@ -224,6 +224,7 @@ onBeforeUnmount(() => {
   &-item {
     position: relative;
     &__wrapper {
+      overflow: hidden;
       @extend %hover-box;
       text-wrap: nowrap;
     }

@@ -74,6 +74,16 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
     @extend %card-container-base;
     padding: 0;
     @include mix.flex-box($j: flex-start);
+    @include mix.respond-down(sm) {
+      .aboutme-innercontent {
+        top: 170px;
+      }
+    }
+    @include mix.respond-down(xs){
+      .aboutme-innercontent {
+        top: 130px;
+      }
+    }
     @include mix.respond-down(lg){
       flex-direction: column;
       align-items: flex-start;
@@ -87,7 +97,7 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
         flex: 7;
       }
       .aboutme-innercontent {
-        top: 130px;
+        top: 170px;
       }
     }
     &:hover {
