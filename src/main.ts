@@ -14,6 +14,7 @@ import VueTippy from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
 // 注册指令 
 import directives from './directives'
+import { initializeTokenStore } from './stores/token.store'
 
 
 const pinia = createPinia()
@@ -22,7 +23,12 @@ pinia.use(piniaPluginPersistedstate)
 const app = createApp(App)
 
 app.use(router);
+
 app.use(pinia)
+
+// 初始化 Token Store（检查过期、自动刷新）
+initializeTokenStore();
+
 app.use(i18n)
 
 // 语言切换

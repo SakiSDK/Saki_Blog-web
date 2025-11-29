@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { post, get, del, put } from "@/utils/require.util";
+import { post, get, del, put } from "@/utils/request.util";
 import crypto from "crypto-js";
 // import { useCaptchaStore } from "@/stores/useCaptchaStore"
 

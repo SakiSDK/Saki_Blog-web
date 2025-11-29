@@ -8,10 +8,10 @@ export interface Config {
 
 // 分页参数
 export interface PaginationParams {
-  page: number
+  pageNum: number
   pageSize: number
   total: number
-  totalPage: number
+  totalPages: number
 }
 
 // 分页响应

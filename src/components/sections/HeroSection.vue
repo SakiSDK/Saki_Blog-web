@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { animate, createSpring, createDraggable } from 'animejs';
+import { animate, spring, createDraggable } from 'animejs';
 import { createI18nUtil } from '@/utils/i18n.util';
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import type { HeroField } from '@/types/components/Hero';
@@ -26,14 +26,14 @@ onMounted(() => {
   animate(['.hero-avatar','.logo-svg'], {
     scale: [
       { to: 1.25, ease: 'inOut(3)', duration: 200 },
-      { to: 1, ease: createSpring({ stiffness: 300 }) }
+      { to: 1, ease: spring({ stiffness: 300 }) }
     ],
     loop: true,
     loopDelay: 250,
   });
   createDraggable(['.hero-avatar','.logo-svg'], {
     container: [0, 0, 0, 0],
-    releaseEase: createSpring({ stiffness: 200 })
+    releaseEase: spring({ stiffness: 200 })
   });
 })
 </script>

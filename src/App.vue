@@ -1,33 +1,54 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useLoadingStore } from './stores/loading.store';
 import GlobalLoader from './views/GlobalLoader.vue';
 import { useEventListener } from '@vueuse/core';
+import { waitForAllRequests } from './utils/apiTracker.util';
 
 
 const loadingStore = useLoadingStore();
+const domReady = ref(false); // 标记 DOM 是否加载完成
+
+// 原有隐藏加载页逻辑（保留）
 const handleHideLoader = () => {
-  // 先让加载页透明（过渡效果），再隐藏
-  const loader = document.querySelector('.global-loader') as HTMLElement;
-  if (loader) {
-    loader.style.opacity = '0';
-    setTimeout(() => {
-      loadingStore.setGlobalLoading(false);
-    }, 300); // 对应 CSS transition 时长
-  }
+  setTimeout(() => {
+    loadingStore.setGlobalLoading(false);
+  }, 300); // 对应 CSS transition 时长
 }
 
-
+// 1. 应用启动时：开启全局加载页
 onMounted(() => {
-  // DOM加载完成（无需等待图片加载）
-  useEventListener('DOMContentLoaded', () => {
-    handleHideLoader()
-  });
+  loadingStore.setGlobalLoading(true); // 初始化显示全局加载
+});
+
+// 2. 监听 DOM 加载完成
+useEventListener('DOMContentLoaded', () => {
+  domReady.value = true;
+  checkAllReady(); // 检查是否可以隐藏全局加载
+});
+
+// 3. 等待所有初始化接口完成（配合 apiTracker.util.ts）
+const waitForApis = async () => {
+  await waitForAllRequests(); // 自动等待所有跟踪的接口
+  checkAllReady();
+};
+
+// 4. 检查：DOM + 接口 都完成 → 隐藏全局加载页
+const checkAllReady = () => {
+  if (domReady.value) {
+    handleHideLoader();
+  }
+};
+
+// 5. 页面挂载后，启动接口等待
+onMounted(() => {
+  waitForApis();
 });
 </script>
 
 <template>
 <div class="app">
+
   <!-- 全局初始化加载页 -->
   <Transition name="loading-fade">
     <GlobalLoader 

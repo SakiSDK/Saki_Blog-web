@@ -1,14 +1,8 @@
 <script lang="ts" setup>
 import AvatarImg from '@/assets/imgs/avatar.webp'
-import { animate, createSpring, createDraggable, stagger, splitText } from 'animejs';
+import { animate, spring, createDraggable, stagger, splitText } from 'animejs';
 import { onMounted, ref } from 'vue';
 import { useThemeStore } from '@/stores/theme.store';
-
-
-/** ---------- Props ---------- */
-// defineProps<{
-//   isShow: boolean
-// }>()
 
 
 /** ---------- 主题状态 ---------- */
@@ -26,13 +20,13 @@ const startAnimeation = () => {
   animate(loadingRef.value, {
     scale: [
       { to: 1.4, ease: 'inOut(3)', duration: 100 },
-      { to: 1, ease: createSpring({ stiffness: 300 }) }
+      { to: 1, ease: spring({ stiffness: 300 }) }
     ],
     loop: true,
   })
   createDraggable(loadingRef.value, {
     container: [0, 0, 0, 0],
-    releaseEase: createSpring({ stiffness: 200 })
+    releaseEase: spring({ stiffness: 200 })
   });
   // 文字动画
   if (!textRef.value) return;

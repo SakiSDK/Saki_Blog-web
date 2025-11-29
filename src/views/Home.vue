@@ -12,6 +12,7 @@ import { onMounted, ref } from 'vue'
 import BlessingCard from '@/components/cards/home/BlessingCard.vue';
 
 
+import TagAPI from '@/apis/tag.api';
 
 const { scrollToNextView, scrollToTop } = useDomUtil();
 onMounted(async () => {
@@ -28,6 +29,16 @@ onMounted(async () => {
         }
     },100)
     useEventListener(window, 'scroll', throlledScroll)
+
+
+    // test
+    try {
+        const res = await TagAPI.getTagList()
+        console.log(res)
+    } catch (error) {
+        console.log(error)
+    }
+
 })
 </script>
 

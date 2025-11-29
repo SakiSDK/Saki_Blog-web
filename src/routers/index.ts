@@ -9,9 +9,11 @@ const router = createRouter({
 })
 
 // 路由跳转前：显示加载页
-router.beforeEach((_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+router.beforeEach((to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   const loadingStore = useLoadingStore();
-  loadingStore.setRouteLoading(true);
+  if (to.name !== 'login') {
+    loadingStore.setRouteLoading(true);
+  }
   next() // 继续跳转
 })
 
