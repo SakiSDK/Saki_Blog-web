@@ -565,15 +565,53 @@ $pop-in-duration: 0.5s !default; // 弹出动画时长
 
 
 /** ---------- Vue Transition 动画系统 ---------- */
+.loading-fade-enter-from {
+  opacity: 1; // 进入前：直接显示
+}
+.loading-fade-enter-active {
+  transition: none;
+}
+.loading-fade-enter-to {
+  opacity: 1; // 进入后：最终状态为不透明
+}
+/* 离开阶段：淡入透明（核心动画） */
+.loading-fade-leave-from {
+  opacity: 1; /* 离开前：初始状态为不透明 */
+}
+.loading-fade-leave-active {
+  /* 离开过渡：opacity 从 1 → 0，慢速度，缓动平滑 */
+  transition: opacity 0.8s ease-in-out; /* duration 设为 slower（0.8s 左右） */
+  @include transition($p: opacity, $dr: slower, $tf: ease-in-out);
+}
+.loading-fade-leave-to {
+  opacity: 0; /* 离开后：最终状态为透明 */
+}
+/* 可选：给加载页根元素加基础样式，确保过渡生效 */
+// ::v-deep(.global-loading) {
+//   transition-property: opacity; /* 明确过渡属性（可选，增强兼容性） */
+// }
 $transition-anims: (
   fade: (
     from: (opacity: 0),
     active: (
       property: ( opacity ),
-      duration: base,
+      duration: slower,
       timing-function: ease-in-out,
     ),
     to: (opacity: 1)
+  ),
+  fade-out: (
+    from: (
+      opacity: 1
+    ),
+    active: (
+      property: ( opacity ),
+      duration: slower,
+      timing-function: ease-in-out,
+    ),
+    to: (
+      opacity: 0
+    )
   ),
   slide-from-up: (
     from: (transform: translateY(100%)),

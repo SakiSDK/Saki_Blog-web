@@ -4,13 +4,7 @@ defineOptions({
   name: 'Avatar',
 })
 
-defineProps<{
-  style?: {
-    size: string;
-    radius: string;
-  }
-  src: string;
-}>();
+defineProps<AvatarProps>();
 </script>
 
 <template>

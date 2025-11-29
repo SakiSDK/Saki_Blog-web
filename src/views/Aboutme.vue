@@ -128,5 +128,8 @@ const aboutmeField: PageHeaderField = {
       grid-column: 1 / 19;
     }
   }
+  &__footer {
+    @include mix.margin-d(t, lg);
+  }
 }
 </style>
