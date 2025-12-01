@@ -5,35 +5,6 @@ import SocialFooter from '@/components/cards/home/SocialFooter.vue';
 import HotTagsCard from '@/components/cards/tags/HotTagsCard.vue';
 import TagsCloudCard from '@/components/cards/tags/TagsCloudCard.vue';
 
-const tag: string[] = [
-  '前端',
-  '后端',
-  '算法',
-  '数据库',
-  '设计',
-  '工具',
-  '其他',
-  '测试',
-  '开发',
-  '运维',
-  '安全',
-  '区块链',
-  '物联网',
-  '人工智能',
-  '机器学习',
-  '深度学习',
-  '图像处理',
-  '视频处理',
-  '音频处理',
-  '游戏开发',
-  '游戏引擎',
-  '游戏工具',
-  '游戏资源',
-  '游戏设计',
-  '游戏开发',
-  '游戏引擎',
-  '游戏工具',
-]
 </script>
 
 <template>

@@ -64,7 +64,7 @@ onMounted(() => {
       <span class="announce-icon">
         <Icon name="notice"/>
       </span>
-      <p class="announce-content">
+      <div class="announce-content">
         <ul
           class="announce-content__wrapper"
           :style="{
@@ -87,7 +87,7 @@ onMounted(() => {
             {{ item.content }}
           </li>
         </ul>
-      </p>
+      </div>
       <span class="announce-icon">
         <Icon name="notice"/>
       </span>

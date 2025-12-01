@@ -2,6 +2,12 @@
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
 import type { AboutCardData } from '@/types/components/Home';
+import { useNavigator } from '@/utils/navigator.util';
+
+
+/** ---------- 页面跳转 ---------- */
+const { go } = useNavigator();
+
 
 /** ---------- AboutCard text ---------- */
 const { tObj } = createI18nUtil();
@@ -55,7 +61,11 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
                 theme: 'link',
               }"
             >
-              <VButton type="secondary" size="small" border>{{ item.name }}</VButton>
+              <VButton type="secondary" size="small" border @click="() => {
+                if (item.key === 'aboutme') {
+                  go(item.link);
+                }
+              }">{{ item.name }}</VButton>
             </div>
           </div>
         </div>

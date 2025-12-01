@@ -19,27 +19,27 @@ const gameFields: GameCardField[] = [
   {
     image: BlackMythWukongImg,
     name: gameItems('blackMythWuKong.name'),
-    webSite: gameItems('blackMythWuKong.webSite'),
+    webSite: gameItems('blackMythWuKong.link'),
   },
   {
     image: StellarBladeImg,
     name: gameItems('stellarBlade.name'),
-    webSite: gameItems('stellarBlade.webSite'),
+    webSite: gameItems('stellarBlade.link'),
   },
   {
     image: Expedition33Img,
     name: gameItems('expedition33.name'),
-    webSite: gameItems('expedition33.webSite'),
+    webSite: gameItems('expedition33.link'),
   },
   {
     image: LittleNightmareImg,
     name: gameItems('littleNightmare.name'),
-    webSite: gameItems('littleNightmare.webSite'),
+    webSite: gameItems('littleNightmare.link'),
   },
   {
     image: EldenRingImg,
     name: gameItems('eldenRing.name'),
-    webSite: gameItems('eldenRing.webSite'),
+    webSite: gameItems('eldenRing.link'),
   },
 ]
 </script>
@@ -77,6 +77,7 @@ const gameFields: GameCardField[] = [
   }
   &-tag {
     @extend %aboutme-tag;
+    @include mix.font-style($c: var(--white-subtler));
   }
   &-title {
     @extend %aboutme-title;

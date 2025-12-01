@@ -26,6 +26,18 @@ export const errorMessage = {
 }
 
 /** ---------- 基础字段验证schema ---------- */
+/** id通用验证 */
+export const idSchema = z.string()
+  .trim()
+  .min(1, errorMessage.required('ID'))
+  .refine(value => value.length > 0, errorMessage.required('ID'));
+/** slug别名验证 */
+export const slugSchema = z.string()
+  .trim()
+  .min(2, errorMessage.required('别名'))
+  .max(50, errorMessage.maxLength('别名', 50))
+  .regex(regex.username, errorMessage.pattern('别名', '字母开头，可包含字母、数字、下划线'))
+  .refine(value => value.length > 0, errorMessage.required('别名'));
 /** 用户名验证（通用） */
 export const usernameSchema = z.string()
   .trim()
@@ -60,6 +72,20 @@ export const chineseNameSchema = z.string()
   .max(10, errorMessage.maxLength('姓名', 10))
   .regex(regex.chinese, errorMessage.pattern('姓名', '请输入中文'))
   .refine(value => value.length > 0, errorMessage.required('姓名'));
+
+
+/** ---------- 通用验证字段 ---------- */
+/**
+ * 2. 分页信息 Schema（匹配后端 pagination 结构）
+ */
+export const PaginationSchema = z.object({
+  page: z.number().int().positive().describe('当前页码'),
+  pageSize: z.number().int().positive().describe('每页条数'),
+  total: z.number().int().nonnegative().describe('总记录数'),
+  totalPages: z.number().int().nonnegative().describe('总页数'),
+  hasNext: z.boolean().describe('是否有下一页'),
+  hasPrev: z.boolean().describe('是否有上一页'),
+});
 
 
 

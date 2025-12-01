@@ -133,6 +133,7 @@ onUnmounted(stopAutoplay)
     }
     &-tag {
         @extend %aboutme-tag;
+        @include mix.font-style($c: var(--white-subtler));
     }
     &-title {
         @extend %aboutme-title;

@@ -57,12 +57,23 @@
   font-family: font-family-value($v);
 }
 
-@mixin font-size($v){
-  font-size: font-size-value($v);
+@mixin font-size($v, $imp: false){
+  @if $imp {
+    font-size: font-size-value($v) !important;
+  } @else {
+    font-size: font-size-value($v);
+  }
 }
 
 @mixin radius($v){
   border-radius: radius-value($v);
+}
+@mixin radius-d($d, $v){
+  @if is-direction-base($d) {
+    border-#{direction-corner-value($d)}-radius: radius-value($v);
+  } @else {
+    border-radius: radius-value($v);
+  }
 }
 
 @mixin size($w, $h: $w){

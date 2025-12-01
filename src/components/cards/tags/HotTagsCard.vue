@@ -1,7 +1,20 @@
 <script lang="ts" setup>
 import CardHeader from '@/components/bases/CardHeader.vue';
+import useTagStore from '@/stores/tag.store';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+import Loading from '@/components/global/Loading.vue';
 
-
+const tagStore = useTagStore();
+const {hotTags, isHotTagsSuccessful, isHotTagsLoading } = storeToRefs(tagStore);
+const { fetchHotTags } = tagStore;
+onMounted(async () => {
+  try {
+    await tagStore.fetchHotTags();
+  } catch (error) {
+    
+  }
+})
 </script>
 
 <template>
@@ -10,11 +23,12 @@ import CardHeader from '@/components/bases/CardHeader.vue';
       <div class="hot-tags__header">
         <CardHeader icon="fire" title="热门标签"/>
       </div>
-      <div class="hot-tags__content">
-        <div class="hot-tags__tag" v-for=" _ in 10">
-          <Tag label="xx" bordered="true"/>
+      <div class="hot-tags__content" v-if="!isHotTagsLoading">
+        <div class="hot-tags__tag" v-for=" tag in hotTags">
+          <Tag :label="tag.name" :count="tag.postCount.toString()" bordered="true"/>
         </div>
       </div>
+      <Loading v-else/>
     </div>
   </div>
 </template>

@@ -14,8 +14,8 @@ import SocialFooter from '@/components/cards/home/SocialFooter.vue';
     <div class="article-categories__container">
       <div class="article-categories__header">
         <PageHeader :field="{
-          title: '文章标签',
-          desc: '按主题浏览我们的文章集合，发现您感兴趣的内容'
+          title: '文章分类',
+          desc: '按分类浏览的文章集合，发现您感兴趣的内容'
         }"/>
       </div>
       <div class="article-categories__body container">

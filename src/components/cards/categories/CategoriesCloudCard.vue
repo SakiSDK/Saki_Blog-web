@@ -7,11 +7,11 @@ import CardHeader from '@/components/bases/CardHeader.vue';
 <template>
   <div class="categories-aside">
     <div class="categories-aside__container">
-      <CardHeader padding="10px 20px" icon="tag" title="标签"/>
+      <CardHeader padding="10px 20px" icon="tag" title="分类"/>
       <div class="categories-aside__content">
-        <Tag label="全部" size="lg" bordered="true" count="33" padding="5px 20px 5px 10px"/>
+        <Tag label="全部" size="lg" :bordered="true" :count="33" padding="5px 20px 5px 10px"/>
         <div class="categories-aside-item" v-for="_ in 15">
-          <Tag label="测试" size="lg" bordered count="0" padding="5px 20px 5px 10px"/>
+          <Tag label="测试" size="lg" :bordered="true" :count="0" padding="5px 20px 5px 10px"/>
         </div>
       </div>
     </div>

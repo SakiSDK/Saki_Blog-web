@@ -1,4 +1,4 @@
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
 
 </script>
 
@@ -15,27 +15,25 @@
 
 <style lang="scss" scoped>
 .motto {
-  height: 180px;
-
+  height: 300px;
   &__container {
     position: relative;
     height: 100%;
+    @extend %flex-center;
     @include mix.container-style($b: var(--border-base));
-    @include anim.card-hover;
+    @include hov.card($t: true);
   }
-
   &-tag {
     @extend %aboutme-tag;
   }
-
   &-content {
     @include mix.margin-d(t, xxl);
-    @include mix.font-style($s: lg, $f: 'accent', $l: 1.7);
-    color: transparent;
-    background: linear-gradient(90deg, var(--blue-base), var(--orange-base), var(--red-base));
+    @include mix.font-style($s: xxl, $f: title, $c: transparent);
+    line-height: 1.7;
+    background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
   }
 }
-</style> -->
+</style>

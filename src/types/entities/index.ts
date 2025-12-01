@@ -1,6 +1,4 @@
-export * as ALbum from './Album'
-export * as Comment from './Article'
-export * as Article from './Article'
-export * as Category from './Category'
-export * as Tag from './Tag'
-export * as User from './User'
+/** ---------- 集中导出 ---------- */
+export type { Pagination } from "@/schemas/base.schema";
+export type * from "./tag.type";
+export type * from "./category.type";

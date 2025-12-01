@@ -6,8 +6,17 @@ import WeChatSVG from '@/assets/imgs/auth_wechat.svg'
 import QQSVG from '@/assets/imgs/auth_qq.svg'
 import VForm from '@/components/bases/VForm.vue'
 import { computed, ref } from 'vue'
+import { useNavigator } from '@/utils/navigator.util'
 
 
+/** ---------- 页面跳转 ---------- */
+const { go } = useNavigator()
+const gotoHome = () => {
+  go('/')
+}
+
+
+/** ---------- 页面文案内容 ---------- */
 const thirdLoginField = [
   {
     icon: GoogleSVG,
@@ -56,11 +65,14 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     })
   }
 }
+
+console.log(window.innerHeight)
 </script>
 
 <template>
   <div class="register container">
     <div class="register__container">
+      <div class="register-home" @click="gotoHome()">首页</div>
       <div class="register__header">
         <div class="register-logo">
           <div class="register-logo-icon">
@@ -120,9 +132,18 @@ const handleLogin = async (values: any, { setErrors }: any) => {
 .register {
   @extend %full-screen;
   @extend %flex-column-center;
+  &-home {
+    @include mix.position-style($p: fixed, $t: lg, $l: lg);
+    @include mix.font-style($c: var(--white-base), $f: pixel, $s: lg);
+    @include mix.container-style($bg: var(--primary-base));
+    @include anim.transition($p: transform bg);
+    @include hov.move-y;
+    @include hov.bg(var(--primary-strong));
+  }
   &__container {
+    min-height: 700px;
     @extend %flex-center;
-    @include mix.container-style($p: 0, $b: var(--border-base), $o: hidden);
+    @include mix.container-style($p: 0, $b: var(--border-base), $o: auto);
     @include mix.respond-down(md) {
       @include mix.flex-box($d: column);
       height: fit-content;
@@ -139,10 +160,12 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     @include anim.transition($p: padding);
   }
   &__header {
+    height: 100%;
     @extend %flex-column-center;
     background: linear-gradient(125deg, var(--primary-base), var(--secondary-subtle));
     @include mix.font-style($c: var(--white-base));
     @include mix.respond-down(md) {
+      height: fit-content !important;
       @include mix.padding(xxl);
     }
   }

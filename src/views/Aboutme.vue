@@ -9,6 +9,8 @@ import AnimeCard from '@/components/cards/aboutme/AnimeCard.vue';
 import { createI18nUtil } from '@/utils/i18n.util';
 import NonsenceCard from '@/components/cards/aboutme/NonsenceCard.vue';
 import Techstack from '@/components/cards/aboutme/Techstack.vue';
+import PersonalityCard from '@/components/cards/aboutme/PersonalityCard.vue';
+import MottoCard from '@/components/cards/aboutme/MottoCard.vue';
 
 /** ---------- 静态数据 ---------- */
 const { t } = createI18nUtil();
@@ -41,6 +43,12 @@ const aboutmeField: PageHeaderField = {
           </div>
           <div class="aboutme-techstack">
             <Techstack/>
+          </div>
+          <div class="aboutme-personality">
+            <PersonalityCard/>
+          </div>
+          <div class="aboutme-motto">
+            <MottoCard/>
           </div>
           <div class="aboutme-game">
             <GameCard />
@@ -110,21 +118,33 @@ const aboutmeField: PageHeaderField = {
       grid-column: 9 / 19;
     }
   }
-  &-game {
+  &-personality {
     @include mix.respond-up(md) {
       grid-row: 3;
+      grid-column: 1 / 11;
+    }
+  }
+  &-motto {
+    @include mix.respond-up(md) {
+      grid-row: 3;
+      grid-column: 11 / 19;
+    }
+  }
+  &-game {
+    @include mix.respond-up(md) {
+      grid-row: 4;
       grid-column: 1 / 10;
     }
   }
   &-anime {
     @include mix.respond-up(md) {
-      grid-row: 3;
+      grid-row: 4;
       grid-column: 10 / 19;
     }
   }
   &-nonsence {
     @include mix.respond-up(md) {
-      grid-row: 4;
+      grid-row: 5;
       grid-column: 1 / 19;
     }
   }

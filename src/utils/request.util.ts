@@ -81,7 +81,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data;
-    console.log('响应数据:', res);
     if (response.status < 200 || response.status >= 300) {
       message.show({
         type: 'error',

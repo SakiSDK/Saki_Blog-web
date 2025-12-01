@@ -2,6 +2,7 @@
 import { createI18nUtil } from '@/utils/i18n.util';
 import { onBeforeUnmount, ref } from 'vue';
 import AvatarImg from '@/assets/imgs/avatar.webp'
+import { useNavigator } from '@/utils/navigator.util';
 
 interface NavItemBase {
   title: string;
@@ -19,6 +20,9 @@ type NavField = NavItemWithDropdown;
 defineOptions({
   name: 'TopBar',
 });
+
+/** ---------- 处理页面跳转 ---------- */
+const {go} = useNavigator()
 
 
 /** ---------- 页面文案数据 ---------- */
@@ -119,7 +123,7 @@ onBeforeUnmount(() => {
       <div class="topbar__header">
         <div
           class="topbar-name"
-          to="/"
+          @click="go('/')"
         >
           <span>
             {{ t('topbar.siteName') }}
@@ -137,8 +141,12 @@ onBeforeUnmount(() => {
             :key="index"
             @mouseenter="handleMouseEnter(index)"
             @mouseleave="handleMouseLeave()"
+            @click="() => {
+              if (field.link) {
+                go(field.link)
+              }
+            }"      
           >
-
             <div class="nav-item__wrapper">
               {{field.title }}
             </div>
@@ -157,6 +165,9 @@ onBeforeUnmount(() => {
                     :to="item.link"
                     @mouseenter="handleMouseEnter(index)"
                     @mouseleave="handleMouseLeave()"
+                    @click="() => {
+                      if(item.link) go(item.link)
+                    }"
                   >
                     <span class="dropdown-item-icon">
                       <Icon :name="item.icon" />
@@ -181,6 +192,9 @@ onBeforeUnmount(() => {
               content: field.tip,
               theme: 'link',
           }"  
+          @click="() => {
+            if(field.link) go(field.link);
+          }"
         >
           <Icon :name="field.icon" />
         </div>

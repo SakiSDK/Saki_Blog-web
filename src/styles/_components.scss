@@ -72,7 +72,7 @@
 /** ---------- about-me页面共用style ---------- */
 %aboutme-tag {
     @include position-style(absolute, $l: lg, $t: sm, $z: base);
-    @include font-style($s: sm, $c: var(--white-subtle));
+    @include font-style($s: sm, $c: var(--text-subtler));
     @include z-index(base);
 }
 %aboutme-container {

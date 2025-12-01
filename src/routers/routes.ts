@@ -31,13 +31,13 @@ const routes: RouteRecordRaw[] = [
     component: () => ArticleDetail
   },
   {
-    path: '/article/tags',
-    name: 'ArticleTags',
+    path: '/article/tag',
+    name: 'ArticleTag',
     component: ArticleTags
   },
   {
-    path: '/article/categories',
-    name: 'ArticleCategories',
+    path: '/article/category',
+    name: 'ArticleCategory',
     component: ArticleCategories
   },
   {

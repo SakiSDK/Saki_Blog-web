@@ -35,6 +35,7 @@ $colors: ();
 }
 @include generate-colors();
 :root {
+  --white-subtler: color-mix(in srgb, var(--white-base) 60%, transparent);
   --blue-strong: #0e6dc6;
   --green-strong: #2f855a;
   --yellow-strong: #dd7723;

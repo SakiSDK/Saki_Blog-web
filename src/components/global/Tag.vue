@@ -163,6 +163,7 @@ const tagStyle = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:list';
 .tag {
   --tag-bg: var(--bg-base);
   --tag-font-color: var(--text-subtle);
@@ -325,7 +326,7 @@ const tagStyle = computed(() => {
           --tag-font-color: #{$v};
         } @else if $k == 'border' {
           --tag-border-base: #{$v};
-          --tag-border-color: #{nth($v, 3)};
+          --tag-border-color: #{list.nth($v, 3)};
         }
       }
     }

@@ -35,17 +35,17 @@
               "timeline": {
                 "name": "文章时间表",
                 "icon": "timeline",
-                "link": "/timeline"
+                "link": "/article/timeline"
               },
               "tags": {
                 "name": "文章标签", 
                 "icon": "tag",
-                "link": "/tag"
+                "link": "/article/tag"
               },
               "categories": {
                 "name": "文章分类",
                 "icon": "category",
-                "link": "/category"
+                "link": "/article/category"
               }
             }
           }
@@ -58,12 +58,12 @@
               "aboutMe": {
                 "name": "关于我",
                 "icon": "user",
-                "link": "/about"
+                "link": "/aboutme"
               },
               "aboutSite": {
                 "name": "关于本站", 
                 "icon": "site",
-                "link": "/about-site"
+                "link": "/aboutsite"
               }
             }
           }
@@ -102,6 +102,7 @@
         "order": ["aboutme", "github", "contact"],
         "items": {
           "aboutme": {
+            "key": "aboutme",
             "name": "关于我",
             "icon": "book",
             "link": "/aboutme",
@@ -109,12 +110,14 @@
             "tip": "点击跳转详情"
           },
           "github": {
+            "key": "github",
             "name": "GitHub",
             "icon": "github",
             "link": "https://github.com/SakiSDK",
             "tip": "点击跳转详情"
           },
           "contact": {
+            "key": "contact",
             "name": "联系我",
             "icon": "mail",
             "link": "mailto:saki@example.com",

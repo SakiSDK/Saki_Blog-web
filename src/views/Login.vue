@@ -5,9 +5,19 @@ import GithubSVG from '@/assets/imgs/auth_github.svg'
 import WeChatSVG from '@/assets/imgs/auth_wechat.svg'
 import QQSVG from '@/assets/imgs/auth_qq.svg'
 import VForm from '@/components/bases/VForm.vue'
-import { computed, ref } from 'vue'
+import { useNavigator } from '@/utils/navigator.util'
 
 
+/** ---------- 页面跳转 ---------- */
+const { go } = useNavigator()
+const gotoResgister = () => {
+  go('/register')
+}
+const gotoHome = () => {
+  go('/')
+}
+
+/** ---------- 页面文案 ---------- */
 const thirdLoginField = [
   {
     icon: GoogleSVG,
@@ -61,6 +71,7 @@ const handleLogin = async (values: any, { setErrors }: any) => {
 <template>
   <div class="login container">
     <div class="login__container">
+      <div class="login-home" @click="gotoHome()">首页</div>
       <div class="login__header">
         <div class="login-logo">
           <div class="login-logo-icon">
@@ -93,9 +104,12 @@ const handleLogin = async (values: any, { setErrors }: any) => {
             :on-submit="handleLogin"
           />
         </div>
+        <div class="login-register">
+          还没有账号？<span @click="gotoResgister()">去注册</span>
+        </div>
         <div class="login__third">
           <div class="login__third-title">
-            <span>第三方登录（首次登录将自动创建账号）</span>
+            <span>第三方登录</span>
           </div>
           <div class="login__third-content">
             <div 
@@ -118,12 +132,30 @@ const handleLogin = async (values: any, { setErrors }: any) => {
 
 <style lang="scss" scoped>
 .login {
-  @extend %full-screen;
+  @include mix.size(100vw, 100vh);
   @extend %flex-column-center;
+  &-home {
+    @include mix.position-style($p: fixed, $t: lg, $l: lg);
+    @include mix.font-style($c: var(--white-base), $f: pixel, $s: lg);
+    @include mix.container-style($bg: var(--primary-base));
+    @include anim.transition($p: transform bg);
+    @include hov.move-y;
+    @include hov.bg(var(--primary-strong));
+  }
+  &-register {
+    width: 100%;
+    @include mix.margin-d(t, lg);
+    text-align: center;
+    &>span {
+      @include mix.font-style($c: var(--primary-base));
+      @include hov.underline-style($bg: var(--primary-base));
+      cursor: pointer;
+    }
+  }
   &__container {
-    // height: 700px;
+    min-height: 700px;
     @extend %flex-center;
-    @include mix.container-style($p: 0, $b: var(--border-base), $o: hidden);
+    @include mix.container-style($p: 0, $b: var(--border-base), $o: auto);
     @include mix.respond-down(md) {
       @include mix.flex-box($d: column);
       height: fit-content;
@@ -140,16 +172,19 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     @include anim.transition($p: padding);
   }
   &__header {
+    height: 100%;
     @extend %flex-column-center;
     background: linear-gradient(125deg, var(--primary-base), var(--secondary-subtle));
     @include mix.font-style($c: var(--white-base));
     @include mix.respond-down(md) {
+      height: fit-content !important;
       @include mix.padding(xxl);
     }
   }
   &__body {
     min-width: 500px;
     @include mix.flex-box($d: column, $a: flex-start);
+    flex-shrink: 0;
     @include mix.padding(70px);
     @include mix.respond-down(md) {
       min-width: 380px;
@@ -158,6 +193,7 @@ const handleLogin = async (values: any, { setErrors }: any) => {
   }
   &-logo {
     @include mix.flex-box($g: lg);
+    flex-shrink: 0;
     @include mix.margin-d(b, xxl);
     &-icon {
       @include mix.container-style($p: md, $bg: var(--white-weak));
@@ -208,8 +244,18 @@ const handleLogin = async (values: any, { setErrors }: any) => {
     width: 100%;
     @include mix.margin-d(t, xxl);
     &-title {
+      width: 100%;
       @include mix.font-style($s: sm, $c: var(--text-subtler));
       @include mix.margin-d(b, sm);
+      @include mix.flex-box($g: sm);
+      text-wrap: nowrap;
+      &::before,
+      &::after {
+        content: '';
+        height: 1px;
+        width: 100%;
+        background: var(--text-weak);
+      }
     }
     &-content {
       width: 100%;

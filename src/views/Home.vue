@@ -29,16 +29,6 @@ onMounted(async () => {
         }
     },100)
     useEventListener(window, 'scroll', throlledScroll)
-
-
-    // test
-    try {
-        const res = await TagAPI.getTagList()
-        console.log(res)
-    } catch (error) {
-        console.log(error)
-    }
-
 })
 </script>
 
