@@ -17,6 +17,10 @@ import directives from './directives'
 import { initializeTokenStore } from './stores/token.store'
 
 
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem('reloaded', '1')
+})
+
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 

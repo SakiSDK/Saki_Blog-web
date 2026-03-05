@@ -88,7 +88,7 @@ onMounted(() => {
 }
 .small-joy {
   position: relative;
-  height: 200px;
+  height: rem(200);
   &__container {
     @extend %aboutme-container;
     @include mix.flex-box($d: column, $a: flex-start);

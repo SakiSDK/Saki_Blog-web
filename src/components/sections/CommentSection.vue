@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import CommentCard from '../cards/CommentCard.vue'
+import CommentCard from '../cards/comments/CommentCard.vue'
 import { ref, computed, onMounted, watch } from 'vue'
-import CommentMask from '../comments/CommentMask.vue'
-import { useCommentStore } from '@/stores/useCommentStore'
-import { usePostStore } from '@/stores/usePostStore'
+// import CommentMask from '../cards/comments/CommentMask.vue'
+// import { useCommentStore } from '@/stores/useCommentStore'
+// import { usePostStore } from '@/stores/usePostStore'
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/useUserStore'
-import { showMessage } from '../message/message'
+// import { useUserStore } from '@/stores/useUserStore'
+// import { showMessage } from '../message/message'
 import loadingImg from '@/assets/images/loading-dark.gif'
 
 
@@ -230,8 +230,7 @@ onMounted(async () => {
     @include mix.margin-d(t, md);
 
     &__box {
-      @include mix.size(100%);
-      @include mix.flex-box($a: flex-start, $g: lg);
+      @extend %full-size;      @include mix.flex-box($a: flex-start, $g: lg);
     }
 
     &__actions {

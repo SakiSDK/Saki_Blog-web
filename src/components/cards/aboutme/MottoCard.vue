@@ -15,7 +15,7 @@
 
 <style lang="scss" scoped>
 .motto {
-  height: 300px;
+  height: rem(300);
   &__container {
     position: relative;
     height: 100%;

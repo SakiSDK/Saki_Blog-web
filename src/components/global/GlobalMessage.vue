@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { Message, AddMessage } from '@/types/components/Message';
+import type { Message, AddMessage } from '@/types/components/Base';
 
 const messages = ref<Message[]>([]);
 
@@ -13,9 +13,7 @@ const addMessage = (message: AddMessage) => {
     closable: true,
     ...message
   }
-  
   messages.value.push(newMessage)
-  
   // 自动移除
   if (newMessage.duration && newMessage.duration > 0) {
     setTimeout(() => {
@@ -81,7 +79,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .message__container {
-  // @include mix.size(fit-content);
   padding-top: 70px;
   @include mix.position-style($p: fixed, $t: 0, $l: lg, $z: fixed);
   pointer-events: none;
@@ -90,7 +87,7 @@ defineExpose({
   @include mix.flex-box($a: flex-start, $j: flex-start);
   width: 300px;
   min-height: 30px;
-  margin-bottom: 10px;
+  @include mix.margin-d(b, sm);
   @include mix.container-style(
     $p: sm md, 
     $r: sm, 
@@ -122,7 +119,7 @@ defineExpose({
     @include mix.text-style($lh: 1.4, $wp: break-word);
   }
   &-text {
-    margin-top: 10px;
+    @include mix.margin-d(t, sm);
     @include mix.font-style($s: sm, $c: var(--text-subtle))
   }
   &__close {

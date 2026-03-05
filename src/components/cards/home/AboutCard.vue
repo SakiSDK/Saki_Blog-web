@@ -2,11 +2,6 @@
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
 import type { AboutCardData } from '@/types/components/Home';
-import { useNavigator } from '@/utils/navigator.util';
-
-
-/** ---------- 页面跳转 ---------- */
-const { go } = useNavigator();
 
 
 /** ---------- AboutCard text ---------- */
@@ -61,11 +56,12 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
                 theme: 'link',
               }"
             >
-              <VButton type="secondary" size="small" border @click="() => {
-                if (item.key === 'aboutme') {
-                  go(item.link);
-                }
-              }">{{ item.name }}</VButton>
+              <VButton 
+                type="secondary" 
+                size="small" 
+                border 
+                :to="item.key === 'aboutme' ? item.link : undefined"
+              >{{ item.name }}</VButton>
             </div>
           </div>
         </div>
@@ -76,9 +72,9 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
 
 <style lang="scss" scoped>
 .aboutme {
-  height: 330px;
+  height: rem(330);
   @include mix.respond-down(xxs){
-    height: 400px;
+    height: rem(400);
   }
   &__container {
     @extend %card-container-base;
@@ -151,7 +147,8 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
     @include anim.transition(transform);
   }
   &-btns {
-    @include mix.flex-box($g: sm);
+    @extend %flex-center;
+    @include mix.gap(sm);
   }
   &-content,
   &-innercontent {

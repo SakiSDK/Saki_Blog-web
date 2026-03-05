@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { createI18nUtil } from '@/utils/i18n.util';
 import { onBeforeUnmount, ref } from 'vue';
-import AvatarImg from '@/assets/imgs/avatar.webp'
-import { useNavigator } from '@/utils/navigator.util';
+import SmartLink from '@/components/bases/SmartLink.vue';
 
 interface NavItemBase {
   title: string;
@@ -20,9 +19,6 @@ type NavField = NavItemWithDropdown;
 defineOptions({
   name: 'TopBar',
 });
-
-/** ---------- 处理页面跳转 ---------- */
-const {go} = useNavigator()
 
 
 /** ---------- 页面文案数据 ---------- */
@@ -121,9 +117,9 @@ onBeforeUnmount(() => {
     <div class="topbar__container">
       <!-- <div class="mask"></div> -->
       <div class="topbar__header">
-        <div
+        <SmartLink
           class="topbar-name"
-          @click="go('/')"
+          to="/"
         >
           <span>
             {{ t('topbar.siteName') }}
@@ -131,7 +127,7 @@ onBeforeUnmount(() => {
           <div class="home-icon">
             <Icon name="home" />
           </div>
-        </div>
+        </SmartLink>
       </div>
       <div class="nav">
         <div class="nav-wrapper">
@@ -140,16 +136,11 @@ onBeforeUnmount(() => {
             v-for="(field, index) in navFields"
             :key="index"
             @mouseenter="handleMouseEnter(index)"
-            @mouseleave="handleMouseLeave()"
-            @click="() => {
-              if (field.link) {
-                go(field.link)
-              }
-            }"      
+            @mouseleave="handleMouseLeave()"    
           >
-            <div class="nav-item__wrapper">
+            <SmartLink class="nav-item__wrapper" :to="field.link">
               {{field.title }}
-            </div>
+            </SmartLink>
             <Transition 
               name="zoom-in"
               :duration="300"
@@ -158,16 +149,13 @@ onBeforeUnmount(() => {
                 v-if="field.dropdowns && index === currentIndex"
               >
                 <div class="dropdown__wrapper">
-                  <div 
+                  <SmartLink 
                     class="dropdown-item"
                     v-for="item in field.dropdowns"
                     :key="item.name"
                     :to="item.link"
                     @mouseenter="handleMouseEnter(index)"
                     @mouseleave="handleMouseLeave()"
-                    @click="() => {
-                      if(item.link) go(item.link)
-                    }"
                   >
                     <span class="dropdown-item-icon">
                       <Icon :name="item.icon" />
@@ -175,7 +163,7 @@ onBeforeUnmount(() => {
                     <span class="dropdown-item-text">
                       {{item.name}}
                     </span>
-                  </div>
+                  </SmartLink>
                 </div>
               </div>
             </Transition>
@@ -183,7 +171,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
       <div class="options">
-        <div 
+        <SmartLink 
           class="options-item" 
           v-for="field,index in optionFields"
           :key="index"
@@ -192,12 +180,9 @@ onBeforeUnmount(() => {
               content: field.tip,
               theme: 'link',
           }"  
-          @click="() => {
-            if(field.link) go(field.link);
-          }"
         >
           <Icon :name="field.icon" />
-        </div>
+        </SmartLink>
       </div>
     </div>
   </div>
@@ -249,20 +234,23 @@ onBeforeUnmount(() => {
   @include mix.position-style($p: absolute, $t: 0, $l: 0);
   border-bottom: var(--border-base);
 }
+.dropdown,
+.dropdown__wrapper,
+.dropdown__item {
+  @extend %flex-center;
+}
 .dropdown {
-  @include mix.flex-box;
-  @include mix.position-style($p: absolute, $t: 55px, $l: 50%, $z: base);
+  @include mix.position-style($p: absolute, $t: rem(55), $l: 50%, $z: base);
   transform-origin: left top; 
   &__wrapper {
-    @include mix.flex-box($g: md);
+    @include mix.gap(md);
     @include mix.container-style($p: sm lg, $r: xxxl, $b: var(--border-base));
     border-color: var(--primary-base);
     transform: translateX(-50%);
   }
   &-item {
-    text-wrap: nowrap;
     @extend %hover-box;
-    @include mix.flex-box;
+    text-wrap: nowrap;
     &-icon {
       @include mix.margin-d(r, xs);
       @include mix.font-size(xl);
@@ -271,8 +259,7 @@ onBeforeUnmount(() => {
 }
 .options {
   @include mix.position-style($p: relative, $z: base);
-  width: fit-content;
-  height: 100%;
+  @include mix.size(fit-content, 100%);
   @include mix.flex-box($w: nowrap, $g: sm);
   @include mix.margin-d(r, xl);
   &-item {
@@ -283,12 +270,11 @@ onBeforeUnmount(() => {
 }
 .topbar {
   @include mix.position-style($p: fixed, $t:0, $r:0, $z: fixed);
-  @include mix.size(100%, 60px);
+  @include mix.size(100%, rem(60));
   &__container {
     position: relative;
     @include mix.flex-box($j: space-between, $a: stretch, $w: nowrap);
     @extend %full-size;
-    // background: var(--bg-base);
   }
   &__header {
     height: 100%;
@@ -296,7 +282,7 @@ onBeforeUnmount(() => {
   }
   &-name {
     @include mix.position-style($p: relative, $z: base);
-    height: 40px;
+    height: rem(40);
     @include mix.margin-d(l, xl);
     @extend %flex-center;
     @include mix.font-style($s: xxl, $f: 'title');

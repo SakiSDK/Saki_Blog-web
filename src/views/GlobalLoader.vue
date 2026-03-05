@@ -76,7 +76,7 @@ onMounted(() => {
     @include mix.flex-box;
   }
   &-logo {
-    @include mix.size(100px);
+    @include mix.size(120px);
     @include mix.radius(50%);
     overflow: hidden;
     border: 5px solid var(--white-ghost);

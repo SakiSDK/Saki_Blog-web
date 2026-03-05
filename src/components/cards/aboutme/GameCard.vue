@@ -71,7 +71,7 @@ const gameFields: GameCardField[] = [
 <style lang="scss" scoped>
 .game {
   position: relative;
-  height: 340px;
+  height: rem(340);
   &__container {
     @extend %aboutme-container;
   }
@@ -107,9 +107,9 @@ const gameFields: GameCardField[] = [
   }
 
   &-item {
-    @include mix.position-style($p: absolute, $t: 0, $l: -20px);
-    @include mix.size(300px, 100%);
-    transform: skew(10deg) translateX(-40px);
+    @include mix.position-style($p: absolute, $t: 0, $l: -rem(20));
+    @include mix.size(rem(300), 100%);
+    transform: skew(10deg) translateX(-rem(40));
     @include anim.transition($p: with transform, $dr: 1s);
     background-position: center;
     background-color: var(--black-base);

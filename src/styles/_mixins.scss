@@ -145,6 +145,7 @@
   $s: null,
   $c: null,
   $w: null,
+  $l: null,
 ){
   @if $f != null {
     font-family: $f;
@@ -157,6 +158,9 @@
   }
   @if $w != null {
     font-weight: $w;
+  }
+  @if $l != null {
+    line-height: $l;
   }
 }
 // 文字样式
@@ -189,6 +193,19 @@
   }
   @if $tw != null {
     text-wrap: $tw;
+  }
+}
+
+// 文本溢出省略
+@mixin text-overflow($line: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if $line == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
   }
 }
 
@@ -305,9 +322,14 @@
   $cg: null,
   $j: null,
   $a: null,
+  $tc: null,   // 自定义 columns，如 200px 1fr 100px
 ){
   display: grid;
-  grid-template-columns: repeat($c, 1fr);
+  @if $tc != null {
+    grid-template-columns: $tc;
+  } @else {
+    grid-template-columns: repeat($c, 1fr);
+  }
   grid-template-rows: repeat($r, 1fr);
   @if $g != null {
     gap: space-value($g);
@@ -325,4 +347,3 @@
     align-items: $a;
   }
 }
-

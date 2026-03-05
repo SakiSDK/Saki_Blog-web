@@ -5,17 +5,10 @@ import { useDomUtil } from '@/utils/dom.util';
 import useTagStore from '@/stores/tag.store';
 import { storeToRefs } from 'pinia';
 import { message } from '@/plugins/message';
-import Loading from '@/components/global/Loading.vue';
-import { useNavigator } from '@/utils/navigator.util';
+import VLoading from '@/components/global/VLoading.vue';
 
 
 const { brightColorByHash } = useDomUtil();
-const { go } = useNavigator();
-
-/** ---------- 页面跳转 ---------- */
-const goToAllTags = () => {
-  go('/article/tag');
-}
 
 /** ---------- 状态管理 ---------- */
 const tagStore = useTagStore();
@@ -48,8 +41,8 @@ onMounted(async () => {
     <div class="article-tag__container">
       <CardHeader title="标签" :subtitle="tagCount" :bordered="true" icon="tag" padding="10px 20px"/>
       <div class="article-tag__body">
-        <Loading v-if="isLoading"/>
-        <div class="article-tag__content" v-if-else="!isLoading && isSuccessful">
+        <VLoading v-if="isLoading"/>
+        <div class="article-tag__content" v-else-if="!isLoading && isSuccessful">
           <span 
             class="article-tag-item" 
             v-for="tag, index in tagList" 
@@ -68,10 +61,10 @@ onMounted(async () => {
             {{ tag.name }}
           </span>
         </div>
-        <div class="article-tag-all" @click="goToAllTags()">
+        <router-link class="article-tag-all" to="/article/tag">
           <span>全部标签</span>
           <span>→</span>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -85,7 +78,7 @@ onMounted(async () => {
   }
   &__body {
     position: relative;
-    min-height: 280px;
+    min-height: rem(290);
     @extend %flex-column-center;
     @include mix.margin-d(b, xxl);
     @include mix.container-style($p: lg, $bg: none);
@@ -97,16 +90,18 @@ onMounted(async () => {
     display: inline-block;
     @include mix.container-style($p: xs md, $r: sm, $bg: var(--tag-bgcolor));
     @include mix.font-style($c: var(--tag-color), $w: bold, $s: sm);
-    letter-spacing: 1px;
+    letter-spacing: rem(1);
     &::before {
       content: '#';
       @include mix.margin-d(r, xxs);
     }
   }
   &-all {
-    width: 100px;
+    width: rem(100);
     @extend %flex-center;
-    @include mix.position-style($p: absolute, $b: -15px, $r: lg);
+    text-decoration: none;
+    color: inherit;
+    @include mix.position-style($p: absolute, $b: 0, $r: lg);
     @include mix.font-style($c: var(--primary-base), $w: bold);
     @include anim.transition(color gap);
     @include hov.color(var(--primary-strong));

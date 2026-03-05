@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, shallowRef } from 'vue'
 import { useIntervalFn, useTimeoutFn } from '@vueuse/core'
 
@@ -118,7 +118,7 @@ onMounted(() => {
     }
   }
   &-content {
-    height: 20px;
+    height: rem(20);
     overflow: hidden;
     text-align: center;
     font-family: 'base';
@@ -126,7 +126,7 @@ onMounted(() => {
       @include anim.transition(all, 0.5s, ease-in-out);
     }
     &__item {
-      height: 20px;
+      height: rem(20);
     }
   }
 }

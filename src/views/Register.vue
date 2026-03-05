@@ -5,14 +5,13 @@ import GithubSVG from '@/assets/imgs/auth_github.svg'
 import WeChatSVG from '@/assets/imgs/auth_wechat.svg'
 import QQSVG from '@/assets/imgs/auth_qq.svg'
 import VForm from '@/components/bases/VForm.vue'
-import { computed, ref } from 'vue'
 import { useNavigator } from '@/utils/navigator.util'
 
 
 /** ---------- 页面跳转 ---------- */
-const { go } = useNavigator()
+const navigator = useNavigator()
 const gotoHome = () => {
-  go('/')
+  navigator.go('/')
 }
 
 
@@ -72,7 +71,6 @@ console.log(window.innerHeight)
 <template>
   <div class="register container">
     <div class="register__container">
-      <div class="register-home" @click="gotoHome()">首页</div>
       <div class="register__header">
         <div class="register-logo">
           <div class="register-logo-icon">
@@ -132,16 +130,8 @@ console.log(window.innerHeight)
 .register {
   @extend %full-screen;
   @extend %flex-column-center;
-  &-home {
-    @include mix.position-style($p: fixed, $t: lg, $l: lg);
-    @include mix.font-style($c: var(--white-base), $f: pixel, $s: lg);
-    @include mix.container-style($bg: var(--primary-base));
-    @include anim.transition($p: transform bg);
-    @include hov.move-y;
-    @include hov.bg(var(--primary-strong));
-  }
   &__container {
-    min-height: 700px;
+    min-height: rem(700);
     @extend %flex-center;
     @include mix.container-style($p: 0, $b: var(--border-base), $o: auto);
     @include mix.respond-down(md) {
@@ -152,35 +142,42 @@ console.log(window.innerHeight)
   &__header,
   &__body {
     height: 100%;
-    @include mix.container-style($r: 0, $p: 50px);
+    @include mix.container-style($r: 0, $p: rem(50));
     @include mix.respond-down(md) {
-      height: auto;
-      width: 100%;
+      @include mix.size(100%, auto);
     }
     @include anim.transition($p: padding);
   }
   &__header {
-    height: 100%;
     @extend %flex-column-center;
     background: linear-gradient(125deg, var(--primary-base), var(--secondary-subtle));
     @include mix.font-style($c: var(--white-base));
     @include mix.respond-down(md) {
+      display: none;
       height: fit-content !important;
       @include mix.padding(xxl);
     }
   }
   &__body {
-    min-width: 500px;
+    min-width: rem(500);
     @include mix.flex-box($d: column, $a: flex-start);
-    @include mix.padding(50px);
+    @include mix.padding(rem(50));
     @include mix.respond-down(md) {
-      min-width: 380px;
-      @include mix.padding(30px);
+      min-width: rem(380);
+      @include mix.padding(xxl);
     }
   }
-  &-logo {
-    @include mix.flex-box($g: lg);
+  &-logo,
+  &-svg {
+    @extend %flex-center;
+  }
+  &-logo,
+  &-detail,
+  &-title {
     @include mix.margin-d(b, xxl);
+  }
+  &-logo {
+    @include mix.gap(lg);
     &-icon {
       @include mix.container-style($p: md, $bg: var(--white-weak));
       @include mix.font-style($s: title, $c: var(--white-base));
@@ -189,15 +186,11 @@ console.log(window.innerHeight)
       @include mix.font-style($s: xl-title, $c: var(--white-base), $f: pixel);
     }
   }
-  &-detail {
-    @include mix.margin-d(b, xxl);
-  }
   &-svg {
-    @extend %flex-center;
-    @include mix.size(250px, 350px);
+    @include mix.size(rem(250), rem(350));
     color: var(--white-base);
     &>img {
-      @include mix.size(150px);
+      @include mix.size(rem(150));
     }
     @include mix.respond-down(md) {
       display: none;
@@ -206,37 +199,38 @@ console.log(window.innerHeight)
   &-copyright {
     @include mix.font-style($c: var(--white-weak));
   }
-  &__form {
+  &__form,
+  &-title,
+  &-subtitle,
+  &__third,
+  &__third-content,
+  &__third-item {
     width: 100%;
-    @include mix.flex-box($d: column);
+  }
+  &__form {
+    @extend %flex-column-center;
   }
   &-title {
-    width: 100%;
     @include mix.font-style($s: title);
-    @include mix.margin-d(b, xxl);
     @include mix.flex-box($j: flex-start);
     &-icon {
       @include mix.inline-flex-box($a: center, $j: center);
       @include mix.margin-d(r, lg);
-      color: var(--primary-base);
+      @include mix.font-style($c: var(--primary-base));
     }
   }
   &-subtitle {
-    width: 100%;
-    @include mix.margin-d(b, 50px);
+    @include mix.margin-d(b, rem(50));
     @include mix.font-style($s: lg, $c: var(--text-subtler));
   }
   &__third {
-    width: 100%;
     @include mix.margin-d(t, xxl);
     &-title {
       @include mix.font-style($s: sm, $c: var(--text-subtler));
       @include mix.margin-d(b, sm);
     }
     &-content {
-      width: 100%;
-      @include mix.flex-box($g: sm);
-      @include mix.grid-box($c: 4);
+      @include mix.grid-box($c: 4, $g: sm);
       @include mix.respond-down(lg) {
         @include mix.grid-box($c: 3);
       }
@@ -245,33 +239,34 @@ console.log(window.innerHeight)
       }
     }
     &-item {
-      width: 100%;
       @include mix.flex-box($j: flex-start);
       @include mix.container-style($p: sm, $b: var(--border-base));
       @include anim.transition($p: transform box-shadow bg);
-      @include hov.move-y(-2px);
+      @include hov.move-y(rem(-2));
       &>img {
-        @include mix.size(30px);
+        @include mix.size(rem(30));
         @include mix.margin-d(r, sm);
       }
     }
+    &-QQ,
+    &-Github,
+    &-WeChat { 
+      color: var(--white-base);
+    }
     &-QQ {
       background: var(--blue-base);
-      color: var(--white-base);
       :active {
         background: var(--blue-strong);
       }
     }
     &-WeChat {
       background: var(--green-base);
-      color: var(--white-base);
       :active {
         background: var(--green-strong);
       }
     }
     &-Github {
       background: var(--black-base);
-      color: var(--white-base);
       :active {
         background: var(--black-strong);
       }

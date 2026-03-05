@@ -4,9 +4,8 @@ import {
   onClickOutside, useToggle, useVModel, useEventListener,
   useElementBounding, whenever, useScroll, onKeyStroke,
   useMediaQuery, useFullscreen, useIntervalFn, usePointer,
-
 } from '@vueuse/core'
-import { usePhotoStore } from '@/stores/usePhotoStore';
+import { useAlbumStore } from '@/stores/album.store';
 
 
 /** ---------- 类型定义 ---------- */
@@ -40,7 +39,7 @@ interface AsideButtonField {
 }
 
 /** ---------- 状态管理 ---------- */
-const { prevPhoto, nextPhoto } = usePhotoStore();
+const { photoList } = useAlbumStore();
 
 
 /** ---------- Props & Emits ---------- */
@@ -139,6 +138,7 @@ watch(playIcon, (val) => {
 
 
 /** ---------- 底部动画导航栏逻辑 ---------- */
+/** 上一张图片 */
 const handlePrevPhoto = () => {
   transitionAnimeName.value = 'fade-slide-right'
   if (props.type === 'album') {
@@ -152,6 +152,7 @@ const handlePrevPhoto = () => {
     currentIndex.value = prevIndex;
   }
 }
+/** 下一张图片 */
 const handleNextPhoto = () => {
   transitionAnimeName.value = 'fade-slide-left'
   if (props.type === 'album') {
@@ -165,6 +166,7 @@ const handleNextPhoto = () => {
     currentIndex.value = nextIndex;
   }
 }
+
 // 图片全屏方法
 const { toggle: toggleFullImg } = useFullscreen(photoRef)
 const navButtonFields = reactive<NavButtonField[]>([
@@ -510,142 +512,116 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .button-icon {
   @include anim.transition(font-color);
-  font-size: fun.font-size(xl);
-
+  @include mix.font-style($s: xl);
   @include util.respond-down(md) {
-    font-size: fun.font-size(md);
+    @include mix.font-style($s: md);
   }
 }
-
 .img-selected {
-  @include mix.position($type: absolute, $t: 5px, $l: 5px);
+  @include mix.position($type: absolute, $t: rem(5), $l: rem(5));
   box-sizing: border-box;
-  @include mix.size(100px, 75px);
+  @include mix.size(rem(100), rem(75));
   @include anim.transition;
-
   &-border {
-    @include mix.size(15px);
-
+    @include mix.size(rem(15));
     &:nth-of-type(1) {
       @include mix.position($type: absolute, $t: 0, $l: 0);
-      @include mix.border(3px solid var(--color-primary-base), none, none, 3px solid var(--color-primary-base));
+      @include mix.border(rem(3) solid var(--color-primary-base), none, none, rem(3) solid var(--color-primary-base));
     }
-
     &:nth-of-type(2) {
       @include mix.position($type: absolute, $t: 0, $r: 0);
-      @include mix.border(3px solid var(--color-primary-base), 3px solid var(--color-primary-base), none, none);
+      @include mix.border(rem(3) solid var(--color-primary-base), rem(3) solid var(--color-primary-base), none, none);
     }
-
     &:nth-of-type(3) {
       @include mix.position($type: absolute, $b: 0, $r: 0);
-      @include mix.border(none, 3px solid var(--color-primary-base), 3px solid var(--color-primary-base), none);
+      @include mix.border(none, rem(3) solid var(--color-primary-base), rem(3) solid var(--color-primary-base), none);
     }
-
     &:nth-of-type(4) {
       @include mix.position($type: absolute, $b: 0, $l: 0);
-      @include mix.border(none, none, 3px solid var(--color-primary-base), 3px solid var(--color-primary-base));
+      @include mix.border(none, none, rem(3) solid var(--color-primary-base), rem(3) solid var(--color-primary-base));
     }
   }
 }
-
 .projector {
   @include mix.position($type: fixed, $t: 0, $l: 0, $z: toast);
-  @include mix.size(100vw, 100vh);
-  @include mix.flex-box;
-
+  @extend %full-screen;  @include mix.flex-box;
   &__wrapper,
   &__container,
   &__aside {
     position: relative;
-    @include mix.size(100%);
-  }
-
+    @extend %full-size;  }
   &__container {
     flex: 9;
-    padding: 20px 20px 85px;
+    padding: rem(20) rem(20) rem(85);
     @include mix.flex-box(column);
   }
-
   &__wrapper {
     @include mix.flex-box;
   }
-
   &-photo {
     display: block;
     position: relative;
     @include mix.max-size(100%);
     @include mix.size(auto);
+    @include mix.radius(md);
     @include mix.object(center, contain);
     margin: 0 auto;
-    border-radius: fun.radius(md);
     caret-color: transparent;
     cursor: zoom-in;
     @include anim.transition;
   }
-
   &__nav {
-    @include mix.size(100%, 50px);
-    max-width: 1920px;
-    @include mix.position($type: absolute, $b: -70px, $l: 50%);
+    @include mix.size(100%, rem(50));
+    max-width: rem(1920);
+    @include mix.position($type: absolute, $b: rem(-70), $l: 50%);
     transform: translateX(-50%);
     @include mix.flex-box($j: space-between, $g: sm);
-    @include mix.box-style($p: 0 20px, $r: md, $bg: var(--interactive-bg));
-    font-size: fun.font-size(lg);
-
+    @include mix.box-style($p: 0 rem(20), $r: md, $bg: var(--interactive-bg));
+    @include mix.font-style($s: lg);
     @include util.respond-down(md) {
       width: 90%;
     }
-
     &-page,
     &__wrapper {
       flex: 1;
     }
-
     &__wrapper {
-      @include mix.flex-box($g: sm);
-
+    @extend %flex-center;
+    @include mix.gap(sm);
       &:nth-child(3) {
         justify-content: flex-end;
       }
     }
-
     &-button {
       @include mix.flex-box;
-      @include mix.box-style($p: 6px, $r: sm, $bg: var(--interactive-base));
+      @include mix.box-style($p: rem(6), $r: sm, $bg: var(--interactive-base));
       @include anim.transition;
       @include anim.bgcolor(var(--interactive-strong))
     }
   }
-
   &__aside {
-    width: 215px;
+    width: rem(215);
     overflow-y: auto;
-
     @include util.respond-down(md) {
-      width: 110px;
+      width: rem(110);
     }
   }
-
   &__grid {
     @include mix.grid-box($columns: 2, $gap: xs, $align: start);
-    width: 215px;
-    padding: fun.space(xs);
+    width: rem(215);
+    @include mix.padding(xs);
     @include anim.transition;
-
     @include util.respond-down(md) {
       grid-template-columns: 1fr;
-      width: 110px;
+      width: rem(110);
     }
-
     @include util.respond-down(md) {
       @include anim.transition;
     }
-
     &-photo {
-      @include mix.size(100px, 75px);
-
+      @include mix.size(rem(100), rem(75));
       &>img {
-        @include mix.size(100%);
+        @extend %full-size;        
         @include mix.object(center, cover);
       }
     }

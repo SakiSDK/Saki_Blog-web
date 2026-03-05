@@ -1,0 +1,421 @@
+@use './functions' as *;
+@use './mixins' as *;
+@use './hover' as hov;
+@use './components' as *;
+
+
+/** ---------- markdown样式重置 ---------- */
+//======== highlight样式重置 ========
+.markdown {
+  h1 {
+    @include font-size(xl);
+  }
+  code {
+    display: inline-block;
+    @include padding(0 xs);
+    color: var(--primary-subtle);
+    background-color: var(--code-base);
+    border: var(--border-base);
+    @include radius(sm);
+  }
+  img {
+    @include radius(lg);
+  }
+  blockquote {
+    @include padding(sm);
+    @include radius-d(tr, md);
+    @include radius-d(br, md);
+    background-color: var(--primary-transparent);
+    color: var(--primary-base);
+    border-left: 3px solid var(--primary-base);
+    li,
+    p,
+    pre {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  p {
+    @include margin-d(b, lg);
+    line-height: 1.75;
+    text-align: justify;
+  }
+  hr {
+    @include margin(lg 0);
+    border: 1px dashed var(--text-weak);
+  }
+  
+  // 自定义分割线样式
+  .article-divider {
+    @include flex-box($j: center, $a: center);
+    @include margin(xl 0);
+    width: 100%;
+    height: rem(60);
+    position: relative;
+    overflow: hidden;
+    .line {
+      flex: 1;
+      height: 0;
+      border-top: 2px dashed var(--primary-base);
+      opacity: 0.3;
+      // 使用 mask 实现两端渐隐效果，保持原有视觉风格
+      -webkit-mask: linear-gradient(to right, transparent, #000, transparent);
+      mask: linear-gradient(to right, transparent, #000, transparent);
+    }
+    // 左右渐变线条
+    .divider-line {
+      flex: 1;
+      height: 2px;
+      position: relative;
+      &.left {
+        background: linear-gradient(to right, transparent, var(--border-color) 80%, var(--primary-base));
+        margin-right: rem(16);
+      }
+      &.right {
+        background: linear-gradient(to left, transparent, var(--border-color) 80%, var(--primary-base));
+        margin-left: rem(16);
+      }
+    }
+    // 中间追逐动画容器
+    .chase-wrapper {
+      position: absolute;
+      width: 100%; // 限制中间活动区域宽度，两侧留给线条
+      height: rem(40);
+      overflow: hidden; // 确保跑出范围后消失
+      flex-shrink: 0; // 防止压缩
+      .cat, 
+      .fish {
+        position: absolute;
+        bottom: 0;
+        @include size(rem(32));
+        color: var(--primary-base);
+        animation: chase-run 10s linear infinite; // 速度稍快
+      }
+      .cat {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .fish {
+        transform: translateY(-15%);
+        transition: transform 0.3s ease;
+      }
+      // 悬停时轻微放大，增加互动感（替代会导致跳跃的加速效果）
+      &:hover {
+        .cat {
+          transform: translateX(-100%) scale(1.2);
+        }
+        .fish {
+          transform: translateY(-15%) scale(1.2);
+        }
+      }
+    }
+  }
+
+  @keyframes chase-run {
+    0% { left: -20%; }
+    100% { left: 120%; }
+  }
+
+  ul {
+    li {
+      @include margin-d(b, lg);
+      // 一级圆点
+      &::before {
+        content: '';
+        display: inline-block;
+        @include size(rem(10));
+        @include container-style($p: 0, $b: 2px solid var(--primary-base), $r: 50%);
+        @include margin-d(r, sm);
+      }
+    }
+    // 嵌套层级控制
+    ul {
+      @include margin-d(l, md);
+      @include margin-d(t, md);
+      li {
+        @include margin-d(b, sm);
+        // 二级圆点：实心圆
+        &::before {
+          background: var(--primary-base);
+          border: 2px solid var(--primary-base);
+        }
+      }
+      // 三级圆点：空心方
+      ul li::before {
+        @include radius(0);
+        background: transparent;
+      }
+      // 四级圆点：实心方
+      ul ul li::before {
+        background: var(--primary-base);
+      }
+    }
+  }
+
+  ol {
+    list-style: decimal inside;
+    li {
+      @include margin-d(b, lg);
+      &::marker {
+        color: var(--primary-base);
+        font-weight: 600;
+        font-family: var(--font-numeric);
+      }
+    }
+    // 嵌套层级
+    ol {
+      list-style-type: lower-alpha;
+      @include margin-d(l, md);
+      @include margin-d(t, md);
+      li {
+        @include margin-d(b, sm);
+      }
+      ol {
+        list-style-type: lower-roman;
+      }
+    }
+  }
+
+  table {
+    // width: 70%;
+    width: 100%;
+    @include margin-d(b, lg);
+    @include font-size(lg);
+    @include radius(lg);
+    // 四角圆角贴合：把圆角直接给四个角单元格，避免外层 overflow:hidden 带来的缝隙
+    border-collapse: collapse;
+    overflow: hidden;
+    outline: 1px solid var(--primary-weak);
+    outline-offset: -2px;
+    th, 
+    td {
+      @include padding(md xl);
+      border: 1px solid var(--primary-ghost);
+      text-align: start;
+    }
+  }
+  thead {
+    background: var(--primary-ghost);
+    border-bottom: 1px solid;
+    tr {
+      th {
+        @include font-style($c: var(--primary-base), $f: title);
+      }
+    }
+  }
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: var(--neutral-ghost) !important;
+      }
+      &:nth-child(odd) {
+        background-color: var(--neutral-transparent) !important;
+      }
+      &:hover {
+        background-color: var(--bg-base) !important;
+      }
+    }
+  }
+  pre {
+    @include container-style($p: lg, $r: lg, $b: var(--border-base), $bg: var(--pre-base));
+    @include margin-d(b, lg);
+    overflow-x: auto;
+    /* 黑色背景 */
+    code {
+      border: none;
+      background-color: var(--pre-base) !important;
+      color: var(--white-base);
+      /* 自动换行 */
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  }
+  strong {
+    @include font-style($c: var(--primary-base), $w: bolder);
+  }
+  a {
+    color: var(--primary-base);
+    @include hov.color(var(--primary-subtle), true);
+    @include hov.underline-style($bt: rem(-3), $bg: var(--primary-base));
+  }
+  details {
+    position: relative;
+    @extend %card-container-base;
+    @include padding-d(b, 0);
+    @include margin-d(b, lg);
+    border: var(--border-base);
+    background: linear-gradient(to bottom,
+        var(--surface-weaker) 0px,
+        /* 顶部 80px 红色 */
+        var(--surface-weaker) 64px,
+        var(--surface-base) 64px,
+        /* 剩余部分蓝色 */
+      );
+    summary {
+      @include padding-d(b, lg);
+      @include font-size(xl);
+    }
+  }
+  @for $i from 1 through 6 {
+    h#{$i} {
+      position: relative;
+      width: fit-content;
+      @include margin(xl 0);
+      @include font-style($f: title, $w: bolder);
+      &::after {
+        content: "";
+        @include position-style($p: absolute, $b: 0, $l: 0, $z: 1);
+        @include size(100%, .3rem);
+        border-radius: rem(3) rem(8) rem(10) rem(6);
+        transform: skew(-35deg);
+        background: linear-gradient(45deg, transparent, var(--primary-base));
+      }
+      &::before {
+        color: var(--primary-base);
+      }
+    }
+  }
+  h1 {
+    @include font-style($s: title);
+  }
+}
+
+/* Markdown Custom Block Styles */
+.custom-block {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  border-radius: 0.5rem;
+  background-color: var(--bg-subtle);
+  transition: all 0.3s ease;
+  .custom-block-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+  p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  /* Tip */
+  &.tip {
+    background-color: var(--blue-transparent);
+    border-color: var(--blue-base);
+    .custom-block-title {
+      color: var(--blue-base);
+    }
+  }
+  /* Warning */
+  &.warning {
+    background-color: rgba(255, 167, 38, 0.1);
+    border-color: #ffa726;
+    .custom-block-title {
+      color: #ffa726;
+    }
+  }
+  /* Danger */
+  &.danger {
+    background-color: rgba(244, 67, 54, 0.1);
+    border-color: #f44336;
+    .custom-block-title {
+      color: #f44336;
+    }
+  }
+  /* Details */
+  &.details {
+    display: block;
+    position: relative;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    padding: 0; // 移除默认 padding，由内容控制
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-base-color);
+    overflow: hidden; // 确保圆角和动画内容不溢出
+
+    summary {
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      margin-bottom: 0;
+      color: var(--text-base);
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: var(--surface-hover);
+      }
+      // 移除原有的 hover opacity，改用背景色交互
+    }
+    
+    // 内容容器动画
+    .details-content {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      // 基础状态（收起时）的过渡效果
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+      opacity: 0;
+    }
+
+    &[open] {
+      summary {
+        border-bottom: 1px solid var(--border-base-color);
+        background-color: var(--surface-base); // 展开时 summary 背景色
+      }
+      
+      .details-content {
+        // 使用一个足够大的 max-height 来模拟 auto，配合 cubic-bezier 实现平滑效果
+        // 或者配合 JS 计算高度。纯 CSS 方案通常使用 max-height
+        max-height: 2000px; 
+        opacity: 1;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        // 展开状态的过渡效果
+        transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in, padding 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
+/* General Markdown Styles */
+.markdown-body {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }
+  /* Mermaid Diagram Styles */
+  .mermaid-container {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+    .mermaid {
+      width: 100%;
+      text-align: center;
+      svg {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+    }
+    .flowchart,
+    .classDiagram,
+    .statediagram,
+    .erDiagram,
+    .requirementDiagram,
+    .mindmapDiagram {
+      max-height: rem(600);
+    }
+  }
+}

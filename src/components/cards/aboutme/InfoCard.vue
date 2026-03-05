@@ -43,7 +43,7 @@ const infoCardContent: InfoCardContent = {
 
 <style lang="scss" scoped>
 .info {
-  height: 200px;
+  height: rem(200);
   &__container {
     @extend %aboutme-container;
     background-color: var(--primary-base);
@@ -76,7 +76,7 @@ const infoCardContent: InfoCardContent = {
   }
   &-title {
     @include mix.font-style($c: var(--white-base), $s: title, $f: 'title');
-    letter-spacing: 3px;
+    letter-spacing: rem(3);
   }
 }
 </style>

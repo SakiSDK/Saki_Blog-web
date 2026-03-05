@@ -1,11 +1,6 @@
 <script lang="ts" setup>
 import type { PictureCardData } from '@/types/components/Home';
 import { createI18nUtil } from '@/utils/i18n.util';
-import { useNavigator } from '@/utils/navigator.util';
-
-/** ---------- 页面跳转 ---------- */
-const { go } = useNavigator();
-const goToAlbum = () => go('/album');
 
 /** ---------- 页面文案内容 ---------- */
 const { tObj } = createI18nUtil();
@@ -33,7 +28,7 @@ const imgPaths: Record<string, string> = {
         content: pictureCardData.tip,
         theme: 'link',
       }">
-        <VButton type="secondary" border @click="goToAlbum()">{{ pictureCardData.content }}</VButton>
+        <VButton type="secondary" border to="/album">{{ pictureCardData.content }}</VButton>
       </div>
     </div>
   </div>

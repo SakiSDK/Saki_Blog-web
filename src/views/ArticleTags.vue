@@ -4,7 +4,16 @@ import ArticleCard from '@/components/cards/articles/ArticleCard.vue';
 import SocialFooter from '@/components/cards/home/SocialFooter.vue';
 import HotTagsCard from '@/components/cards/tags/HotTagsCard.vue';
 import TagsCloudCard from '@/components/cards/tags/TagsCloudCard.vue';
+import { useArticleStore } from '@/stores/article.store';
+import { onMounted } from 'vue';
 
+const articleStore = useArticleStore();
+const { useArticleListComputed, getHomeArticleList } = articleStore;
+const { articleList } = useArticleListComputed('home');
+
+onMounted(async () => {
+  await getHomeArticleList({ page: 1, pageSize: 10 });
+});
 </script>
 
 <template>
@@ -26,12 +35,16 @@ import TagsCloudCard from '@/components/cards/tags/TagsCloudCard.vue';
         <div class="article-tags__main">
           <TagsCloudCard/>
           <div class="article-tags__content">
-            <ArticleCard/>
-            <ArticleCard/>
-            <ArticleCard/>
-            <ArticleCard/>
-            <ArticleCard/>
-            <ArticleCard/>
+            <ArticleCard
+              v-for="article in articleList"
+              :key="article.shortId"
+              :short-id="article.shortId"
+              :cover="article.cover"
+              :title="article.title"
+              :categories="article.categories.map(c => c.name)"
+              :tags="article.tags.map(t => t.name)"
+              :date="new Date(article.createdAt).toLocaleDateString()"
+            />
           </div>
         </div>
       </div>
@@ -67,11 +80,12 @@ import TagsCloudCard from '@/components/cards/tags/TagsCloudCard.vue';
       opacity: 1;
     }
   }
-  &-hot {
+  &-hot,
+  &__main,
+  &__search-bar {
     width: 100%;
   }
   &__main {
-    width: 100%;
     grid-column: 1/21;
     @include mix.respond-up(md){
       grid-column: 7/21;
@@ -88,11 +102,11 @@ import TagsCloudCard from '@/components/cards/tags/TagsCloudCard.vue';
     }
   }
   &__search-bar {
-    width: 100%;
     @include mix.container-style($b: var(--border-base));
   }
   &__footer {
-    @include mix.flex-box($d: column, $g: title);
+    @extend %flex-column-center;
+    @include mix.gap(title);
   }
 }
 </style>

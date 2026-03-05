@@ -69,8 +69,8 @@ onMounted(() => {
     caret-color: transparent;
   }
   &-avatar {
-    @include mix.size(170px);
-    border: 3px solid var(--white-subtle);
+    @include mix.size(rem(170));
+    border: rem(3) solid var(--white-subtle);
     border-radius: 50%;
     caret-color: transparent;
   }
@@ -80,15 +80,15 @@ onMounted(() => {
   }
   &-title {
     text-align: flex-start;
-    @include mix.font-style(title, 70px, var(--white-base))
+    @include mix.font-style(title, rem(70), var(--white-base))
   }
   &-description { 
-    width: 250px;
+    width: rem(250);  
     text-wrap: wrap;
     &::after {
       content: '';
-      @include mix.position-style($p: relative, $t: 2px);
-      border-right: 3px solid transparent;
+      @include mix.position-style($p: relative, $t: rem(2));
+      border-right: rem(3) solid transparent;
     }
   }
 }

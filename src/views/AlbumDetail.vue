@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import AlbumInfoCard from '../cards/AlbumInfoCard.vue';
 import { LazyImg, Waterfall } from 'vue-waterfall-plugin-next'
@@ -76,8 +76,8 @@ onMounted(async() => {
         console.error(error)
     }
 })
-</script>
-<template>
+</script> -->
+<!-- <template>
     <TopBar/>
     <RightBar/>
     <div class="album-page">
@@ -149,9 +149,9 @@ onMounted(async() => {
             </div>
         </transition>
     </div>
-</template>
+</template> -->
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 %label-style {
     display: inline-block;
     @include mix.container-style(
@@ -162,7 +162,7 @@ onMounted(async() => {
     @include mix.font-style($c: rgb(255, 255, 255), $s: xs);
 }
 .album-page { 
-    padding-top: 70px;
+    padding-top: rem(70);
     &__container,
     &__header,
     &__body {
@@ -205,6 +205,6 @@ onMounted(async() => {
     @include mix.position($type: fixed,$t: 0,$l: 0,$z: modal);
     overscroll-behavior: contain;
     background-color: rgba(255, 255, 255, 0.071);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(rem(20));
 }
-</style>
+</style> -->

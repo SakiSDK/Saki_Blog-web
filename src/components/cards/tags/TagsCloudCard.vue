@@ -2,16 +2,24 @@
 import CardHeader from '@/components/bases/CardHeader.vue';
 import useTagStore from '@/stores/tag.store';
 import { storeToRefs } from 'pinia';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Pagination from '@/components/bases/Pagination.vue';
+import VLoading from '@/components/global/VLoading.vue';
 
 // 分页状态
 const currentPage = ref(1);
 const pageSize = ref(10);
-const total = ref(128); // 总条数（从接口获取）
 
 const tagStore = useTagStore();
-const { tagList, getTagTotal, pagination } = storeToRefs(tagStore);
+const { tagList, getTagTotal, pagination, isLoading } = storeToRefs(tagStore);
+
+console.log()
+watch(currentPage, async (val) => {
+  await tagStore.fetchTagList({
+    page: val,
+    pageSize: pageSize.value
+  },true);
+})
 onMounted(async () => {
   try {
     await tagStore.fetchTagList();
@@ -26,13 +34,18 @@ onMounted(async () => {
     <div class="tags-aside__container">
       <CardHeader padding="10px 20px" icon="tag" title="标签" :subtitle="`共 ${getTagTotal} 个标签`"/>
       <div class="tags-aside__content">
-        <Tag label="全部" size="lg" :bordered="true" padding="5px 10px"/>
-        <div 
-          class="tags-aside-item" 
-          v-for="tag, index in tagList" 
-          :key="index"
-        >
-          <Tag :label="tag.name" size="lg" :bordered="true" :count="Number(tag.postCount)" padding="5px 20px 5px 10px"/>
+        <div class="tags-aside__wrapper" v-if="!isLoading">
+          <Tag label="全部" size="lg" :bordered="true" padding="5px 10px"/>
+          <div 
+            class="tags-aside-item" 
+            v-for="tag, index in tagList" 
+            :key="index"
+          >
+            <Tag :label="tag.name" size="lg" :bordered="true" :count="Number(tag.postCount)" padding="5px 20px 5px 10px"/>
+          </div>
+        </div>
+        <div class="tags-aside__wrapper" v-else>
+          <VLoading/>
         </div>
       </div>
       <!-- 分页组件 -->
@@ -41,7 +54,7 @@ onMounted(async () => {
         :total="pagination.total ?? 0"
         v-model:pageSize="pageSize"
         :total-pages="pagination.totalPages ?? 0"
-        :page-btn-count="7"
+        :page-btn-count="2"
         :show-total="true"
         :show-jumper="false"
         :show-size-changer="false"
@@ -58,8 +71,14 @@ onMounted(async () => {
     @include hov.card($t: true);
   }
   &__content {
-    @include mix.flex-box($j: flex-start, $g: sm, $w: wrap);
+    min-height: 160px;
+    @extend %flex-column-center;
     @include mix.padding(lg);
+  }
+  &__wrapper {
+    width: 100%;
+    @include mix.flex-box($j: flex-start, $a: flex-start, $g: sm, $w: wrap);
+    align-content: flex-start;
     @include mix.respond-down(xs){
       @include mix.gap(xs);
     }

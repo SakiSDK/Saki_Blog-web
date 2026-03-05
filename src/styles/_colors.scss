@@ -127,20 +127,31 @@ $colors: ();
   --neutral-ghost: #{color.adjust($neutral, $alpha: -0.8)};
   --neutral-transparent: #{color.adjust($neutral, $alpha: -0.9)};
 
+  // 代码快颜色
+  --pre-base: #1E2B36;
+
 }
 
 // 引用主题
 [data-theme='light'] {
   @include generate-theme(false);
-  --border-base: 1px solid var(--border-light-base);
+  // --border-base: 1px solid var(--border-light-base);
+  --border-base: 1px solid transparent;
   --border-base-color: var(--border-light-base);
   --primary-strong: var(--blue-strong);
   --bg-strong: rgb(216, 220, 228);
+  --text-disabled: #b4b4b4;
+  --interactive-disabled: rgb(245, 245, 245);
+  --code-base: #ecf0f3;
 }
 [data-theme='dark'] {
   @include generate-theme(true);
-  --border-base: 1px solid var(--border-dark-base);
+  // --border-base: 1px solid var(--border-dark-base);
+  --border-base: 1px solid transparent;
   --border-base-color: var(--border-dark-base);
   --primary-strong: var(--yellow-strong);
   --bg-strong: rgb(45, 43, 43);
+  --text-disabled: #666666;
+  --interactive-disabled: rgb(40, 40, 40);
+  --code-base: #282c34;
 }

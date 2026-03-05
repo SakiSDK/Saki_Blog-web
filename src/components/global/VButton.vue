@@ -47,7 +47,9 @@ const handleClick = (event: MouseEvent) => {
 </script>
 
 <template>
-  <button
+  <component
+    :is="to && !disabled ? 'router-link' : 'button'"
+    :to="to && !disabled ? to : undefined"
     :class="buttonClasses"
     :disabled="disabled || loading"
     @click="handleClick"
@@ -60,7 +62,7 @@ const handleClick = (event: MouseEvent) => {
     <span v-if="$slots.default">
       <slot></slot>
     </span>
-  </button>
+  </component>
 </template>
 
 <style lang="scss" scoped>
@@ -70,7 +72,6 @@ const handleClick = (event: MouseEvent) => {
     opacity: 0;
   }
 }
-
 .btn {
   position: relative;
   @include mix.container-style($b: none, $p: sm xl, $r: sm, $o: hidden);
@@ -88,8 +89,6 @@ const handleClick = (event: MouseEvent) => {
     border: var(--border-base);
   }
 }
-
-
 .btn:disabled,
 .btn-disabled {
   opacity: 0.6;

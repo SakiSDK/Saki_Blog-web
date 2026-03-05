@@ -1,0 +1,12 @@
+export interface ServerConfig {
+  apiUrl: string;
+  apiBaseUrl: string;
+  staticUrl: string;
+  timeout: number;
+  retry: boolean;
+  retryDelay: number;
+  retryCount: number;
+}
+export interface EnvConfig {
+  env: string;
+}

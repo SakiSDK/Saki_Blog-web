@@ -17,7 +17,9 @@ import sequlizeSvg from '@/assets/svgs/icon-sequelize.svg'
 import dockerSvg from '@/assets/svgs/icon-docker.svg'
 import npmSvg from '@/assets/svgs/icon-npm.svg'
 import elementPlusSvg from '@/assets/svgs/icon-element-plus.svg'
-
+import axiosSvg from '@/assets/svgs/icon-axios.svg'
+import zodSvg from '@/assets/svgs/icon-zod.svg'
+import vueuseSvg from '@/assets/svgs/icon-vueuse.svg'
 import Carousel from '@/components/bases/Carousel.vue'
 import { useDomUtil } from '@/utils/dom.util'
 
@@ -44,6 +46,9 @@ const skills: { svg: string, text: string }[] = [
   { svg: dockerSvg, text: 'Docker' },
   { svg: gitSvg, text: 'Git' },
   { svg: pythonSvg, text: 'Python' },
+  { svg: axiosSvg, text: 'Axios' },
+  { svg: zodSvg, text: 'Zod' },
+  { svg: vueuseSvg, text: 'VueUse' },
 ]
 </script>
 
@@ -90,7 +95,7 @@ const skills: { svg: string, text: string }[] = [
 
 <style lang="scss" scoped>
 .techstack {
-  height: 320px;
+  height: rem(320);
   &-tag,
   &-content {
     display: inline-block;
@@ -137,7 +142,7 @@ const skills: { svg: string, text: string }[] = [
   &__detail {
     @include mix.position-style($p: absolute, $t: 0, $l: 0);
     @extend %full-size;
-    @include mix.padding-d(t, 80px);
+    @include mix.padding-d(t, rem(80));
     @include mix.flex-box($j: flex-start, $a: flex-start, $w: wrap, $g: sm);
     align-content: flex-start;
     opacity: 0;
@@ -149,9 +154,9 @@ const skills: { svg: string, text: string }[] = [
     @include mix.flex-box($w: nowrap);
     @include mix.container-style($p: xs md, $r: sm, $bg: var(--tag-bgcolor));
     @include mix.font-style($c: var(--tag-color), $w: bold, $s: sm);
-    letter-spacing: 1px;
+    letter-spacing: rem(1);
     &-icon {
-      @include mix.size(20px);
+      @include mix.size(rem(20));
       @include mix.margin-d(r, xs);
     }
   }

@@ -3,14 +3,14 @@ import CardHeader from '@/components/bases/CardHeader.vue';
 import useTagStore from '@/stores/tag.store';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
-import Loading from '@/components/global/Loading.vue';
+import Loading from '@/components/global/VLoading.vue';
 
 const tagStore = useTagStore();
 const {hotTags, isHotTagsSuccessful, isHotTagsLoading } = storeToRefs(tagStore);
 const { fetchHotTags } = tagStore;
 onMounted(async () => {
   try {
-    await tagStore.fetchHotTags();
+    await fetchHotTags();
   } catch (error) {
     
   }
@@ -23,12 +23,14 @@ onMounted(async () => {
       <div class="hot-tags__header">
         <CardHeader icon="fire" title="热门标签"/>
       </div>
-      <div class="hot-tags__content" v-if="!isHotTagsLoading">
-        <div class="hot-tags__tag" v-for=" tag in hotTags">
-          <Tag :label="tag.name" :count="tag.postCount.toString()" bordered="true"/>
+      <div class="hot-tags__wrapper">
+        <div class="hot-tags__content" v-if="!isHotTagsLoading">
+          <div class="hot-tags__tag" v-for=" tag in hotTags">
+            <Tag :label="tag.name" :count="Number(tag.postCount)" :bordered="true"/>
+          </div>
         </div>
+        <Loading v-else/>
       </div>
-      <Loading v-else/>
     </div>
   </div>
 </template>
@@ -38,6 +40,10 @@ onMounted(async () => {
   &__container {
     @include mix.container-style($b: var(--border-base), $p: 0);
     @include hov.card($t: true);
+  }
+  &__wrapper {
+    min-height: 250px;
+    @extend %flex-column-center;
   }
   &__content {
     @include mix.padding(lg);

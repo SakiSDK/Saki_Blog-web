@@ -1,6 +1,11 @@
 <script lang="ts" setup>
-import TestImg from '@/assets/imgs/anime_mushokutensei.webp'
-// import TestImg from '@/assets/imgs/column-img.jpeg'
+import type { Album } from '@/schemas/album.schema';
+
+
+const props = defineProps<{
+  album: Album
+}>()
+
 
 </script>
 
@@ -10,18 +15,17 @@ import TestImg from '@/assets/imgs/anime_mushokutensei.webp'
       <div 
         class="album-card__cover"
         v-lazy="{
-          src: TestImg
+          src: album.cover,
         }"
       >
       </div>
       <div class="album-card__wrapper">
-        <div class="album-card-name">测试</div>
-        <div class="album-card-title">测试的标题</div>
+        <div class="album-card__header">
+          <div class="album-card-name">{{ album.name }}</div>
+          <div class="album-card-title">{{ album.title }}</div>
+        </div>
         <div class="album-card-description">
-          测试的描述测试的描述测试的描述测试的描述测试
-          的描述测试的描述测试的描述测试的描述测试的描
-          述测试的描述测试的描述测试的描述测试的描述测
-          试的描述测试的描述
+          {{ album.description }}
         </div>
       </div>
     </div>
@@ -30,7 +34,7 @@ import TestImg from '@/assets/imgs/anime_mushokutensei.webp'
 
 <style lang="scss" scoped>
 .album-card {
-  height: 600px;
+  height: rem(600);
   &__container {
     position: relative;
     height: 100%;
@@ -39,12 +43,12 @@ import TestImg from '@/assets/imgs/anime_mushokutensei.webp'
     @include hov.card;
     &:hover {
       .album-card__cover {
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
       .album-card-description {
-        transform: scale(1);
         visibility: visible;
         opacity: 1;
+        transform: translateY(0);
       }
     }
   }
@@ -70,25 +74,24 @@ import TestImg from '@/assets/imgs/anime_mushokutensei.webp'
   &__wrapper {
     @include mix.z-index(base);
     @include mix.padding(lg);
+    @include mix.flex-box($d: column, $j: space-between, $a: flex-start);
+    @extend %full-size;
   }
   &-name {
     position: relative;
     @include mix.font-style($c: var(--white-subtle));
-    @include mix.margin-d(b, lg);
+    @include mix.margin-d(b, sm);
   }
   &-title {
     position: relative;
     @include mix.font-style($f: pixel, $s: title, $c: var(--white-base));
   }
   &-description {
-    @include mix.padding(lg);
-    @include mix.position-style($p: absolute, $b: 20px, $l: 0);
-    @include mix.font-style($s: xl, $f: base, $c: var(--white-subtle));
+    @include mix.font-style($s: md, $f: base, $c: var(--white-subtle));
     line-height: 1.5;
     visibility: hidden;
     opacity: 0;
-    transform-origin: bottom center;
-    transform: scale(0.1);
+    transform: translateY(20px);
     @include anim.transition($p: visibility opacity transform, $dr: 1s);
   }
 }

@@ -1,91 +1,79 @@
 import { z } from 'zod';
-import { PaginationSchema, ResponseSchema } from './base.schema';
+import { PaginationSchema, ResponseSchema, zBoolean, zDate, zId, zInteger, zPageNum, zPageSize, zSearchKeyword, zStr } from './base.schema';
 
 
-const TagSchema = z.object({
-  id: z
-    .number("ID 必须是数字")
-    .int("ID 必须是整数")
-    .describe("ID"),
-  name: z
-    .string("标签名必须是文本")
-    .trim()
-    .min(1, "标签名不能为空")
-    .max(50, "标签名最多50个字符")
-    .regex(/^[a-zA-Z0-9_\u4e00-\u9fa5\-\s]+$/, "标签名只能包含中英文、数字、下划线、横线和空格")
-    .describe("标签名称"),
-  slug: z
-    .string("标签别名必须是文本")
-    .trim()
-    .min(1, "标签别名不能为空")
-    .max(50, "标签别名最多50个字符")
-    .regex(/^[a-z0-9\-]+$/, "标签别名只能包含小写字母、数字和横线")
-    .toLowerCase()
-    .describe("标签别名"),
-  desciption: z
-    .string("描述必须是文本")
-    .trim()
-    .max(500, "描述最多 500 个字符")
-    .optional()
-    .describe("描述"),
-  postCount: z
-    .number("文章数量必须是数字")
-    .int("文章数量必须是整数")
-    .min(0, "文章数量不能小于 0")
-    .describe("文章数量"),
-  order: z
-    .number("排序必须是数字")
-    .int("排序必须是整数")
-    .min(0, "排序不能小于 0")
-    .describe("排序"),
-  createdAt: z.string().datetime(),
+/** ---------- 标签基础字段 ---------- */
+/** 标签 id */
+export const TagIdSchema = zId.describe("标签ID");
+/** 标签名称 */
+export const TagNameSchema = zStr.max(50, "标签名最多50个字符")
+  .regex(/^[a-zA-Z0-9_\u4e00-\u9fa5\-\s]+$/, "标签名只能包含中英文、数字、下划线、横线和空格")
+  .describe('标签名称');
+/** 标签别名 */
+export const TagSlugSchema = zStr.max(50, "标签别名最多50个字符")
+  .regex(/^[a-z0-9\-]+$/, "标签别名只能包含小写字母、数字和横线")
+  .toLowerCase().describe("标签别名");
+/** 标签描述 */
+export const TagDescriptionSchema = zStr.max(500, "描述最多500个字符").optional().describe("标签描述");
+/** 标签字段优先级 */
+export const TagOrderSchema = zInteger.min(0, "标签字段优先级不能小于 0").describe("标签字段优先级");
+/** 标签文章数量 */
+export const TagPostCountSchema = zInteger.min(0, "标签文章数量不能小于 0").describe("标签文章数量");
+/** 标签创建时间 */
+export const TagCreatedAtSchema = zDate.describe("标签创建时间");
+
+/** 标签简要信息 */
+export const BriefTagSchema = z.object({
+  id: TagIdSchema,
+  name: TagNameSchema,
+  slug: TagSlugSchema,
 })
 
-const zPageSize = z
-    .number("页大小必须是数字")
-    .int("页大小必须是整数")
-    .positive("页大小必须是正数")
-    .default(10)
-    .optional()
-    .describe("页大小")
+/** 标签信息 */
+const TagSchema = BriefTagSchema.extend({
+  description: TagDescriptionSchema,
+  postCount: TagPostCountSchema,
+  order: TagOrderSchema,
+  createdAt: TagCreatedAtSchema,
+})
 
+/** 标签返回值 */
 export const TagListDataSchema = z.object({
-  list: z.array(TagSchema),
+  list: z.array(TagSchema).describe("标签列表"),
   pagination: PaginationSchema
 })
+
+/** 热门标签返回值 */
 export const HotTagsSchema = z.object({
-  list: z.array(TagSchema),
+  list: z.array(TagSchema).describe("热门标签列表"),
 })
+
+
 
 /** ---------- 标签列表完整响应 Schema + 类型推导 ---------- */
-// 组合出标签列表接口的完整响应 Schema
+/** 标签列表完整响应 */
 export const TagListResponseSchema = ResponseSchema(TagListDataSchema);
+/** 热门标签列表完整相应 */
 export const HotTagsResponseSchema = ResponseSchema(HotTagsSchema);
 
+
+
 /** ---------- 标签请求的schema ---------- */
+/** 标签列表请求参数 */
 export const TagListParamsSchema = z.object({
-  page: z
-    .number("页码必须是数字")
-    .int("页码必须是整数")
-    .positive("页码必须是正数")
-    .default(1)
-    .optional()
-    .describe("页码"),
+  page: zPageNum,
   pageSize: zPageSize,
-  keyword: z
-    .string("搜索关键词必须是文本")
-    .trim()
-    .max(50, "搜索关键词最多50个字符")
-    .optional()
-    .describe("搜索关键词")
+  keyword: zSearchKeyword.optional(),
 })
+/** 热门标签列表请求参数 */
 export const HostTagsParamsSchema = z.object({
   pageSize: zPageSize,
-  withPostCount: z.boolean().default(true).optional(),
+  withPostCount: zBoolean.default(true).optional().describe("是否返回文章数量"),
 })
 
 
 export type Tag = z.infer<typeof TagSchema>; // 单个标签类型
+export type BriefTag = z.infer<typeof BriefTagSchema>; // 简要标签类型
 export type Pagination = z.infer<typeof PaginationSchema>; // 分页类型
 export type TagListData = z.infer<typeof TagListDataSchema>; // 业务数据类型
 

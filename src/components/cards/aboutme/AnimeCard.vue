@@ -125,7 +125,7 @@ onUnmounted(stopAutoplay)
 
 <style lang="scss" scoped>
 .anime {
-    height: 340px;
+    height: rem(340);
     &__container { 
         @extend %aboutme-container;
         overflow: hidden;
@@ -138,7 +138,8 @@ onUnmounted(stopAutoplay)
     &-title {
         @extend %aboutme-title;
     }
-    &__content {
+    &__content,
+    &-img {
         @extend %full-size;
     }
     &__wrapper {
@@ -146,14 +147,13 @@ onUnmounted(stopAutoplay)
         @include mix.flex-box($j: flex-start, $w: nowrap);
     }
     &-img { 
-        @extend %full-size;
         flex-shrink: 0;
         @include anim.transition($dr: 1s);
         &:hover {
             transform: scale(1.2);
         }
         &>img {
-            @extend %full-size;
+            height: 100%;
             @include mix.object-style(center, cover);
         }
     }

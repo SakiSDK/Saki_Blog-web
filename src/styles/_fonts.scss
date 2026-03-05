@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+/** ---------- 字体注册 ---------- */
+@each $font-name, $font-src-list in $custom-font-src {
+  @font-face {
+    font-family: '#{$font-name}';
+    src: $font-src-list;
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+}

@@ -8,6 +8,7 @@ import NotFound from '@/views/NotFound.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Album from '@/views/Album.vue';
+import PhotoWaterFall from '@/views/PhotoWaterFall.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -26,9 +27,9 @@ const routes: RouteRecordRaw[] = [
     component: Album,
   },
   {
-    path: '/article/:shortId',
-    name: 'ArticleDetail',
-    component: () => ArticleDetail
+    path: '/album/:slug',
+    name: 'WaterFall',
+    component: PhotoWaterFall,
   },
   {
     path: '/article/tag',
@@ -39,6 +40,11 @@ const routes: RouteRecordRaw[] = [
     path: '/article/category',
     name: 'ArticleCategory',
     component: ArticleCategories
+  },
+  {
+    path: '/article/:shortId',
+    name: 'ArticleDetail',
+    component: ArticleDetail
   },
   {
     path: '/login',

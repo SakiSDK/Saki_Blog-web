@@ -27,7 +27,7 @@ import INTPIMG from '@/assets/imgs/aboutme_intp.webp'
 
 <style lang="scss" scoped>
 .personality {
-    height: 300px;
+    height: rem(300);
     &__container {
         position: relative;
         height: 100%;
@@ -41,7 +41,7 @@ import INTPIMG from '@/assets/imgs/aboutme_intp.webp'
         }
     }
     &-tag {
-        @include mix.position-style($p: absolute, $l: 20px, $t: 10px);
+        @include mix.position-style($p: absolute, $l: rem(20), $t: rem(10));
         @include mix.font-style($s: sm, $c: var(--text-weak))
     }
     &-title {
@@ -49,15 +49,15 @@ import INTPIMG from '@/assets/imgs/aboutme_intp.webp'
         @include mix.margin-d(t, xxl);
         &>span {
             @include mix.font-style($s: title, $f: title,);
-            letter-spacing: 3px;
+            letter-spacing: rem(3);
         }
         &>span:nth-child(2) {
             color: var(--color-primary-base);
         }
     }
     &-img {
-        @include mix.size(200px);
-        @include mix.position-style($p: absolute, $t: 15px, $r: 20px);
+        @include mix.size(rem(200));
+        @include mix.position-style($p: absolute, $t: rem(15), $r: rem(20));
         @include anim.transition($dr: 1s);
     }
     &-tip {
@@ -66,7 +66,7 @@ import INTPIMG from '@/assets/imgs/aboutme_intp.webp'
     }
     &-link {
         @include anim.transition(color);
-        @include hov.underline-style(-3px, var(--primary-base));
+        @include hov.underline-style(-rem(3), var(--primary-base));
         @include hov.color(var(--primary-base));
     }
 }

@@ -311,16 +311,25 @@ const getCode = async () => {
 
   //? 模拟验证码发送给
   codeCountdown.value = 60;
-  const timer = setInterval(() => {
+  timer = setInterval(() => {
     codeCountdown.value--;
     if (codeCountdown.value <= 0) {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     }
   }, 1000);
 
   //? 发送验证码
   console.log('发送验证码', values.email);
 }
+
+// 销毁组件时清除定时器
+import { onUnmounted } from 'vue';
+let timer: ReturnType<typeof setInterval> | null = null;
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer);
+  }
+});
 
 // 计算表单类名
 const formClass = computed(() => {
@@ -632,22 +641,29 @@ defineExpose({
 <style lang="scss" scoped>
 .form-base {
   width: 100%;
-  &__fields {
+  &__fields,
+  &__field,
+  &__input-wrapper,
+  &__control,
+  &__textarea,
+  &__date,
+  &__file {
     width: 100%;
-    @include mix.flex-box($d: column, $a: flex-start, $g: lg);
-    @include mix.margin-d(b, xxl);
+  }
+  &__fields {
+    @include mix.flex-box($d: column, $a: flex-start, $g: sm);
+    @include mix.margin-d(b, lg);
     @include mix.respond-down(xs) {
       @include mix.gap(0);
     }
     &--grid {
       display: grid;
-      @include mix.gap(md);
+      @include mix.gap(sm);
     }
   }
   &__field {
     position: relative;
-    width: 100%;
-    @include mix.padding-d(b, xl);
+    @include mix.padding-d(b, lg);
     &--require {
       .form-base__label::after {
         content: '*';
@@ -667,7 +683,7 @@ defineExpose({
         border-color: var(--red-base);
         &:focus {
           border-color: var(--red-base);
-          box-shadow: 0 0 0 2px rgba(var(--red-rgb), 0.1);
+          box-shadow: 0 0 0 rem(2) rgba(var(--red-rgb), 0.1);
         }
       }
     }
@@ -678,18 +694,17 @@ defineExpose({
     @include mix.margin-d(b, sm);
   }
   &__input-wrapper {
-    width: 100%;
+    @extend %flex-center;
+    @include mix.gap(sm);
     @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
-    @include mix.flex-box($g: sm);
     @include mix.font-style($s: lg, $c: var(--text-subtle));
     @include anim.transition($p: border-color box-shadow);
     &:focus-within {
       border-color: var(--primary-base);
-      box-shadow: 0 0 0 4px var(--primary-weak);
+      box-shadow: 0 0 0 rem(4) var(--primary-weak);
     }
   }
   &__input {
-
   }
   &__prefix-icon,
   &__suffix-icon {
@@ -699,152 +714,117 @@ defineExpose({
     @include mix.position-style($p: absolute, $b: 0);
     @include mix.font-style($c: var(--red-subtle));
   }
-  &__control {
-    width: 100%;
+  &__control,
+  &__checkbox {
     @include mix.flex-box($j: flex-start);
   }
   &__checkbox {
-    @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
+    flex-wrap: nowrap;
+    @include mix.gap(sm);
     &-label {
       text-wrap: nowrap;
       @include mix.font-style($s: lg);
       @include hov.color(var(--primary-base), true);
     }
     &-input {
-      @include mix.size(20px);
+      @include mix.size(rem(20));
+    }
+  }
+  &__file,
+  &__textarea,
+  &__date {
+    @include mix.padding(sm);
+    @include mix.font-style($s: lg, $c: var(--text-base));
+  }
+  &__textarea,
+  &__date {
+    @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
+    border: none;
+    outline: none;
+    &:focus {
+      outline: none;
+      border-color: var(--primary-base);
     }
   }
   &__textarea {
-    width: 100%;
-    @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
-    @include mix.padding(sm);
-    @include mix.font-style($s: lg, $c: var(--text-base));
     resize: vertical;
-    min-height: 80px;
-    border: none;
-    outline: none;
-    &:focus {
-      outline: none;
-      border-color: var(--primary-base);
-    }
+    min-height: rem(80);
   }
-  &__date {
-    width: 100%;
-    @include mix.container-style($b: var(--border-base), $r: md, $bg: var(--bg-base));
-    @include mix.padding(sm);
-    @include mix.font-style($s: lg, $c: var(--text-base));
-    border: none;
-    outline: none;
-    
-    &:focus {
-      outline: none;
-      border-color: var(--primary-base);
-    }
-  }
-  
-  &__file {
-    width: 100%;
-    @include mix.padding(sm);
-    @include mix.font-style($s: lg, $c: var(--text-base));
-  }
-  
   &__code-btn {
-    position: absolute;
-    right: 8px;
-    top: 50%;
+    @include mix.position-style($p: absolute, $t: 50%, $r: rem(8));
     transform: translateY(-50%);
     @include mix.container-style($b: none, $r: sm, $bg: var(--primary-base));
     @include mix.padding(xs sm);
     @include mix.font-style($s: sm, $c: white, $w: 500);
     cursor: pointer;
-    transition: all 0.2s;
-    
+    @include anim.transition($p: bg color);
     &:hover:not(:disabled) {
       background: var(--primary-dark);
     }
-    
     &:disabled {
       background: var(--bg-subtle);
       color: var(--text-muted);
       cursor: not-allowed;
     }
   }
-  
   &__checkbox {
     @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
-    
     &-label {
       text-wrap: nowrap;
       @include mix.font-style($s: lg, $c: var(--text-subtle));
       @include hov.color(var(--primary-base), true);
     }
-    
     &-input {
-      @include mix.size(20px);
+      @include mix.size(rem(20));
       accent-color: var(--primary-base);
     }
   }
-  
   &__radio-group {
     @include mix.flex-box($d: column, $a: flex-start, $g: sm);
   }
-  
   &__radio {
     @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
-    
     &-label {
       text-wrap: nowrap;
       @include mix.font-style($s: lg, $c: var(--text-subtle));
       @include hov.color(var(--primary-base), true);
     }
-    
     &-input {
-      @include mix.size(20px);
+      @include mix.size(rem(20));
       accent-color: var(--primary-base);
     }
   }
-  
   &__switch {
     @include mix.flex-box($j: flex-start, $w: nowrap, $g: sm);
     position: relative;
     cursor: pointer;
-    
     &-input {
       display: none;
-      
       &:checked + .form-base__switch-slider {
         background-color: var(--primary-base);
-        
         &::before {
-          transform: translateX(20px);
+          transform: translateX(rem(20));
         }
       }
-      
       &:disabled + .form-base__switch-slider {
         opacity: 0.6;
         cursor: not-allowed;
       }
     }
-    
     &-slider {
       position: relative;
-      width: 44px;
-      height: 24px;
+      @include mix.size(rem(44), rem(24));
       background-color: var(--border-base);
-      border-radius: 24px;
+      border-radius: rem(24);
       transition: all 0.3s;
-      
       &::before {
         content: '';
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 20px;
-        height: 20px;
+        @include mix.size(rem(20));
+        @include mix.position-style($p: absolute, $t: rem(2), $l: rem(2));
         background-color: white;
         border-radius: 50%;
         transition: all 0.3s;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 rem(1) rem(3) rgba(0, 0, 0, 0.2);
       }
     }
     
@@ -863,88 +843,78 @@ defineExpose({
     @include mix.margin-d(t, xl);
     @include mix.padding-d(t, md);
     display: flex;
-    gap: 12px;
-    border-top: 1px solid var(--border-base);
-    
+    gap: rem(12);
+    border-top: var(--border-base);
     @include mix.respond-down(sm) {
       flex-direction: column;
     }
   }
   
   &__loading {
-    @include mix.size(16px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    @include mix.size(rem(16));
+    border: rem(2) solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top-color: white;
     animation: spin 1s linear infinite;
-    margin-right: 8px;
+    margin-right: rem(8);
   }
-  
   // ---------- layout ----------
   &--vertical {
     .form-base__field {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: rem(8);
     }
     
     .form-base__label {
       @include mix.font-style($w: 500, $c: var(--text-base));
     }
   }
-  
   &--horizontal {
     .form-base__field {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      
+      gap: rem(12);
       @include mix.respond-down(sm) {
         flex-direction: column;
         align-items: stretch;
-        gap: 8px;
+        gap: rem(8);
       }
     }
-    
     .form-base__label {
       @include mix.font-style($w: 500, $c: var(--text-base));
       flex-shrink: 0;
       text-align: v-bind('config.labelAlign || "right"');
-      padding-top: 8px;
+      padding-top: rem(8);
       width: v-bind('config.labelWidth || "auto"');
-      
       @include mix.respond-down(sm) {
         text-align: left;
         padding-top: 0;
         width: auto;
       }
     }
-    
     .form-base__control {
       flex: 1;
     }
   }
-  
   &--inline {
     .form-base__fields {
       display: flex;
       flex-wrap: wrap;
       align-items: flex-end;
-      gap: 16px;
+      gap: rem(16); 
     }
-    
     .form-base__field {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: rem(8);
       margin-bottom: 0;
       flex: 1;
-      min-width: 200px;
+      min-width: rem(200);
       
       @include mix.respond-down(md) {
-        min-width: 150px;
+        min-width: rem(150);
       }
-      
       @include mix.respond-down(sm) {
         min-width: 100%;
       }
@@ -959,46 +929,44 @@ defineExpose({
   
   // ---------- size ----------
   &--small {
-    font-size: 12px;
-    
+    font-size: rem(12);
     .form-base__input,
     .form-base__textarea,
     .form-base__select,
     .form-base__date {
-      padding: 6px 10px;
-      font-size: 12px;
+      padding: rem(6) rem(10);
+      font-size: rem(12);
     }
-    
     .form-base__label {
-      font-size: 12px;
+      font-size: rem(12);
     }
   }
   
   &--medium {
-    font-size: 14px;
+    font-size: rem(14);
     .form-base__input,
     .form-base__textarea,
     .form-base__select,
     .form-base__date {
-      padding: 8px 12px;
-      font-size: 14px;
+      padding: rem(8) rem(12);
+      font-size: rem(14);
     }
     .form-base__label {
-      font-size: 14px;
+      font-size: rem(14);
     }
   }
   
   &--large {
-    font-size: 16px;
+    font-size: rem(16);
     .form-base__input,
     .form-base__textarea,
     .form-base__select,
     .form-base__date {
-      padding: 12px 16px;
-      font-size: 16px;
+      padding: rem(12) rem(16);
+      font-size: rem(16);
     }
     .form-base__label {
-      font-size: 16px;
+      font-size: rem(16);
     }
   }
   // ---------- state ----------
@@ -1019,7 +987,6 @@ defineExpose({
     display: block;
   }
 }
-
 @keyframes spin {
   to {
     transform: rotate(360deg);

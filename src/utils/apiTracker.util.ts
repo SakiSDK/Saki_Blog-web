@@ -43,6 +43,13 @@ export const waitForAllRequests = (timeout: number = 15000): Promise<void> => {
   return new Promise<void>((resolve) => {
     let finished = false;               // 是否已结束，用于避免重复回调
     let timeoutId: number | null = null;
+    let checkInterval: ReturnType<typeof setInterval> | null = null;
+
+    // 清理所有定时器
+    const cleanup = () => {
+      if (timeoutId !== null) clearTimeout(timeoutId);
+      if (checkInterval !== null) clearInterval(checkInterval);
+    };
 
     /** --- 超时定时器 --- */
     timeoutId = setTimeout(() => {
@@ -50,20 +57,18 @@ export const waitForAllRequests = (timeout: number = 15000): Promise<void> => {
       finished = true;
       console.warn('接口加载超时，强制隐藏加载页');
       pendingRequests.clear(); 
+      cleanup();
       resolve();
     }, timeout) as unknown as number;
 
     /** --- 轮询 pendingRequests --- */
-    const checkInterval = setInterval(() => {
+    checkInterval = setInterval(() => {
       if (pendingRequests.size === 0) {
         if (finished) return; // race 已结束
         finished = true;
 
         console.log('所有接口已完成，隐藏加载页');
-        clearInterval(checkInterval);
-
-        // 清理超时定时器（关键步骤）
-        if (timeoutId !== null) clearTimeout(timeoutId);
+        cleanup();
 
         resolve();
       }
@@ -71,8 +76,7 @@ export const waitForAllRequests = (timeout: number = 15000): Promise<void> => {
 
     // 无接口立即 resolve
     if (pendingRequests.size === 0) {
-      clearInterval(checkInterval);
-      if (timeoutId !== null) clearTimeout(timeoutId);
+      cleanup();
       finished = true;
       resolve();
     }

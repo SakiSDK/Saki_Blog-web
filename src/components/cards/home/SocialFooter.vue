@@ -65,7 +65,8 @@ onMounted(() => {
   &__container {
     position: relative;
     height: fit-content;
-    @include mix.flex-box($g: xxl);
+    @extend %flex-center;
+    @include mix.gap(xxl);
     @include mix.margin-d(t, xxl);
     @include mix.respond-down(sm){
       @include mix.gap(sm);

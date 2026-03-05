@@ -94,51 +94,67 @@ const aboutmeField: PageHeaderField = {
   &-education { 
     @extend %full-width;
   }
-  &-info {
+  &-info,
+  &-small-joy {
     @include mix.respond-up(md) {
       grid-row: 1;
+    }
+  }
+  &-info {
+    @include mix.respond-up(md) {
       grid-column: 1 / 12;
     }
   }
   &-small-joy {
     @include mix.respond-up(md) {
-      grid-row: 1;
       grid-column: 12 / 19;
+    }
+  }
+  &-education,
+  &-techstack {
+    @include mix.respond-up(md) {
+      grid-row: 2;
     }
   }
   &-education {
     @include mix.respond-up(md) {
-      grid-row: 2;
       grid-column: 1 / 9;
     }
   }
   &-techstack {
     @include mix.respond-up(md) {
-      grid-row: 2;
       grid-column: 9 / 19;
+    }
+  }
+  &-personality,
+  &-motto {
+    @include mix.respond-up(md) {
+      grid-row: 3;
     }
   }
   &-personality {
     @include mix.respond-up(md) {
-      grid-row: 3;
       grid-column: 1 / 11;
     }
   }
   &-motto {
     @include mix.respond-up(md) {
-      grid-row: 3;
       grid-column: 11 / 19;
+    }
+  }
+  &-game,
+  &-anime {
+    @include mix.respond-up(md) {
+      grid-row: 4;
     }
   }
   &-game {
     @include mix.respond-up(md) {
-      grid-row: 4;
       grid-column: 1 / 10;
     }
   }
   &-anime {
     @include mix.respond-up(md) {
-      grid-row: 4;
       grid-column: 10 / 19;
     }
   }

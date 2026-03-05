@@ -170,11 +170,9 @@ const tagStyle = computed(() => {
   --tag-border-color: var(--border-base);
   --tag-border-base: none;
   --tag-padding: 0;
-
   @include mix.inline-flex-box($a: center, $g: sm);
   @include mix.container-style($p: sm sm, $r: sm, $bg: var(--tag-bg), $b: var(--tag-border-base));
   @include mix.font-style($s: md, $c: var(--tag-font-color));
-
   line-height: 1;
   user-select: none;
   cursor: default;
@@ -197,11 +195,9 @@ const tagStyle = computed(() => {
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
     &:active {
       transform: translateY(0);
     }
-    
     &:focus {
       outline: none;
     }
@@ -211,7 +207,6 @@ const tagStyle = computed(() => {
     opacity: 0.6;
     pointer-events: none;
   }
-  
   // 选中状态
   &.tag-checked {
     --tag-bg: var(--primary-base);
@@ -225,24 +220,18 @@ const tagStyle = computed(() => {
   &.tag-bordered-follow {
     --tag-border-base: 1px solid var(--tag-font-color);
   }
-  
   // 换行样式
   &.tag-wrapped {
     white-space: normal;
     word-break: break-word;
   }
-  
   &.tag-padding {
     padding: var(--tag-padding) !important;
   }
-
   // 图标样式
   .tag-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @extend %flex-center;
   }
-  
   // 内容样式
   .tag-content {
     flex: 1;
@@ -251,12 +240,9 @@ const tagStyle = computed(() => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   // 关闭按钮样式
   .tag-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @extend %flex-center;
     cursor: pointer;
     border-radius: 50%;
     padding: 2px;
@@ -291,7 +277,6 @@ const tagStyle = computed(() => {
       }
     }
   }
-
   // 标签类型
   $tag-types: (
     primary: (

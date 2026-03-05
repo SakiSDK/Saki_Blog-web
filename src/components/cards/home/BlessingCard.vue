@@ -91,6 +91,7 @@ const { brightColorByHash } = useDomUtil();
             <div class="blessing__content">
               {{ backList[currentBackIndex] }}
             </div>
+            <div class="text">SakiSDK</div>
           </div>
         </div>
       </div>
@@ -100,11 +101,10 @@ const { brightColorByHash } = useDomUtil();
 <style lang="scss" scoped>
 .blessing {
   perspective: 1000px;
-  height: 255px;
+  height: 280px;
   &__container {
     position: relative;
-    @include mix.size(100%);
-    @include anim.transition($p: border-color transform, $dr: slower);
+    @extend %full-size;    @include anim.transition($p: border-color transform, $dr: slower);
     transform: rotateY(var(--rotateDeg));
     transform-style: preserve-3d;
     &:hover {
@@ -115,11 +115,9 @@ const { brightColorByHash } = useDomUtil();
     }
   }
   &__wrapper {
-    @include mix.size(100%);
-  }
+    @extend %full-size;  }
   &__front, &__back {
-    @include mix.size(100%);
-    @include mix.position-style($p: absolute, $t: 0, $l: 0);
+    @extend %full-size;    @include mix.position-style($p: absolute, $t: 0, $l: 0);
     @include mix.container-style($p: 0, $b: var(--border-base));
     backface-visibility: hidden; // ⭐ 必须要有，控制是否显示“背面”
     @include mix.flex-box($d: column, $a: flex-start, $j: flex-start);
@@ -136,5 +134,9 @@ const { brightColorByHash } = useDomUtil();
     }
     line-height: 1.7;
   }
+}
+.text {
+  @include mix.padding(lg);
+  @include mix.font-style($s: title, $f: title);
 }
 </style>

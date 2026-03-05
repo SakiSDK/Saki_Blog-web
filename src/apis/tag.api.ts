@@ -6,6 +6,7 @@ import { HostTagsParamsSchema, HotTagsResponseSchema, TagListParamsSchema, TagLi
 
 
 /** ---------- Tag API 封装 ---------- */
+/** Tag API */
 export const TagAPI = {
   /**
    * 获取标签列表（分页）
@@ -23,7 +24,7 @@ export const TagAPI = {
       ...params
     }
     const safeParams = validateRequest(TagListParamsSchema, unitParams);
-    const res = await get<TagListResponse>('/web/tag/', safeParams, config);
+    const res = await get<TagListResponse>('/tag/', safeParams, config);
     return validateResponse(TagListResponseSchema, res);
   },
 
@@ -42,7 +43,7 @@ export const TagAPI = {
       ...params
     }
     const safeParams = validateRequest(HostTagsParamsSchema, unitParams);
-    const res = await get<HotTagsResponse>('/web/tag/hot', safeParams, config);
+    const res = await get<HotTagsResponse>('/tag/hot', safeParams, config);
     return validateResponse(HotTagsResponseSchema, res);
   }
 }

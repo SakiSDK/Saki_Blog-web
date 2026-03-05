@@ -7,127 +7,176 @@ import Annuncement from '@/components/cards/home/Annuncement.vue';
 import SocialFooter from '@/components/cards/home/SocialFooter.vue';
 import ArticleSection from '@/components/sections/ArticleSection.vue';
 import { useDomUtil } from '@/utils/dom.util';
-import { useThrottleFn, useEventListener, useWindowScroll} from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { useThrottleFn, useEventListener, useWindowScroll } from '@vueuse/core'
+import { onMounted } from 'vue'
 import BlessingCard from '@/components/cards/home/BlessingCard.vue';
+import SnakeGameCard from '@/components/cards/home/SnakeGameCard.vue';
+import TechStackCard from '@/components/cards/home/TechStackCard.vue';
 
 
 import TagAPI from '@/apis/tag.api';
 
 const { scrollToNextView, scrollToTop } = useDomUtil();
 onMounted(async () => {
-    const { directions } = useWindowScroll()
-    const throlledScroll = useThrottleFn(() => {
-        if (directions.bottom) {
-            if (window.scrollY < window.innerHeight) {
-                scrollToNextView();
-            }
-        } else {
-            if (window.scrollY < window.innerHeight) {
-                scrollToTop()
-            }
-        }
-    },100)
-    useEventListener(window, 'scroll', throlledScroll)
+  const { directions } = useWindowScroll()
+  const throlledScroll = useThrottleFn(() => {
+    if (directions.bottom) {
+      if (window.scrollY < window.innerHeight) {
+        scrollToNextView();
+      }
+    } else {
+      if (window.scrollY < window.innerHeight) {
+        scrollToTop()
+      }
+    }
+  }, 100)
+  useEventListener(window, 'scroll', throlledScroll)
 })
 </script>
 
 <template>
-    <TopBar ref="topBarRef"/>
-    <div class="home">
-        <HeroSection/>
-        <div class="home__content container">
-            <div class="home__wrapper">
-                <div class="home-aboutme" v-reveal>
-                    <AboutCard/>
-                </div>
-                <div class="home-picture" v-reveal>
-                    <PictureCard/>
-                </div>
-                <div class="home-hello" v-reveal>
-                    <HelloCard/>
-                </div>
-                <div class="home-blessing" v-reveal>
-                    <BlessingCard/>
-                </div>
-                <div class="home-announcement" v-reveal>
-                    <Annuncement/>
-                </div>
-            </div>
-            <div class="home__article">
-                <ArticleSection/>
-            </div>
-            <div class="home__info-line">
-                <SocialFooter/>
-            </div>
+  <TopBar ref="topBarRef" />
+  <div class="home">
+    <HeroSection />
+    <div class="home__content container">
+      <div class="home__wrapper">
+        <div
+          class="home-aboutme"
+          v-reveal
+        >
+          <AboutCard />
         </div>
-        <FooterBar/>
+        <div
+          class="home-picture"
+          v-reveal
+        >
+          <PictureCard />
+        </div>
+        <div
+          class="home-hello"
+          v-reveal
+        >
+          <HelloCard />
+        </div>
+        <div
+          class="home-blessing"
+          v-reveal
+        >
+          <BlessingCard />
+        </div>
+        <div
+          class="home-announcement"
+          v-reveal
+        >
+          <Annuncement />
+        </div>
+        <div
+          class="home-snake"
+          v-reveal
+        >
+          <SnakeGameCard />
+        </div>
+        <div
+          class="home-tech"
+          v-reveal
+        >
+          <TechStackCard />
+        </div>
+      </div>
+      <div class="home__article">
+        <ArticleSection />
+      </div>
+      <div class="home__info-line">
+        <SocialFooter />
+      </div>
     </div>
-    <RightBar/>
+    <FooterBar />
+  </div>
+  <RightBar />
 </template>
 
 <style lang="scss" scoped>
 @use 'sass:map';
 .home {
-    &__content{
-        @include mix.margin-d(b, lg);
+  &__content {
+    @include mix.margin-d(b, lg);
+  }
+  &__content {
+    min-height: calc(100vh - 293px);
+    @include mix.padding(title);
+    @include mix.margin-d(t, 50px);
+    @include mix.respond-down(xxs) {
+      padding: 0;
     }
-    &__content {
-        min-height: calc(100vh - 293px);
-        @include mix.padding(title);
-        @include mix.margin-d(t, 50px);
-        @include mix.respond-down(xxs){
-            padding: 0;
-        }
+  }
+  &__wrapper {
+    width: 100%;
+    @include mix.grid-box($c: 18, $g: lg);
+    @include mix.respond-down(md) {
+      grid-template-columns: none !important;
+      @include mix.flex-box($d: column, $g: lg);      
     }
-    &__wrapper {
-        width: 100%;
-        @include mix.grid-box($c: 18, $g: lg);
-        @include mix.respond-down(md){
-            display: block;
-            grid-template-columns: none !important;
-            @include mix.flex-box($d: column, $g: lg);
-        };
+  }
+  &-aboutme,
+  &-picture,
+  &-hello,
+  &-group,
+  &-announcement,
+  &-blessing,
+  &-article,
+  &-snake,
+  &-tech {
+    @extend %full-width;
+  }
+  &-aboutme,
+  &-picture {
+    @include mix.respond-up(md) {
+      grid-row: 1;
     }
-    &-aboutme,
-    &-picture,
-    &-hello,
-    &-group, 
-    &-announcement,
-    &-blessing,
-    &-article {
-        @extend %full-width;
-        // width: 200px;
+  }
+  &-aboutme {
+    @include mix.respond-up(md) {
+      grid-column: 1 / 9;
     }
-    &-aboutme {
-        @include mix.respond-up(md) {
-            grid-row: 1;
-            grid-column: 1 / 9;
-        }
+  }
+  &-picture {
+    @include mix.respond-up(md) {
+      grid-column: 9 / 19;
     }
-    &-picture {
-        @include mix.respond-up(md) {
-            grid-row: 1;
-            grid-column: 9 / 19;
-        }
+  }
+  &-hello,
+  &-blessing {
+    @include mix.respond-up(md) {
+      grid-row: 2;
     }
-    &-hello {
-        @include mix.respond-up(md) {
-            grid-row: 2;
-            grid-column: 1 / 10;
-        }
+  }
+  &-hello {
+    @include mix.respond-up(md) {
+      grid-column: 1 / 10;
     }
-    &-blessing {
-        @include mix.respond-up(md) {
-            grid-row: 2;
-            grid-column: 10 / 19;
-        }
+  }
+  &-blessing {
+    @include mix.respond-up(md) {
+      grid-column: 10 / 19;
     }
-    &-announcement {
-        @include mix.respond-up(md) {
-            grid-row: 3;
-            grid-column: 1 / 19;
-        }
+  }
+  &-announcement {
+    @include mix.respond-up(md) {
+      grid-row: 4;
+      grid-column: 1 / 19;
     }
+  }
+  &-snake {
+    @include mix.respond-up(md) {
+      grid-row: 3;
+      grid-column: 1 / 8;
+    }
+  }
+  &-tech {
+    @include mix.respond-up(md) {
+      grid-row: 3;
+      grid-column: 8 / 19;
+    }
+  }
 }
 </style>

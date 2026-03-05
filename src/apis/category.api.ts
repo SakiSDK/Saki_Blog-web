@@ -24,7 +24,7 @@ export const CategoryAPI = {
       ...params
     }
     const safeParams = validateRequest(CategoryListParamsSchema, unitParams);
-    const res = await get<CategoryListResponse>('/web/category/', safeParams, config);
+    const res = await get<CategoryListResponse>('/category/', safeParams, config);
     return validateResponse(CategoryListResponseSchema, res);
   },
 }

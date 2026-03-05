@@ -49,11 +49,32 @@
   }
   &__content {
     @include mix.margin-d(t, xl);
-    @include mix.flex-box($d: column, $a: flex-start, $g: sm);
+    @include mix.grid-box($c: 2, $g: md);
   }
   &-word {
+    @include mix.container-style($p: md, $r: lg);
+    @include mix.flex-box($d: column, $a: flex-start, $g: xs);
+    @include anim.transition($p: transform box-shadow);
+    cursor: default;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    // 后两个长内容跨两列
+    &:nth-child(3),
+    &:nth-child(4) {
+      grid-column: 1 / -1;
+    }
+
+    // 移动端单列
+    @include mix.respond-down(sm) {
+      grid-column: 1 / -1 !important;
+    }
+
     &-title {
-      @include mix.font-style($s: md, $c: var(--text-base), $f: 'title');
+      @include mix.font-style($s: md, $c: var(--text-base), $f: 'title', $w: 600);
     }
     &-text {
       @include mix.margin-d(t, sm);

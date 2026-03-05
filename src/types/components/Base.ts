@@ -6,6 +6,7 @@ export interface PageHeaderField {
   infos?: {
     title: string,
     value: string,
+    icon?: string,
   }[],
 }
 
@@ -59,6 +60,7 @@ export interface ButtonProps {
   ripple?: boolean
   noWrap?: boolean
   border?: boolean
+  to?: string | object
 }
 
 export interface ButtonEmits {
@@ -69,6 +71,7 @@ export interface ButtonEmits {
 /** ---------- 通用组件CardHeader Props类型 ---------- */
 export interface CardHeaderProps {
   title?: string;
+  fontSize?: string;
   subtitle?: string;
   align?: 'left' | 'center' | 'right'; // 标题对齐
   bordered?: boolean; // 是否展示底部分割线

@@ -1,0 +1,6 @@
+@use "sass:math";
+
+// 内部辅助函数：px 转 rem
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}

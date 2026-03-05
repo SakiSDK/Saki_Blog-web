@@ -39,7 +39,14 @@ router.beforeEach((to: RouteLocationNormalized, _from: RouteLocationNormalized, 
     loadingStore.setRouteLoading(true);
   }
   const tagStore = useTagStore();
-  tagStore.isPageReloaded = false;
+  if (sessionStorage.getItem('reloaded') === '1') {
+    console.log('刷新页面')
+    tagStore.isPageReloaded = true;
+    sessionStorage.removeItem('reloaded');
+  } else {
+    console.log('非刷新页面')
+    tagStore.isPageReloaded = false;
+  }
   next() // 继续跳转
 })
 

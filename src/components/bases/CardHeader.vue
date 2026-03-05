@@ -5,6 +5,7 @@ import type { CardHeaderProps } from '@/types/components/Base';
 
 const props = withDefaults(defineProps<CardHeaderProps>(), {
   align: 'left',
+  fontSize: 'xl',
   bordered: true,
   padding: '20px 20px',
   background: 'none',
@@ -19,7 +20,7 @@ const headerClass = computed(() => ({
 </script>
 
 <template>
-  <div class="card-header" >
+  <div class="card-header" :style="{ '--font-size': fontSize }">
     <div 
       class="card-header__container"
       :class="headerClass"
@@ -34,7 +35,7 @@ const headerClass = computed(() => ({
         </slot>
       </div>
       <!-- 左侧：标题 + 副标题 -->
-      <div class="card-header-title">
+      <div class="card-header-title" :class="`is-size-${fontSize}`">
         <!-- 如果用户没有传 slot，则显示 title props -->
         <slot name="title">
           <h3 v-if="title">{{ title }}</h3>
@@ -50,6 +51,8 @@ const headerClass = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
+@use "@/styles/variables.scss" as var;
+
 .with-border.card-header__container {
   border-bottom: var(--border-base);
 }
@@ -73,12 +76,15 @@ const headerClass = computed(() => ({
     );
     @include mix.flex-box($j: flex-start, $g: lg);
   }
-
   &-title {
-    @include mix.flex-box($d: column, $a: flex-start, $g: sm);
-    h3 {
-      @include mix.font-style($s: xl, $w: 600, $f: 'title');
-      margin: 0;
+    // $title-size: var(--font-size);
+    @include mix.flex-box($d: column, $a: flex-start, $g: xs);
+    @include mix.font-style($f: title);
+    // 生成预定义大小类
+    @each $key, $value in var.$font-size {
+      &.is-size-#{$key} h3 {
+        font-size: $value;
+      }
     }
     .subtitle {
       @include mix.font-style($s: sm, $c: var(--text-subtler));
@@ -89,7 +95,8 @@ const headerClass = computed(() => ({
     @include mix.flex-box($a: center, $j: flex-start, $g: sm);
   }
   &-icon {
-    @include mix.size(40px);
+    @include mix.size(rem(40));
+    align-self: stretch; // 让图标区域在交叉轴上撑满，与右侧等高
     @include mix.flex-box($s: 0);
     @include mix.container-style($p: 0, $bg: var(--primary-base), $r: sm);
     @include mix.font-style($s: xxl, $c: var(--white-base));

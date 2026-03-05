@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { useNavigator } from '@/utils/navigator.util';
+import SmartLink from '@/components/bases/SmartLink.vue';
 
 defineOptions({
   name: 'FooterBar'
 })
 
 
-const { go } = useNavigator();
+/** ---------- 页面文案内容 ---------- */
 const guessField = {
   title: '猜你想看',
   items: [
@@ -79,7 +79,7 @@ const mottoField = {
             </div>
             <div class="footer-bar-item-content">
               <div class="footer-bar-item-link" v-for="item, index in guessField.items" :key="index">
-                <span v-if="item.link" @click="go(item.link)">{{ item.title }}</span>
+                <SmartLink v-if="item.link" :to="item.link">{{ item.title }}</SmartLink>
               </div>
             </div>
           </div>

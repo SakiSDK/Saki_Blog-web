@@ -28,6 +28,7 @@ export default defineConfig({
           @use "@/styles/mixins.scss" as mix;
           @use "@/styles/animations.scss" as anim;
           @use "@/styles/hover.scss" as hov;
+          @use "@/styles/functions.scss" as *;
         `
           // @use "@/styles/main.scss" as *;
       }

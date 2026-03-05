@@ -22,7 +22,12 @@ export type TocTree = {
 }
 
 // slugify: 生成锚点ID，支持中英文
-const slugify = (s: string) => s.trim().toLowerCase().replace(/[^\\w\\u4e00-\\u9fa5]+/g, '-')
+const slugify = (s: string) => {
+    const slug = s.trim().toLowerCase()
+        .replace(/[^\\w\\u4e00-\\u9fa5]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    return slug || 'section';
+}
 
 
 // highlight.js 安全封装，如果失败就转义为普通文本
@@ -135,6 +140,7 @@ const buildMd = (localHeadings: Heading[]) => {
         })
     }
     ;['info', 'warning', 'danger'].forEach(makeContrainer);
+    
     return md
 }
 
