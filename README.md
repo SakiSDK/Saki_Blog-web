@@ -47,13 +47,13 @@
 
 > 视频演示效果
 <p align="center">
-  <img src="./docs/preview/video/preview1.avi" alt="Preview Video" width="80%" />
+  <video src="./docs/preview/video/preview1.mp4" alt="Preview Video" width="80%" controls></video>
 </p>
 
 #### 📱 移动端适配
 > 针对不同尺寸屏幕的深度优化，确保在手机端也能获得原生应用般的体验。
 <p align="center">
-  <img src="./docs/preview/video/preview2.avi" alt="Preview Video" width="80%" />
+  <video src="./docs/preview/video/preview2.mp4" alt="Preview Video" width="80%" controls></video>
 </p>
 
 
