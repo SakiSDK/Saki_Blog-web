@@ -45,15 +45,21 @@
   <img src="./docs/preview/home/home-light-2.avif" alt="Desktop Home" width="80%" />
 </p>
 
-> 视频演示效果
+> 视频演示效果 (GitHub 不支持直接播放视频，请点击下方图片观看)
 <p align="center">
-  <video src="./docs/preview/video/preview1.mp4" alt="Preview Video" width="80%" controls></video>
+  <a href="./docs/preview/video/preview1.mp4" target="_blank">
+    <!-- 使用现有的截图作为封面 -->
+    <img src="./docs/preview/home/home-dark-1.avif" alt="Watch Video" width="80%" />
+  </a>
 </p>
 
 #### 📱 移动端适配
 > 针对不同尺寸屏幕的深度优化，确保在手机端也能获得原生应用般的体验。
 <p align="center">
-  <video src="./docs/preview/video/preview2.mp4" alt="Preview Video" width="80%" controls></video>
+  <a href="./docs/preview/video/preview2.mp4" target="_blank">
+     <!-- 建议添加一张移动端的截图作为封面，这里暂时使用文字链接的样式或占位图 -->
+     <img src="https://via.placeholder.com/375x667?text=Click+to+Watch+Mobile+Demo" alt="Watch Mobile Video" width="30%" />
+  </a>
 </p>
 
 
