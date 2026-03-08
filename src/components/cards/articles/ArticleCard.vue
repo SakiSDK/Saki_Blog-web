@@ -140,10 +140,9 @@ const props = withDefaults(defineProps<ArticleCardProps>(), {
   }
   &-title {
     width: 100%;
-    @include mix.font-style($f: title, $s: lg, $w: 600, $c: var(--text-base));
+    @include mix.font-style($f: title, $s: lg, $w: 600, $c: var(--text-base), $l: 1.4);
     @include mix.text-overflow(2);
     margin: rem(4) 0;
-    line-height: 1.4;
     @include anim.transition($p: color);
     @include mix.respond-down(md) {
       font-size: rem(16);
@@ -152,13 +151,16 @@ const props = withDefaults(defineProps<ArticleCardProps>(), {
   &-tags {
     margin-top: auto;
     @include mix.size(100%, rem(24));
-    @include mix.flex-box($g: xs, $j: flex-start, $w: wrap);
+    @extend %flex-start;
+    @include mix.gap(xs);
+    flex-wrap: wrap;
     overflow: hidden;
     &-item {
       @include mix.font-style($s: xs, $c: var(--text-subtle));
       @include mix.container-style($p: xs sm, $r: sm, $bg: var(--bg-subtle));
       @include hov.bg(var(--primary-subtle));
-      @include anim.transition($p: bg);
+      @include hov.color(var(--white-base));
+      @include anim.transition($p: bg color);
       &::before {
         content: '#';
         margin-right: 2px;

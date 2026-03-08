@@ -16,7 +16,22 @@
     "readMore": "阅读更多",
     "confirmDelete": "确定要删除吗？",
     "confirmLogout": "确定要登出吗？",
-    "confirmDeleteComment": "确定要删除此评论吗？"
+    "confirmDeleteComment": "确定要删除此评论吗？",
+    "back": "返回",
+    "forward": "前进",
+    "refresh": "刷新",
+    "home": "首页",
+    "copyLink": "复制链接",
+    "theme": "切换主题",
+    "toTop": "回到顶部",
+    "noResult": "未找到结果",
+    "select": "选择",
+    "close": "关闭",
+    "category": "文章分类",
+    "tag": "文章标签",
+    "column": "博客相册",
+    "copyLinkSuccess": "复制链接成功",
+    "copyLinkFailed": "复制链接失败"
   },
   "topbar": {
     "siteName": "SakiSDK",

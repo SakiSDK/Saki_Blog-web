@@ -1,6 +1,10 @@
 <script lang="ts" setup>
-import type { PictureCardData } from '@/types/components/Home';
 import { createI18nUtil } from '@/utils/i18n.util';
+
+interface PictureCardData {
+  tip: string;
+  content: string;
+}
 
 /** ---------- 页面文案内容 ---------- */
 const { tObj } = createI18nUtil();

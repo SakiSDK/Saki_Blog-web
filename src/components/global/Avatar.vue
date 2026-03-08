@@ -1,8 +1,15 @@
 <script lang="ts" setup>
-import type { AvatarProps } from '@/types/components/Avatar';
 defineOptions({
   name: 'Avatar',
 })
+
+interface AvatarProps {
+  style: {
+    size: string;
+    radius?: string;
+  }
+  src: string;
+}
 
 defineProps<AvatarProps>();
 </script>
@@ -35,8 +42,7 @@ defineProps<AvatarProps>();
   @include hov.rotate(180deg, true);
   &>img {
     display: block;
-    @extend %full-size;
-    object-fit: cover;
+    @extend %img-cover;
   }
 }
 

@@ -5,6 +5,7 @@ import GlobalLoader from './views/GlobalLoader.vue';
 import { useEventListener } from '@vueuse/core';
 import { waitForAllRequests } from './utils/apiTracker.util';
 import CustomScrollbar from '@/components/global/CustomScrollbar.vue';
+import ContextMenu from '@/components/global/ContextMenu.vue';
 
 
 const loadingStore = useLoadingStore();
@@ -20,11 +21,6 @@ const handleHideLoader = () => {
     loadingStore.setGlobalLoading(false);
   }, 300); // 对应 CSS transition 时长
 }
-
-// 1. 应用启动时：开启全局加载页
-onMounted(() => {
-  // loadingStore.setGlobalLoading(true); // 已移至 setup 顶部
-});
 
 // 2. 监听 DOM 加载完成
 useEventListener('DOMContentLoaded', () => {
@@ -73,6 +69,7 @@ onMounted(() => {
   </Transition>
   <div v-show="!loadingStore.isGlobalLoading">
     <CustomScrollbar />
+    <ContextMenu />
     <router-view/>
   </div>
 </div>

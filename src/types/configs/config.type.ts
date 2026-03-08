@@ -6,6 +6,7 @@ export interface ServerConfig {
   retry: boolean;
   retryDelay: number;
   retryCount: number;
+  signSecret: string;
 }
 export interface EnvConfig {
   env: string;

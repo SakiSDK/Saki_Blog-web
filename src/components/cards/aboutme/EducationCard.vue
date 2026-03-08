@@ -57,38 +57,30 @@ import schoolLogo from '@/assets/imgs/school.webp';
 <style lang="scss" scoped>
 .education {
   height: rem(320);
-  
   &__container {
     @extend %aboutme-container;
     @include mix.flex-box($d: column, $j: space-between, $a: stretch);
-    padding: rem(24);
+    @include mix.padding(rem(24));
     background: var(--surface-base);
     position: relative;
     overflow: hidden;
   }
 }
-
 .education-header {
   @include mix.flex-box($j: space-between, $a: center, $g: md);
   flex-shrink: 0;
-  
   .header-title {
     @include mix.flex-box($a: baseline, $g: xs);
-    
     .en {
       @include mix.font-style($f: pixel, $s: md, $c: var(--text-subtle));
       letter-spacing: 1px;
       opacity: 0.8;
     }
-    
     .cn {
+      @include mix.container-style($p: rem(2) rem(6), $r: sm, $bg: var(--surface-subtle));
       @include mix.font-style($s: xs, $c: var(--text-subtler));
-      background: var(--surface-subtle);
-      padding: 2px 6px;
-      border-radius: 4px;
     }
   }
-  
   .header-line {
     flex: 1;
     height: 1px;
@@ -96,54 +88,36 @@ import schoolLogo from '@/assets/imgs/school.webp';
     opacity: 0.5;
   }
 }
-
 .education-body {
   flex: 1;
   @include mix.flex-box($d: column, $j: center, $a: flex-start, $g: lg);
-  padding: rem(10) 0;
+  @include mix.padding(rem(10) 0);
 }
-
 .education-school {
   @include mix.flex-box($a: center, $g: lg);
-  
   .school-logo {
     @include mix.size(rem(64));
     @include mix.flex-box($j: center, $a: center);
-    background: white; // 改为白色底色，适应 Logo
-    border-radius: 18px;
-    box-shadow: var(--shadow-base);
+    @include mix.container-style($r: lg, $p: rem(3), $bg: var(--white-base), $s: var(--shadow-base), $o: hidden);
     flex-shrink: 0;
-    overflow: hidden;
-    padding: rem(3); // 给 Logo 一点内边距
-    
     img {
-      width: 100%;
-      height: 100%;
+      @extend %full-size;
       object-fit: contain;
     }
   }
-  
   .school-content {
     @include mix.flex-box($d: column, $a: flex-start, $g: sm);
-    
     .school-name {
-      @include mix.font-style($f: title, $s: xl, $c: var(--text-title));
+      @include mix.font-style($f: title, $s: xl, $c: var(--text-title), $l: 1.2);
       margin: 0;
-      line-height: 1.2;
     }
-
     .school-badges {
       @include mix.flex-box($a: center, $g: sm);
-      
       .badge {
+        @include mix.container-style($p: rem(2) rem(8), $r: sm, $bg: var(--surface-subtle), $b: 1px solid var(--border-base-color));
         @include mix.font-style($s: xs, $c: var(--text-subtle));
-        padding: 2px 8px;
-        border-radius: 4px;
-        background: var(--surface-subtle);
-        border: 1px solid var(--border-base-color);
-        
         &.highlight {
-          color: var(--blue-base);
+          @include mix.font-style($c: var(--blue-base));
           background: var(--blue-transparent);
           border-color: var(--blue-ghost);
         }
@@ -154,58 +128,41 @@ import schoolLogo from '@/assets/imgs/school.webp';
 
 .education-timeline {
   @include mix.flex-box($a: center, $g: md);
-  padding-left: rem(6); // Align with some visual balance
-  
+  @include mix.padding-d(l, rem(6));
   .timeline-dot {
     @include mix.size(rem(8));
     border-radius: 50%;
     background: var(--green-base);
     box-shadow: 0 0 0 4px var(--green-transparent);
   }
-  
   .timeline-line {
-    width: rem(40);
-    height: 2px;
+    @include mix.size(rem(40), 2px);
     background: var(--border-base-color);
   }
-  
   .timeline-period {
     @include mix.font-style($f: pixel, $s: sm, $c: var(--text-subtle));
     letter-spacing: 0.5px;
   }
 }
-
 .education-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: rem(16);
+  @include mix.grid-box($c: 2, $g: rem(16));
   flex-shrink: 0;
-  
   .detail-item {
-    padding: rem(16);
-    border-radius: 12px;
-    border: 1px solid transparent;
+    @include mix.container-style($p: md, $r: lg, $b: var(--border-base));
     @include mix.flex-box($d: column, $a: flex-start, $g: xs);
-    transition: all 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-2px);
-    }
-    
+    @include hov.move-y;
+    @include anim.transition($p: transform, $dr: slow);
     .detail-label {
       @include mix.font-style($s: xs, $c: var(--text-subtler));
     }
-    
     .detail-value {
       @include mix.font-style($s: md, $w: bold);
     }
-    
     &.major {
       background: var(--red-transparent);
       border-color: var(--red-ghost);
       .detail-value { color: var(--red-base); }
     }
-    
     &.direction {
       background: var(--yellow-transparent);
       border-color: var(--yellow-ghost);

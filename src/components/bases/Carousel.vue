@@ -7,8 +7,8 @@ const svgModules: Record<string, any> = import.meta.glob(
   '../../assets/svgs/*.svg',
   { eager: true }
 )
-const svgPaths: string[] = Object.entries(svgModules).map(([path]) => {
-  return new URL(path, import.meta.url).href
+const svgPaths: string[] = Object.values(svgModules).map((mod: any) => {
+  return mod.default
 })
 
 const { brightColorByHash } = useDomUtil();
@@ -118,12 +118,7 @@ const finalRightList = computed(() => buildFixedLengthList(rightGroupRaw));
   
   // 关键动画：向上移动 50%（即移动完第一份列表的高度）
   animation: scroll-vertical 20s linear infinite;
-  
-  // 只有当鼠标悬停在特定列时暂停，或者悬停整个容器暂停？通常悬停整个容器暂停体验更好
-  // 这里保持原样，悬停列暂停
-  &:hover {
-    animation-play-state: paused;
-  }
+  @extend %hover-pause;
 
   // 内部元素样式
   .img-svg {

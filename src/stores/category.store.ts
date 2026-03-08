@@ -18,7 +18,11 @@ export const useCategoryStore = defineStore('category', () => {
   })
   const isLoading = ref(false)
   const errorMsg = ref<string | null>(null)
-  const currentParams = ref<CategoryListParams>({})
+  const currentParams = ref<CategoryListParams>({
+    page: 1,
+    pageSize: 10,
+    keyword: ''
+  })
   const errorCode = ref<number | null>(null);
   const isSuccessful = ref<boolean>(false);
 
@@ -178,7 +182,11 @@ export const useCategoryStore = defineStore('category', () => {
 
   const clearCategoryCache = () => {
     resetState();
-    currentParams.value = {};
+    currentParams.value = {
+      page: 1,
+      pageSize: 10,
+      keyword: ''
+    };
   };
   return {
     categoryList,

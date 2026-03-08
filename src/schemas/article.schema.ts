@@ -41,6 +41,7 @@ export const AuthorSchema = z.object({
   nickname: zStr.max(32, "作者字数最多位 32 位").describe("作者姓名"),
   avatar: zStr.max(255, "头像 URL 字数最多位 255 位").describe("作者头像 URL"),
 })
+export type Author = z.infer<typeof AuthorSchema>;
 
 /** 最新文章信息 */
 export const LatestArticleSchema = z.object({
@@ -98,6 +99,7 @@ export const LatestArticleListResponseSchema = ResponseSchema(LatestArticleListS
 export const HomeArticleListQuerySchema = z.object({
   page: zPageNum,
   pageSize: zPageSize.default(6),
+  keyword: zStr.optional().describe("搜索关键字"),
 })
 /** 获取文章详细信息参数 */
 export const ArticleDetailParamsSchema = z.object({

@@ -34,41 +34,53 @@ export const reveal = (el: HTMLElement, options: RevealOptions = {}) => {
     ...options
   }
 
-  // 设置初始样式（透明 + 偏移）
-  el.style.opacity = '0.5';
+  // 1. 立即设置初始样式（透明 + 偏移），防止闪烁
+  // 注意：此时不设置 transition，等到触发动画时再动态设置，以便控制 delay
+  el.style.opacity = '0'; 
   el.style.transform = `translateY(${defaultOptions.distance})`;
-  el.style.transition = `
-    opacity ${defaultOptions.duration}ms ${defaultOptions.easing} ${defaultOptions.delay}ms,
-    transform ${defaultOptions.duration}ms ${defaultOptions.easing} ${defaultOptions.delay}ms
-  `;
-  // 避免闪烁，强制重绘
-  // el.offsetHeight; 
+  
+  // 标记是否是初始检查
+  // 如果是初始检查且在视口内 -> 应用配置的 delay
+  // 如果是后续检查（即滚动进入视口） -> delay 设为 0
+  let isInitialCheck = true;
 
   // 创建IntersectionObserver实例
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // 获取元素
           const target = entry.target as HTMLElement
           
+          // 核心逻辑：判断是否需要应用延迟
+          // 如果是初始检查（isInitialCheck为true），说明元素一开始就在视口内，保留 delay
+          // 如果不是初始检查（isInitialCheck为false），说明元素是后来滚动进来的，移除 delay
+          const appliedDelay = isInitialCheck ? defaultOptions.delay : 0;
+          
+          // 动态设置过渡效果
+          target.style.transition = `
+            opacity ${defaultOptions.duration}ms ${defaultOptions.easing} ${appliedDelay}ms,
+            transform ${defaultOptions.duration}ms ${defaultOptions.easing} ${appliedDelay}ms
+          `;
+          
+          // 强制重绘，确保 transition 设置生效后再改变属性 (通常浏览器会处理，但为了保险)
+          // void target.offsetHeight; 
+
           // 触发动画：恢复原位 + 不透明
           target.style.opacity = '1';
           target.style.transform = 'translateY(0)';
           
-          // 动画完成后清除内联样式（可选，避免影响后续交互，但要小心 transitions）
-          // 这里保留 transition 样式以支持可能的 hover 效果或其他变换
-          // 但通常 reveal 是一次性的，完成后可以清理 transform
+          // 动画完成后清除内联样式
           setTimeout(() => {
             target.style.transform = '';
             target.style.transition = ''; 
-            // 注意：清除 transition 可能会导致 hover 效果失去过渡，视情况而定
-            // 如果组件本身有 hover 效果，最好只清除 transform
-          }, defaultOptions.duration + defaultOptions.delay);
+          }, defaultOptions.duration + appliedDelay);
 
-          // 停止监听
           observer.unobserve(target)
         }
+        
+        // 处理完当前这一批 entries 后，初始检查阶段结束
+        // 之后的任何触发都视为“滚动进入”
+        isInitialCheck = false;
       })
     },
     {
@@ -78,13 +90,12 @@ export const reveal = (el: HTMLElement, options: RevealOptions = {}) => {
     }
   )
 
-  // 开始监听目标元素
-  observer.observe(el)
+  // 开始监听
+  observer.observe(el);
   
   // 添加停止监听方法
   el._stopReveal = () => {
     observer.disconnect();
-    // 恢复样式（可选）
     el.style.opacity = '';
     el.style.transform = '';
     el.style.transition = '';
@@ -97,13 +108,10 @@ export const reveal = (el: HTMLElement, options: RevealOptions = {}) => {
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding) {
-    // 获取指令参数
     const options = binding.value as RevealOptions || {}
-    // 开始监听
     reveal(el, options)
   },
   beforeUnmount(el: HTMLElement) {
-    // 卸载时停止监听
     if (el._stopReveal) {
       el._stopReveal();
       delete el._stopReveal;

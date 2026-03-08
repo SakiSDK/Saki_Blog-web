@@ -3,7 +3,7 @@ import PageHeader from '@/components/bases/PageHeader.vue';
 import AlbumCard from '@/components/cards/album/AlbumCard.vue';
 import { message } from '@/plugins/message';
 import { useAlbumStore } from '@/stores/album.store';
-import type { PageHeaderField } from '@/types/components/Base';
+import type { PageHeaderField } from '@/components/bases/PageHeader.vue';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 

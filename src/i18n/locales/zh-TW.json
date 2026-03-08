@@ -15,7 +15,16 @@
     "readMore": "閱讀更多",
     "confirmDelete": "確定要刪除嗎？",
     "confirmLogout": "確定要登出嗎？",
-    "confirmDeleteComment": "確定要刪除此評論嗎？"
+    "confirmDeleteComment": "確定要刪除此評論嗎？",
+    "back": "返回",
+    "forward": "前進",
+    "refresh": "刷新",
+    "home": "首頁",
+    "copyLink": "複製連結",
+    "toTop": "回到頂部",
+    "noResult": "未找到結果",
+    "select": "選擇",
+    "close": "關閉"
   },
   "topbar": {
     "siteName": "SakiSDK",

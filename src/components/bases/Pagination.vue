@@ -1,9 +1,42 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
-import type { PaginationEmits, PaginationProps } from '@/types/components/Base';
 import { useVModel } from '@vueuse/core';
 
 
+
+/** 分页参数类型定义 */
+export interface PaginationProps {
+  /** 当前页码（v-model 绑定） */
+  page: number;
+  /** 总条数 */
+  total: number;
+  /** 每页条数 */
+  pageSize: number;
+  /** 总页数 */
+  totalPages: number;
+  /** 页码按钮数量（奇数，默认5） */
+  pageBtnCount?: number;
+  /** 是否禁用分页 */
+  disabled?: boolean;
+  /** 是否显示总数 */
+  showTotal?: boolean;
+  /** 是否显示跳转输入框 */
+  showJumper?: boolean;
+  /** 是否显示每页条数切换 */
+  showSizeChanger?: boolean;
+  /** 每页条数选项（默认：[10,20,30,50]） */
+  pageSizeOptions?: number[];
+  /** 总数文本模板（{total} 占位符） */
+  totalText?: string;
+  /** 跳转文本模板（{current}  currentPage占位符, {pages} 总页数占位符） */
+  jumperText?: string;
+}
+/** 分页事件类型定义 */
+export interface PaginationEmits {
+  /** 页码/每页条数变化时触发 */
+  (e: 'update:page', value: number): void;
+  (e: 'update:pageSize', value: number): void;
+}
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   pageBtnCount: 5,
@@ -70,7 +103,6 @@ const pageList = computed(() => {
   for (let i = start; i <= end; i++){
     result.push(i);
   }
-  console.log(end)
 
   // 结尾省略：end < totalPages 时，添加「... + totalPages」
   if (end < totalPages) {
@@ -106,7 +138,6 @@ const prevPage = () => {
 
 /** 下一页 */
 const nextPage = () => {
-  console.log('运行')
   if (props.disabled || page.value === props.totalPages) return;
   page.value += 1;
 };

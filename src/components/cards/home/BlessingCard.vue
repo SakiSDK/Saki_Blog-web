@@ -91,7 +91,6 @@ const { brightColorByHash } = useDomUtil();
             <div class="blessing__content">
               {{ backList[currentBackIndex] }}
             </div>
-            <div class="text">SakiSDK</div>
           </div>
         </div>
       </div>
@@ -115,11 +114,14 @@ const { brightColorByHash } = useDomUtil();
     }
   }
   &__wrapper {
-    @extend %full-size;  }
-  &__front, &__back {
-    @extend %full-size;    @include mix.position-style($p: absolute, $t: 0, $l: 0);
+    @extend %full-size;  
+  }
+  &__front, 
+  &__back {
+    @extend %full-size;    
+    @include mix.position-style($p: absolute, $t: 0, $l: 0);
     @include mix.container-style($p: 0, $b: var(--border-base));
-    backface-visibility: hidden; // ⭐ 必须要有，控制是否显示“背面”
+    backface-visibility: hidden;
     @include mix.flex-box($d: column, $a: flex-start, $j: flex-start);
     @include anim.transition($p: border-color);
   }
@@ -128,15 +130,10 @@ const { brightColorByHash } = useDomUtil();
   }
   &__content {
     @include mix.container-style($p: lg);
-    @include mix.font-style($s: xl, $f: title);
+    @include mix.font-style($s: xl, $f: title, $l: 1.7);
     @include mix.respond-down(xxs){
       @include mix.font-size(md);
     }
-    line-height: 1.7;
   }
-}
-.text {
-  @include mix.padding(lg);
-  @include mix.font-style($s: title, $f: title);
 }
 </style>

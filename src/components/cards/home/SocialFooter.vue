@@ -71,7 +71,7 @@ onMounted(() => {
     @include mix.respond-down(sm){
       @include mix.gap(sm);
       .social-icon {
-        @include mix.size(30px);
+        @include mix.size(rem(30));
         @include mix.padding(xs);
         @include mix.font-size(lg);
       }
@@ -92,14 +92,14 @@ onMounted(() => {
     @include mix.z-index(base);
   }
   &-icon {
-    @include mix.size(45px);
+    @include mix.size(rem(45));
     @include mix.container-style($r: 50%, $p: 0);
     @extend %flex-center;
     flex-shrink: 0;
     @include mix.font-style($s: xxl, $c: var(--text-subtle));
+    @include hov.scale(1.2);
     @include anim.transition(transform gap padding);
     transform-origin: bottom center;
-    @include hov.scale(1.2);
   }
 }
 

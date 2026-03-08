@@ -30,7 +30,6 @@ export default defineConfig({
           @use "@/styles/hover.scss" as hov;
           @use "@/styles/functions.scss" as *;
         `
-          // @use "@/styles/main.scss" as *;
       }
     }
   },

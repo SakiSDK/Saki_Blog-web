@@ -149,19 +149,19 @@ const performAIMove = () => {
   
   // 过滤有效移动
   const validMoves = moves.filter(m => {
-     // 防止反向
-     if (m.x === -velocity.x && m.y === -velocity.y && snake.length > 1) return false;
-     
-     const nextX = head.x + m.x;
-     const nextY = head.y + m.y;
-     
-     // 撞墙
-     if (nextX < 0 || nextX >= tileCountX.value || nextY < 0 || nextY >= tileCountY.value) return false;
-     
-     // 撞自己
-     if (snake.some(s => s.x === nextX && s.y === nextY)) return false;
-     
-     return true;
+    // 防止反向
+    if (m.x === -velocity.x && m.y === -velocity.y && snake.length > 1) return false;
+    
+    const nextX = head.x + m.x;
+    const nextY = head.y + m.y;
+    
+    // 撞墙
+    if (nextX < 0 || nextX >= tileCountX.value || nextY < 0 || nextY >= tileCountY.value) return false;
+    
+    // 撞自己
+    if (snake.some(s => s.x === nextX && s.y === nextY)) return false;
+    
+    return true;
   });
   
   if (validMoves.length > 0) {
@@ -270,81 +270,29 @@ const gameOver = () => {
 .snake-card {
   height: 350px;
   &__container {
-    @include mix.flex-box($d: column);
     height: 100%;
+    @include mix.flex-box($d: column);
     position: relative;
     overflow: hidden;
   }
 }
 .game-wrapper {
   position: relative;
-  @include mix.flex-box($j: center, $a: center);
-  flex: 1;
   width: 100%;
+  @extend %flex-center;
+  flex: 1;
 }
 .game-canvas {
-  border-radius: rem(8);
-  border: 1px solid var(--border-base);
-  background-color: var(--bg-base);
   display: block;
+  @include mix.radius(lg);
+  background-color: var(--bg-base);
 }
-.game-overlay {
-  @include mix.position-style($p: absolute, $t: 0, $l: 0, $r: 0, $b: 0);
-  @include mix.flex-box($j: center, $a: center);
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(2px);
-  border-radius: rem(8);
-  z-index: 10;
-}
-
-.overlay-content {
-  @include mix.flex-box($d: column, $g: sm);
-  text-align: center;
-  color: #fff;
-}
-
-.game-over-text {
-  @include mix.font-style($s: xl, $w: bold, $c: #ef4444);
-  margin-bottom: rem(8);
-}
-
-.final-score {
-  @include mix.font-style($s: lg, $w: bold);
-  margin-bottom: rem(16);
-}
-
-.start-btn {
-  padding: rem(8) rem(24);
-  border-radius: rem(20);
-  background: var(--primary-base);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  @include mix.font-style($s: md, $w: bold);
-  @include anim.transition(transform background);
-
-  &:hover {
-    transform: scale(1.05);
-    background: var(--primary-dark);
-  }
-  
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-.instruction {
-  margin-top: rem(16);
-  @include mix.font-style($s: sm, $c: rgba(255, 255, 255, 0.7));
-}
-
 .score-display {
   @include mix.position-style($p: absolute, $t: 10px, $r: 10px);
-  background: rgba(0, 0, 0, 0.5);
-  padding: rem(4) rem(8);
-  border-radius: rem(4);
-  color: #fff;
-  @include mix.font-style($s: sm, $w: bold);
+  @include mix.padding(xs sm);
+  @include mix.radius(sm);
+  background: var(--black-weak);
+  @include mix.font-style($s: sm, $w: bold, $c: var(--white-base));
   pointer-events: none;
 }
 </style>

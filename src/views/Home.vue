@@ -86,7 +86,7 @@ onMounted(async () => {
       <div class="home__article">
         <ArticleSection />
       </div>
-      <div class="home__info-line">
+      <div class="home__info-line" v-reveal>
         <SocialFooter />
       </div>
     </div>

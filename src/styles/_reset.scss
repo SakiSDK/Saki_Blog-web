@@ -17,7 +17,24 @@ body {
   -webkit-tap-highlight-color: transparent;
   background: var(--bg-gradient);
   @include font-style($c: var(--text-base), $s: md, $f: var(--font-numeric));
-  // font-family: Georgia, 'Times New Roman', Times, serif;
+  /* --- 字体方案 (请取消注释以切换) --- */
+
+  /* 方案1：经典宋体 (衬线) - 优雅、书卷气、适合长文阅读 */
+  // font-family: "Songti SC", "SimSun", "STSong", "Noto Serif SC", "Times New Roman", serif;
+
+  /* 方案2：标准黑体 (无衬线) - 现代、清晰、通用性最强 (MacOS默认) */
+  // font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", sans-serif;
+
+  /* 方案3：雅致楷体 (手写风) - 传统、柔和、有书法感 */
+  // font-family: "Kaiti SC", "STKaiti", "KaiTi", "楷体", "Georgia", serif;
+
+  /* 方案4：可爱圆体 (圆润) - 活泼、年轻、无棱角 */
+  font-family: "Yuanti SC", "YouYuan", "幼圆", "PingFang SC", "Hiragino Sans GB", sans-serif;
+
+  /* 方案5：极客等宽 (代码风) - 机械感、对齐 */
+  // font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+
+
 }
 /* 现代浏览器方案 */
 html {

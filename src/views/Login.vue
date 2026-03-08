@@ -127,7 +127,7 @@ const handleLogin = async (values: any, { setErrors }: any) => {
   &-register {
     width: 100%;
     @include mix.margin-d(t, lg);
-    text-align: center;
+    @extend %text-center;
     &-box {
       @include mix.font-style($c: var(--primary-base));
       @include hov.underline-style($bg: var(--primary-base));

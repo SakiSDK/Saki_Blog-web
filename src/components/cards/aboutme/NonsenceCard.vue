@@ -78,8 +78,7 @@
     }
     &-text {
       @include mix.margin-d(t, sm);
-      @include mix.font-style($s: sm, $c: var(--text-weak));
-      line-height: 1.7;
+      @include mix.font-style($s: sm, $c: var(--text-weak), $l: 1.7);
       &>span {
         background: 
           linear-gradient(120deg, var(--primary-weak) 0%, var(--secondary-weak) 100%),

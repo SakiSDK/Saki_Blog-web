@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import type { AddMessage, Message } from '@/types/plugins/message';
 import { ref } from 'vue';
-import type { Message, AddMessage } from '@/types/components/Base';
+
+
 
 const messages = ref<Message[]>([]);
 
@@ -47,12 +49,13 @@ defineExpose({
 
 <template>
   <TransitionGroup 
-    name="slide-from-left"
+    name="message-fade"
     tag="div"
     class="message__container"
   >
     <div 
       v-for="message in messages"
+      :key="message.id"
       :class="['message', `message--${message.type}`]"
     >
       <div class="message-icon">
@@ -126,13 +129,28 @@ defineExpose({
     @include mix.size(18px);
     margin-left: 12px;
     @include mix.container-style($b: none, $bg: none, $p: 0);
-    @include mix.font-style($s: lg, $c: var(--interactive-base));
+    @include mix.font-style($s: lg, $c: var(--interactive-base), $l: 1);
     cursor: pointer;
-    line-height: 1;
     &:hover {
       color: var(--primary-base);
     }
   }
+}
+
+// 消息动画
+.message-fade-enter-active,
+.message-fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.message-fade-enter-from,
+.message-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.message-fade-leave-active {
+  position: absolute;
 }
 </style>
 

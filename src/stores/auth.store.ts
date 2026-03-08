@@ -1,7 +1,8 @@
 import { computed, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
-import type { TokenPair, TokenPayload, User } from '@/types/stores/AuthStore';
+import { useRouter } from 'vue-router';
+import type { TokenPair, TokenPayload, User, LoginCredentials, RegisterData } from '@/types/stores/AuthStore';
 import { AuthApi } from '@/apis/auth.api';
 
 
@@ -227,7 +228,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         // 设置 token 到 API 客户端
-        AuthApi.setAccessToken(tokens.accessToken)
+        // AuthApi.setAccessToken(tokens.accessToken)
 
         return { success: true }
       } else {
@@ -280,7 +281,7 @@ export const useAuthStore = defineStore('auth', () => {
       console.warn('注销时发生错误:', err)
     } finally {
       clearAuthState()
-      AuthApi.clearAccessToken()
+      // AuthApi.clearAccessToken()
       
       if (!silent) {
         // 跳转到登录页
@@ -397,9 +398,9 @@ export const useAuthStore = defineStore('auth', () => {
   // 监听 token 变化，自动设置到 API 客户端
   watch(accessToken, (newToken) => {
     if (newToken) {
-      AuthApi.setAccessToken(newToken)
+      // AuthApi.setAccessToken(newToken)
     } else {
-      AuthApi.clearAccessToken()
+      // AuthApi.clearAccessToken()
     }
   })
 

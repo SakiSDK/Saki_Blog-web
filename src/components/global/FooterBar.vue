@@ -147,8 +147,7 @@ const mottoField = {
       }
     }
     &-motto {
-      @include mix.font-style($c: var(--text-subtler), $s: xs);
-      line-height: 1.7;
+      @include mix.font-style($c: var(--text-subtler), $s: xs, $l: 1.7);
     }
   }
   &-title {
@@ -161,7 +160,7 @@ const mottoField = {
   }
   &-copyright,
   &-link {
-    text-align: center;
+    @extend %text-center;
     @include mix.font-style($c: var(--text-subtler), $s: xs);
   }
   &-link {

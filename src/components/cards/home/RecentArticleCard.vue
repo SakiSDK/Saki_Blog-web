@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // import useDateFormat from '@/utils/useDateFormat';
+import CardHeader from '@/components/bases/CardHeader.vue';
 
 interface RecentPost {
     shortId: string,
@@ -59,12 +60,10 @@ const goToPostDetail = async (shortId: string) => {
                     >
                         <img v-lazy-img="post.coverPath" alt="">
                     </div>
-                    <div class="recent__post__content">
-                        <div class="recent__post-title">{{ post.title }}</div>
+                    <div class="recent__post-title">{{ post.title }}</div>
                         <!-- <div class="recent__post-title">{{ formatDate(post.createdAt) }}</div> -->
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </template>
@@ -75,13 +74,13 @@ const goToPostDetail = async (shortId: string) => {
     &__container {
         @extend %full-size;
         @extend %box-style;
-        @include anim.card-hover;
+        @include hov.card($t: true);
     }
     &__post {
         @include mix.radius(lg);
         @include anim.transition;
-        @include anim.bgcolor(var(--color-primary-base));
-        @include anim.font-color(var(--text-inverse));
+        @include hov.bg(var(--color-primary-base));
+        @include hov.color(var(--text-inverse));
         cursor: pointer;
         &__wrapper {
             @include mix.flex-box($j: flex-start, $w: nowrap, $g: lg);
@@ -94,18 +93,21 @@ const goToPostDetail = async (shortId: string) => {
             @include mix.radius(lg);
             overflow: hidden;
             &>img {
-                @include mix.object;
+                @include mix.object-style($f: cover, $p: center);
                 overflow: hidden;
                 @include mix.size(60px);
                 transform: translateZ(0);
             }
         }
+        &__content {
+            @include mix.flex-box($d: column, $a: flex-start, $j: space-between);
+            flex: 1;
+            overflow: hidden;
+        }
         &-title {
-            flex: 6;
-            @include mix.text-ellipsis(2);
-            white-space: wrap;
+            @include mix.font-style($s: md, $w: 600);
+            @include mix.text-overflow(2);
         }
     }
 }
-
 </style>

@@ -1,13 +1,20 @@
 {
   "id": "4889943",
-  "name": "blog-web",
+  "name": "Blog-Web",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
+      "icon_id": "39248172",
+      "name": "skill",
+      "font_class": "skill",
+      "unicode": "e8e4",
+      "unicode_decimal": 59620
+    },
+    {
       "icon_id": "6851465",
-      "name": "注册",
+      "name": "zhuce",
       "font_class": "zhuce",
       "unicode": "e6d6",
       "unicode_decimal": 59094

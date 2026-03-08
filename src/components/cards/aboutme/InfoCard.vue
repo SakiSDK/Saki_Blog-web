@@ -1,8 +1,14 @@
 <script lang="ts" setup>
 import avatar from '@/assets/imgs/avatar.webp'
-import type { InfoCardContent } from '@/types/components/Aboutme';
 import { createI18nUtil } from '@/utils/i18n.util';
 
+
+interface InfoCardContent {
+  welcome: string;
+  title: string;
+  description: string;
+  emoji: string;
+}
 
 /** ---------- infoCard text ---------- */
 const { tWithPrefix } = createI18nUtil();
@@ -47,7 +53,8 @@ const infoCardContent: InfoCardContent = {
   &__container {
     @extend %aboutme-container;
     background-color: var(--primary-base);
-    @include mix.flex-box($j: flex-start, $g: lg);
+    @extend %flex-start;
+    @include mix.gap(lg);
     &:hover {
       .info-welcome {
         &>span {

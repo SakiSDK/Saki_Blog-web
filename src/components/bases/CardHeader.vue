@@ -1,7 +1,18 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type { CardHeaderProps } from '@/types/components/Base';
 
+
+/** ---------- 通用组件CardHeader Props类型 ---------- */
+export interface CardHeaderProps {
+  title?: string;
+  fontSize?: string;
+  subtitle?: string;
+  align?: 'left' | 'center' | 'right'; // 标题对齐
+  bordered?: boolean; // 是否展示底部分割线
+  padding?: string; // 自定义 padding
+  background?: string;
+  icon?: string;
+}
 
 const props = withDefaults(defineProps<CardHeaderProps>(), {
   align: 'left',
@@ -54,7 +65,7 @@ const headerClass = computed(() => ({
 @use "@/styles/variables.scss" as var;
 
 .with-border.card-header__container {
-  border-bottom: var(--border-base);
+  border-bottom: var(--header-border-base);
 }
 .is-center.card-header__container {
   justify-content: center;
@@ -74,7 +85,8 @@ const headerClass = computed(() => ({
       $p: var(--card-header-padding), 
       $bg: var(--card-header-background)
     );
-    @include mix.flex-box($j: flex-start, $g: lg);
+    @extend %flex-start;
+    @include mix.gap(lg);
   }
   &-title {
     // $title-size: var(--font-size);

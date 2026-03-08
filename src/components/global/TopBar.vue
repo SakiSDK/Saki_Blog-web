@@ -2,6 +2,7 @@
 import { createI18nUtil } from '@/utils/i18n.util';
 import { onBeforeUnmount, ref } from 'vue';
 import SmartLink from '@/components/bases/SmartLink.vue';
+import SearchModal from './SearchModal.vue';
 
 interface NavItemBase {
   title: string;
@@ -61,15 +62,25 @@ const optionData = tObj<{
 const optionFields = optionData.order.map(itemKey => {
   const item = optionData.items[itemKey];
   return {
+    key: itemKey,
     tip: item.tip,
     icon: item.icon,
     link: item.link
   };
 }) as Array<{
+  key: string;
   tip: string;
   icon: string;
   link: string;
 }>;
+
+const showSearch = ref(false);
+
+const handleOptionClick = (field: any) => {
+  if (field.key === 'search') {
+    showSearch.value = true;
+  }
+};
 
 // --- 下拉框逻辑修改为 Hover ---
 
@@ -179,12 +190,17 @@ onBeforeUnmount(() => {
           v-tippy="{
               content: field.tip,
               theme: 'link',
-          }"  
+          }"
+          @click="handleOptionClick(field)"
         >
           <Icon :name="field.icon" />
         </SmartLink>
       </div>
     </div>
+    <SearchModal 
+      v-if="showSearch" 
+      @close="showSearch = false" 
+    />
   </div>
 </template>
 
@@ -250,10 +266,11 @@ onBeforeUnmount(() => {
   }
   &-item {
     @extend %hover-box;
+    @include mix.inline-flex-box(center, center);
     text-wrap: nowrap;
     &-icon {
       @include mix.margin-d(r, xs);
-      @include mix.font-size(xl);
+      @include mix.font-style($s: xl);
     }
   }
 }

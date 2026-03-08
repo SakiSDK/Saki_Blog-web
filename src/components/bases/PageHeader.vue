@@ -1,11 +1,21 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type { PageHeaderField } from '@/types/components/Base';
 import Wave from './Wave.vue';
 import type { BriefTag } from '@/schemas/tag.schema';
 import type { BriefCategory } from '@/schemas/category.schema';
 import Icon from '@/components/global/Icon.vue';
 
+
+/** ---------- PageHeader文案类型 ---------- */
+export interface PageHeaderField {
+  title: string,
+  desc: string,
+  infos?: {
+    title: string,
+    value: string,
+    icon?: string,
+  }[],
+}
 
 const props = withDefaults(defineProps<{
   field: PageHeaderField
@@ -96,10 +106,13 @@ const hasMeta = computed(() => {
   // 新的元数据样式
   &-meta {
     @include mix.margin(md 0);
-    @include mix.flex-box($j: flex-start, $g: lg, $w: wrap);
+    @extend %flex-start;
+    @include mix.gap(lg);
+    flex-wrap: wrap;
     @include mix.z-index(base);
     &-group {
-      @include mix.flex-box($j: flex-start, $g: md);
+      @extend %flex-start;
+      @include mix.gap(md);
     }
     &-item {
       @include mix.flex-box($a: center, $g: xs);

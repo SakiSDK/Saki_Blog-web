@@ -1,10 +1,26 @@
 <script setup lang="ts">
-import type { ButtonEmits, ButtonProps } from '@/types/components/Base';
 import { computed } from 'vue'
 defineOptions({
   name: 'VButton',
 })
 
+/** ---------- 按钮类型 ---------- */
+export interface ButtonProps {
+  type?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'danger'
+  size?: 'small' | 'default' | 'large'
+  icon?: string
+  loading?: boolean
+  disabled?: boolean
+  block?: boolean
+  ripple?: boolean
+  noWrap?: boolean
+  border?: boolean
+  to?: string | object
+}
+
+export interface ButtonEmits {
+  (e: 'click', event: MouseEvent): void
+}
 
 // Props
 const props = withDefaults(defineProps<ButtonProps>(), {

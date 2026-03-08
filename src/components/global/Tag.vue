@@ -1,11 +1,30 @@
 <script lang="ts" setup>
-import type { TagProps } from '@/types/components/Base';
 import { ref, computed, watch } from 'vue';
 import { useVModel } from '@vueuse/core';
 
 defineOptions({
   name: 'Tag',
 })
+
+/** ---------- Tag组件 Props类型 ---------- */
+export interface TagProps {
+  label?: string;
+  count?: null | number;
+  type?: 'primary' | 'secondary' | 'default' | 'outline' | 'ghost';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  padding?: string;
+  icon?: string;
+  color?: string;
+  radius?: string;
+  rippled?: boolean;
+  wrapped?: boolean;
+  bordered?: boolean;
+  borderColor?: 'theme' | 'follow';
+  closable?: boolean;
+  disabled?: boolean;
+  clickable?: boolean;
+  modelValue?: boolean;
+}
 
 const props = withDefaults(defineProps<TagProps>(), {
   label: '',
@@ -172,8 +191,7 @@ const tagStyle = computed(() => {
   --tag-padding: 0;
   @include mix.inline-flex-box($a: center, $g: sm);
   @include mix.container-style($p: sm sm, $r: sm, $bg: var(--tag-bg), $b: var(--tag-border-base));
-  @include mix.font-style($s: md, $c: var(--tag-font-color));
-  line-height: 1;
+  @include mix.font-style($s: md, $c: var(--tag-font-color), $l: 1);
   user-select: none;
   cursor: default;
   @include anim.transition;

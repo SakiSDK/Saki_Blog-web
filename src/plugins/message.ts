@@ -40,7 +40,7 @@ const message: MessageInstance = {
       type: 'success',
       title,
       content,
-      duration,
+      duration: duration || 3000, // 成功消息默认 3s 消失
       closable: closable ?? true,
     })
   },
@@ -50,7 +50,7 @@ const message: MessageInstance = {
       type: 'info',
       title,
       content,
-      duration,
+      duration: duration || 3000, // 提示消息默认 3s 消失
       closable: closable ?? true,
     })
   },
@@ -60,8 +60,8 @@ const message: MessageInstance = {
       type: 'warning',
       title,
       content,
-      duration,
-      closable: closable ?? false,
+      duration: duration || 4500, // 警告消息时间稍长
+      closable: closable ?? true,
     })
   },
   
@@ -70,13 +70,16 @@ const message: MessageInstance = {
       type: 'error',
       title,
       content,
-      duration: duration || 5000, // 错误消息默认显示时间长一些
-      closable: closable ?? false,
+      duration: duration || 6000, // 错误消息默认显示 6s，确保用户看到
+      closable: closable ?? true,
     })
   },
   
   show: (options: MessageOptions) => {
-    return showMessage(options)
+    return showMessage({
+      ...options,
+      duration: options.duration || 3000 // 通用显示也设置默认 3s
+    })
   },
   
   remove: (id: string) => {

@@ -61,10 +61,9 @@ const aspectRatio = computed(() => {
 
   &__image {
     display: block;
-    @extend %full-size;
+    @extend %img-cover;
     @include mix.position-style($p: absolute, $t: 0, $l: 0);
     @include anim.transition($p: transform, $dr: 0.6s);
-    object-fit: cover;
   }
 
   &__actions {

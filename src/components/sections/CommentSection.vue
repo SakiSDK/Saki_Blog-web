@@ -1,12 +1,12 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import CommentCard from '../cards/comments/CommentCard.vue'
 import { ref, computed, onMounted, watch } from 'vue'
-// import CommentMask from '../cards/comments/CommentMask.vue'
-// import { useCommentStore } from '@/stores/useCommentStore'
-// import { usePostStore } from '@/stores/usePostStore'
+import CommentMask from '../cards/comments/CommentMask.vue'
+import { useCommentStore } from '@/stores/comment.store'
+import { useArticleStore } from '@/stores/article.store'
 import { storeToRefs } from 'pinia'
-// import { useUserStore } from '@/stores/useUserStore'
-// import { showMessage } from '../message/message'
+import { useAuthStore } from '@/stores/auth.store'
+import { message } from '@/plugins/message'
 import loadingImg from '@/assets/images/loading-dark.gif'
 
 
@@ -14,10 +14,11 @@ import loadingImg from '@/assets/images/loading-dark.gif'
 const LIMIT_INPUT: number = 1000
 
 /** ---------- 状态管理 ---------- */
-const { fetchComments, submitComment } = useCommentStore()
-const { commentCount, comments, isLoading, hasMore } = storeToRefs(useCommentStore());
-const { currentPost } = storeToRefs(usePostStore())
-const { user } = storeToRefs(useUserStore());
+const commentStore = useCommentStore()
+const { fetchComments, submitComment } = commentStore
+const { commentCount, comments, isLoading, hasMore } = storeToRefs(commentStore);
+const { articleDetail: currentPost } = storeToRefs(useArticleStore())
+const { user } = storeToRefs(useAuthStore());
 
 
 //页面动态数据
@@ -60,15 +61,9 @@ const handleSubmitComment = async () => {
       content: inputContent.value,
     });
 
-    showMessage({
-      type: 'primary',
-      content: '评论成功',
-    })
-  } catch (error) {
-    showMessage({
-      type: 'error',
-      content: error.message,
-    });
+    message.success('评论成功')
+  } catch (error: any) {
+    message.error(error.message || '评论失败');
   } finally {
     // 提交完成后重置输入框
     inputContent.value = '';
@@ -129,7 +124,7 @@ onMounted(async () => {
           <div class="comment-form__box">
             <div class="commtent-form__avatar-wrapper">
               <Avatar
-                :src="user.avatar"
+                :src="user?.avatar || ''"
                 :size="'55px'"
               />
             </div>
@@ -217,66 +212,55 @@ onMounted(async () => {
     @include anim.translateY;
     @include mix.margin-d(b, lg);
   }
-
   &-title {
     display: inline-flex;
     @include mix.flex-box($j: flex-start, $g: sm);
     @include mix.margin-d(b, lg);
     font-weight: normal;
   }
-
   &-form {
     @include mix.margin-d(b, xl);
     @include mix.margin-d(t, md);
-
     &__box {
-      @extend %full-size;      @include mix.flex-box($a: flex-start, $g: lg);
+      @extend %full-size;      
+      @include mix.flex-box($a: flex-start, $g: lg);
     }
-
     &__actions {
       @include mix.margin-d(t, md);
       @include mix.flex-box($j: flex-end, $g: md);
     }
-
     &__submit,
     &__cancel {
       @include mix.container-style($p: sm md, $b: var(--border-base), $r: md);
       @include anim.transition;
       @include anim.translateY(-2px, none);
     }
-
     &__submit {
       background-color: var(--color-primary-base);
       @include anim.bgcolor(var(--color-primary-strong));
     }
-
     &__cancel {
       background-color: var(--interactive-base);
       @include anim.bgcolor(var(--interactive-strong));
     }
-
     &__info {
       @include mix.flex-box($j: flex-start, $g: sm);
-
       &-item {
         flex: 1;
         @include mix.flex-box($j: flex-start);
         @include mix.container-style($b: var(--border-base), $r: md, $p: 0, $o: hidden);
         @include mix.margin-d(b, lg);
-        font-size: fun.font-size(sm);
-
+        @include mix.font-style($s: sm);
         &>span {
           @include mix.container-style($p: sm md, $r: 0, $bg: var(--interactive-base));
           border-right: var(--border-base);
         }
-
         &>input {
           flex: 1;
           @include mix.container-style($p: 0 md, $r: md);
           @include mix.radius-d(tl bl, 0);
         }
       }
-
       &-send {
         @include mix.margin-d(b, lg);
         @include mix.container-style($p: sm md, $b: var(--border-base), $r: md, $bg: var(--interactive-base));
@@ -286,49 +270,39 @@ onMounted(async () => {
         @include anim.bgcolor(var(--interactive-strong))
       }
     }
-
     &__text {
       position: relative;
       width: 100%;
       @include mix.margin-d(b, sm);
-
       &>textarea {
         @include mix.container-style($p: sm md, $b: var(--border-base), $r: md);
         width: 100%;
         min-height: 150px;
-        font-size: fun.font-size(sm);
-        line-height: 1.7;
+        @include mix.font-style($l: 1.7, $s: sm);
         resize: none;
       }
-
       &-limit {
         @include mix.position(absolute, $b: 15px, $r: 10px);
         @include mix.font-style($s: xs, $c: var(--text-subtle));
       }
     }
   }
-
   &__list {
     @include mix.container-style($p: lg 60px, $b: var(--border-base));
-
     &--expanded {
       rotate: 180deg;
     }
-
     &__header {
       @include mix.flex-box($j: space-between);
       @include mix.container-style($p: sm lg, $b: var(--border-base), $r: md);
       @include mix.margin(lg 0);
-
       &-stat,
       &-refresh {
         font-size: fun.font-size(lg);
       }
-
       &-refresh {
         cursor: pointer;
         @include anim.transition;
-
         &:hover {
           color: var(--color-primary-base);
         }
@@ -359,4 +333,4 @@ onMounted(async () => {
     }
   }
 }
-</style>
+</style> -->

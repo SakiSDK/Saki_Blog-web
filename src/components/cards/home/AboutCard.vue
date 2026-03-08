@@ -1,8 +1,18 @@
 <script lang="ts" setup>
 import AvatarImg from '@/assets/imgs/avatar.webp'
 import { createI18nUtil } from '@/utils/i18n.util';
-import type { AboutCardData } from '@/types/components/Home';
 
+
+interface AboutCardData {
+  name: string;
+  detail: string;
+  content: string;
+  innerContent: string;
+  tip: string;
+  title: string;
+  emoji: string;
+  btns: any
+}
 
 /** ---------- AboutCard text ---------- */
 const { tObj } = createI18nUtil();
@@ -152,8 +162,7 @@ const aboutBtns = aboutBtnOrder.map(itemKey => {
   }
   &-content,
   &-innercontent {
-    line-height: 2;
-    @include mix.font-style($c: var(--text-subtler));
+    @include mix.font-style($c: var(--text-subtler), $l: 2);
     @include anim.transition(transform);
     transform-origin: center bottom;
   }

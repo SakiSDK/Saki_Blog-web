@@ -62,6 +62,10 @@
 }
 
 /** ---------- 公共style ---------- */
+%box-style {
+  @include container-style($p: lg, $r: md, $b: var(--border-base));
+}
+
 %card-container-base {
   position: relative;
   height: 100%;
@@ -82,4 +86,219 @@
 %aboutme-title {
   @include position-style($p: absolute, $t: 40px, $l: lg, $z: base);
   @include font-style($s: title, $f: 'title', $c: var(--white-base));
+}
+
+/** ---------- 布局扩展 ---------- */
+%flex-between {
+  @include flex-box($j: space-between);
+}
+
+%flex-start {
+  @include flex-box($j: flex-start);
+}
+
+%flex-end {
+  @include flex-box($j: flex-end);
+}
+
+%absolute-center {
+  @include position-style($p: absolute, $t: 50%, $l: 50%);
+  transform: translate(-50%, -50%);
+}
+
+/** ---------- 文本样式 ---------- */
+%text-truncate {
+  @include text-overflow(1);
+}
+
+%text-truncate-2 {
+  @include text-overflow(2);
+}
+
+%text-center {
+  text-align: center;
+}
+
+/** ---------- 交互与视觉 ---------- */
+%clickable {
+  cursor: pointer;
+  user-select: none;
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+%disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+%hover-pause {
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+%hide-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+%glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(var(--surface-base-rgb), 0.7);
+}
+
+%overlay-base {
+  @include position-style($p: absolute, $t: 0, $l: 0);
+  @include size(100%);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/** ---------- 动画与过渡 ---------- */
+%trans-base {
+  @include anim.transition($dr: base, $tf: ease);
+}
+
+%trans-all {
+  @include anim.transition($p: all, $dr: base, $tf: ease);
+}
+
+%trans-smooth {
+  @include anim.transition($p: all, $dr: slow, $tf: smooth);
+}
+
+%anim-fade-in {
+  @include anim.fade-in;
+}
+
+%anim-scale-in {
+  animation: scaleIn var(--animation-duration-base) var(--animation-timing-function-elastic) forwards;
+}
+
+/** ---------- 阴影样式 ---------- */
+%shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+%shadow-md {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+%shadow-lg {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+%shadow-hover {
+  @extend %trans-base;
+  &:hover {
+    @extend %shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+/** ---------- 网格布局 ---------- */
+%grid-center {
+  display: grid;
+  place-items: center;
+}
+
+%grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: space-value(md);
+}
+
+%grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: space-value(md);
+}
+
+/** ---------- 图片与媒体 ---------- */
+%aspect-video {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+%aspect-square {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+%img-cover {
+  @include size(100%);
+  object-fit: cover;
+}
+
+%img-contain {
+  @include size(100%);
+  object-fit: contain;
+}
+
+/** ---------- 滚动交互 ---------- */
+%scroll-snap-x {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  @extend %hide-scrollbar;
+  
+  > * {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+}
+
+%scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/** ---------- 文本特效 ---------- */
+%text-gradient-primary {
+  background: linear-gradient(135deg, var(--primary-base), var(--secondary-base));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+%text-antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/** ---------- 表单基础 ---------- */
+%input-reset {
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  
+  &::placeholder {
+    color: var(--text-ghost);
+  }
+}
+
+%focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--primary-base);
+    outline-offset: 2px;
+  }
+}
+
+/** ---------- 骨架屏效果 ---------- */
+%skeleton-pulse {
+  @include anim.skeleton;
+  background: linear-gradient(
+    90deg, 
+    var(--surface-base) 25%, 
+    var(--surface-variant, var(--surface-subtle)) 50%, 
+    var(--surface-base) 75%
+  );
+  background-size: 200% 100%;
 }

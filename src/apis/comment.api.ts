@@ -1,11 +1,9 @@
-import { del, post, get } from "@/utils/request";
-import { useToken } from "@/utils/useToken";
+import { del, post, get } from "@/utils/request.util";
+import { useTokenStore } from "@/stores/token.store";
 import snakecaseKeys from 'snakecase-keys'
 import { omitBy, isUndefined } from 'lodash'
 
 
-
-const { getToken } = useToken()
 export class CommentApi {
     static async getAllCommentCount(): Promise<number> {
         const res = await get(`/api/v1/web/comment/count`)
@@ -29,12 +27,13 @@ export class CommentApi {
         content: string,
         parent_id?: number
     }) {
+        const tokenStore = useTokenStore()
         const res = await post(
             `/api/v1/web/post/${shortId}/comment`,
             omitBy(snakecaseKeys(data || {}, { deep: true }), isUndefined),
             {
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': `Bearer ${tokenStore.getToken()}`
                 }
             }
         )
@@ -42,9 +41,10 @@ export class CommentApi {
     }
 
     static async deleteComment(shortId: string, commentId: string) {
+        const tokenStore = useTokenStore()
         const res = await del(`/api/v1/web/comment/${commentId}`, undefined, {
             headers: {
-                'Authorization': `Bearer ${getToken()}`
+                'Authorization': `Bearer ${tokenStore.getToken()}`
             }
         })
         return res;

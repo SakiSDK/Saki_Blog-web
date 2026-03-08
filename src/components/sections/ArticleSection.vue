@@ -63,21 +63,21 @@ onMounted(async () => {
   <div class="article-section">
     <div class="article-section__container">
       <div class="article-section__aside">
-        <div class="article-section-recent">
+        <div class="article-section-recent" v-reveal>
           <RecentArticlesCard/>
         </div>
-        <div class="article-section-tag">
+        <div class="article-section-tag" v-reveal>
           <ArticleTagCard/>
         </div>
       </div>
       <div class="article-section__main">
-        <div class="article-section-category-bar">
+        <div class="article-section-category-bar" v-reveal>
           <ArticleCategoryBar/>
         </div>
         <div class="article-section__content">
           <div class="article-section__sheet">
             <div class="article-section__wrapper">
-              <div class="article-section__item" v-for=" article in articleList" :key="article.shortId">
+              <div class="article-section__item" v-reveal v-for=" article in articleList" :key="article.shortId">
                 <ArticleCard
                   :short-id="article.shortId"
                   :cover="article.cover"
@@ -89,7 +89,7 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-          <div class="article-section__pagination">
+          <div class="article-section__pagination" v-reveal>
             <Pagination
               v-model:page="currentPage"
               v-model:pageSize="pageSize"

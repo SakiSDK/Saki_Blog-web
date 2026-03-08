@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import PageHeader from '@/components/bases/PageHeader.vue';
-import type { PageHeaderField } from '@/types/components/Base';
+import type { PageHeaderField } from '@/components/bases/PageHeader.vue';
 import GameCard from '@/components/cards/aboutme/GameCard.vue';
 import InfoCard from '@/components/cards/aboutme/InfoCard.vue';
 import SmallJoyCard from '@/components/cards/aboutme/SmallJoyCard.vue';
@@ -32,31 +32,70 @@ const aboutmeField: PageHeaderField = {
       </div>
       <div class="aboutme__body container">
         <div class="aboutme__body-wrapper">
-          <div class="aboutme-info">
+          <div 
+            class="aboutme-info" 
+            v-reveal="{
+              delay: 1500,
+              duration: 1000
+            }"
+          >
             <InfoCard />
           </div>
-          <div class="aboutme-small-joy">
+          <div 
+            class="aboutme-small-joy"
+            v-reveal="{
+              delay: 1600,
+              duration: 1000
+            }"
+          >
             <SmallJoyCard />
           </div>
-          <div class="aboutme-education">
+          <div 
+            class="aboutme-education"
+            v-reveal="{
+              delay: 1700,
+              duration: 1000
+            }"
+          >
             <EducationCard />
           </div>
-          <div class="aboutme-techstack">
+          <div 
+            class="aboutme-techstack"
+            v-reveal="{
+              delay: 1800,
+              duration: 1000
+            }"
+          >
             <Techstack/>
           </div>
-          <div class="aboutme-personality">
+          <div class="aboutme-personality" v-reveal="{
+            delay: 1900,
+            duration: 1000
+          }">
             <PersonalityCard/>
           </div>
-          <div class="aboutme-motto">
+          <div class="aboutme-motto" v-reveal="{
+            delay: 2000,
+            duration: 1000
+          }">
             <MottoCard/>
           </div>
-          <div class="aboutme-game">
+          <div class="aboutme-game" v-reveal="{
+            delay: 2100,
+            duration: 1000
+          }">
             <GameCard />
           </div>
-          <div class="aboutme-anime">
+          <div class="aboutme-anime" v-reveal="{
+            delay: 2200,
+            duration: 1000
+          }">
             <AnimeCard />
           </div>
-          <div class="aboutme-nonsence">
+          <div class="aboutme-nonsence" v-reveal="{
+            delay: 2300,
+            duration: 1000
+          }">
             <NonsenceCard/>
           </div>
         </div>

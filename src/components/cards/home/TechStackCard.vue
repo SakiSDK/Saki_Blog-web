@@ -68,7 +68,6 @@ const row3 = computed(() => [...devOpsAndDbStack, ...devOpsAndDbStack, ...devOps
   <div class="tech-stack-card">
     <CardHeader title="技术栈" subtitle="Tech Stack" icon="rocket" />
     <div class="scroll-wrapper">
-      
       <!-- Row 1: Frontend (Left Scroll) -->
       <div class="scroll-track-container">
         <div class="scroll-track scroll-left">
@@ -84,7 +83,6 @@ const row3 = computed(() => [...devOpsAndDbStack, ...devOpsAndDbStack, ...devOps
           </div>
         </div>
       </div>
-
       <!-- Row 2: Languages & Tools (Right Scroll) -->
       <div class="scroll-track-container">
         <div class="scroll-track scroll-right">
@@ -100,7 +98,6 @@ const row3 = computed(() => [...devOpsAndDbStack, ...devOpsAndDbStack, ...devOps
           </div>
         </div>
       </div>
-
       <!-- Row 3: DevOps & DB (Left Scroll Slow) -->
       <div class="scroll-track-container">
         <div class="scroll-track scroll-left-slow">
@@ -124,110 +121,79 @@ const row3 = computed(() => [...devOpsAndDbStack, ...devOpsAndDbStack, ...devOps
 <style lang="scss" scoped>
 .tech-stack-card {
   @extend %card-container-base;
-  height: 350px;
-  display: flex;
-  flex-direction: column;
+  @include mix.padding(0);
+  @include mix.flex-box($d: column);
   overflow: hidden;
+  height: 350px;
 }
-
 .scroll-wrapper {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px; // Increased gap between rows for better separation
-  padding: 10px 0;
+  @include mix.flex-box($d: column, $g: lg);
+  @include mix.padding(sm 0);
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   overflow: hidden; // Ensure no vertical overflow
 }
-
 .scroll-track-container {
   width: 100%;
   overflow: hidden;
   display: flex;
-  padding: 4px 0; // Add some vertical padding for hover effects
-  
+  @include mix.padding(xs 0);
   &:hover {
     .scroll-track {
       animation-play-state: paused;
     }
   }
 }
-
 .scroll-track {
   display: flex;
-  gap: 16px;
   width: max-content;
-  
+  @include mix.gap(md);
   &.scroll-left {
     animation: scrollLeft 40s linear infinite;
   }
-  
   &.scroll-right {
     animation: scrollRight 45s linear infinite;
   }
-  
   &.scroll-left-slow {
     animation: scrollLeft 50s linear infinite;
   }
 }
-
 @keyframes scrollLeft {
   0% { transform: translateX(0); }
   100% { transform: translateX(-25%); }
 }
-
 @keyframes scrollRight {
   0% { transform: translateX(-25%); }
   100% { transform: translateX(0); }
 }
-
 .tech-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px; // Slightly reduced padding
-  border-radius: 50px;
-  background-color: var(--bg-base);
-  border: 1px solid var(--border-base);
-  transition: all 0.3s ease;
+  height: 36px; // Fixed height for consistency
+  @include mix.flex-box($g: sm);
+  @include mix.container-style($p: xs md, $r: 50px, $bg: var(--bg-base));
+  @include hov.move-y;
+  @include hov.border;
+  @include hov.bg;
   white-space: nowrap;
   user-select: none;
   flex-shrink: 0;
-  height: 36px; // Fixed height for consistency
-
+  transition: all 0.3s ease;
   &:hover {
-    transform: translateY(-2px);
-    background-color: var(--bg-strong);
     box-shadow: var(--shadow-sm);
-    border-color: var(--primary-base);
-    
     .tech-icon {
       transform: scale(1.1);
     }
   }
 }
-
 .tech-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px; // Fixed width container
-  height: 20px; // Fixed height container
+  @extend %flex-center;
+  @include mix.size(20px);
 }
-
 .tech-icon {
-  width: 100%;
-  height: 100%;
+  @extend %full-size;
+  @include anim.transition($p: transform, $dr: 0.3s, $tf: ease);
   object-fit: contain; // Ensure icon fits within the box
-  transition: transform 0.3s ease;
 }
-
 .tech-name {
-  font-size: 0.85rem; // Slightly smaller font
-  font-weight: 500;
-  color: var(--text-base);
-  line-height: 1;
+  @include mix.font-style($s: md, $w: 500, $c: var(--text-base), $l: 1, $f: title);
 }
 </style>

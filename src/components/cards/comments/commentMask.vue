@@ -26,7 +26,7 @@
     @include mix.font-style($c: var(--text-base), $s: md);
     background-color: var(--surface-ghost);
     inset: 0;
-    backdrop-filter: blur(rem(2));
+    @extend %glass-effect;
     cursor: pointer;
     @include util.container-h-down(1200px){
         background-color: red !important;
@@ -50,7 +50,7 @@
         @include mix.margin-d(t, sm);
         @include anim.transition;
         @include anim.translateY(-rem(2), none);
-        @include anim.bgcolor(var(--color-primary-strong));
+        @include hov.bg(var(--color-primary-strong));
         @include mix.font-style($c: var(--color-white-base), $s: lg);
     }
     &-title {

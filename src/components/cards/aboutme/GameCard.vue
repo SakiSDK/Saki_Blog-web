@@ -5,8 +5,18 @@ import Expedition33Img from '@/assets/imgs/game_Expedition33.webp'
 import LittleNightmareImg from '@/assets/imgs/game_LittleNightmare.webp'
 import EldenRingImg from '@/assets/imgs/game_EldenRing.webp';
 import { createI18nUtil } from '@/utils/i18n.util';
-import type { CardBaseInfo, GameCardField } from '@/types/components/Aboutme';
 
+
+interface CardBaseInfo {
+  tag: string;
+  title: string;
+}
+
+interface GameCardField {
+  name: string;
+  webSite: string;
+  image: string;
+}
 
 const { tWithPrefix } = createI18nUtil();
 const gameT = tWithPrefix('aboutme.gameCard');
@@ -56,10 +66,12 @@ const gameFields: GameCardField[] = [
             v-for="game, index in gameFields"
             :key="index"
             :href="game.webSite"
+            target="_blank"
           >
-            <div class="game-item" v-lazy="{
-              src: game.image
-            }">
+            <div class="game-item">
+              <img class="game-img" v-lazy="{
+                src: game.image
+              }" :alt="game.name"/>
             </div>
           </a>
         </div>
@@ -95,24 +107,35 @@ const gameFields: GameCardField[] = [
     @include mix.size(20%, 100%);
     position: relative;
     overflow: hidden;
-    transform: skew(-10deg);
     background-color: var(--black-base);
-    @include anim.transition($dr: 1s);
+    // 修复边缘锯齿
+    backface-visibility: hidden;
+    outline: 1px solid transparent; 
+    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: width;
+    
+    // Hover effect
     &:hover {
       width: 44%;
-      .game-item {
-        transform: skew(10deg) scale(1.3);
+      .game-img {
+        transform: scale(1.1);
+        filter: brightness(1.1);
       }
     }
   }
 
   &-item {
-    @include mix.position-style($p: absolute, $t: 0, $l: -rem(20));
-    @include mix.size(rem(300), 100%);
-    transform: skew(10deg) translateX(-rem(40));
-    @include anim.transition($p: with transform, $dr: 1s);
-    background-position: center;
-    background-color: var(--black-base);
+    @include mix.position-style($p: absolute, $l: 0);
+    @include mix.size(100%);
+  }
+
+  &-img {
+    @extend %img-cover;
+    // 修复边缘锯齿
+    backface-visibility: hidden;
+    outline: 1px solid transparent;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+    will-change: transform;
   }
 }
 </style>

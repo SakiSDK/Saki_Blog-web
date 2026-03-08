@@ -15,7 +15,16 @@
     "readMore": "続きを読む",
     "confirmDelete": "削除してもよろしいですか？",
     "confirmLogout": "ログアウトしてもよろしいですか？",
-    "confirmDeleteComment": "このコメントを削除してもよろしいですか？"
+    "confirmDeleteComment": "このコメントを削除してもよろしいですか？",
+    "back": "戻る",
+    "forward": "進む",
+    "refresh": "更新",
+    "home": "ホーム",
+    "copyLink": "リンクをコピー",
+    "toTop": "トップへ",
+    "noResult": "結果が見つかりません",
+    "select": "選択",
+    "close": "閉じる"
   },
   "topbar": {
     "siteName": "SakiSDK",

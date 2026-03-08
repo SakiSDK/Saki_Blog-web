@@ -221,8 +221,7 @@ watch(
       height: rem(250);
     }
     img {
-      @extend %full-size;
-      object-fit: cover;
+      @extend %img-cover;
       @include hov.scale(1.05, true);
     }
   }

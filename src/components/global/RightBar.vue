@@ -3,7 +3,9 @@ import { computed, ref } from 'vue';
 import { useThemeStore } from '@/stores/theme.store';
 import { storeToRefs } from 'pinia';
 import { useLangStore } from '@/stores/lang.store';
-import type { RightBarThemeIcon } from '@/types/components/Base'
+
+/** ---------- RightBar 右侧按钮类型 ---------- */
+export type RightBarThemeIcon = 'moon-star' | 'sun';
 
 export interface RightBarField {
   id: string

@@ -347,3 +347,22 @@
     align-items: $a;
   }
 }
+
+// 移动端适配快捷方式
+@mixin mobile {
+  @include respond-down(sm) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include respond-between(sm, md) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include respond-up(md) {
+    @content;
+  }
+}

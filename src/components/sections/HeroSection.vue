@@ -3,9 +3,13 @@ import { ref, onMounted } from 'vue'
 import { animate, spring, createDraggable } from 'animejs';
 import { createI18nUtil } from '@/utils/i18n.util';
 import AvatarImg from '@/assets/imgs/avatar.webp'
-import type { HeroField } from '@/types/components/Hero';
 import Wave from '../bases/Wave.vue';
 
+
+interface HeroField {
+  title: string;
+  description: string;
+}
 
 /** ---------- 静态数据 ---------- */
 const contentActive = ref<string>('')

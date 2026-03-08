@@ -87,8 +87,7 @@ const props = defineProps<{
     @include mix.font-style($f: pixel, $s: title, $c: var(--white-base));
   }
   &-description {
-    @include mix.font-style($s: md, $f: base, $c: var(--white-subtle));
-    line-height: 1.5;
+    @include mix.font-style($s: md, $f: base, $c: var(--white-subtle), $l: 1.5);
     visibility: hidden;
     opacity: 0;
     transform: translateY(20px);

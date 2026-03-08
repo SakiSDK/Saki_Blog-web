@@ -22,6 +22,11 @@ const routes: RouteRecordRaw[] = [
     component: Aboutme
   },
   {
+    path: '/aboutsite',
+    name: 'Aboutsite',
+    component: () => import('@/views/Aboutsite.vue')
+  },
+  {
     path: '/album',
     name: 'Album',
     component: Album,
@@ -55,6 +60,16 @@ const routes: RouteRecordRaw[] = [
     path: '/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/construction',
+    name: 'Construction',
+    component: () => import('@/views/Construction.vue'),
+  },
+  {
+    path: '/announcement',
+    name: 'Announcement',
+    component: () => import('@/views/Announcement.vue'),
   },
   // 其他未定义的路由，自动跳转到notfound页
   {

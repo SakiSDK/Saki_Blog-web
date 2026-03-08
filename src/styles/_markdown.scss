@@ -403,7 +403,7 @@
     margin: 1rem 0;
     .mermaid {
       width: 100%;
-      text-align: center;
+      @extend %text-center;
       svg {
         max-width: 100% !important;
         height: auto !important;

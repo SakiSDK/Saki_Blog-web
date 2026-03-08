@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { ref, onMounted, shallowRef } from 'vue'
+import { ref, onMounted, shallowRef, onUnmounted } from 'vue'
 import { useIntervalFn, useTimeoutFn } from '@vueuse/core'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const informContents = shallowRef([
   {
     id: 1,
@@ -35,11 +37,21 @@ const informContents = shallowRef([
   }
 ])
 const currentIndex = ref(0)
-const itemHeight = 20 // 每条 li 高度，和样式一致
+const itemHeight = ref(24) // 每条 li 高度，和样式一致
+const announceContentRef = ref<HTMLElement | null>(null)
 
+const updateHeight = () => {
+  if (announceContentRef.value) {
+    // 获取容器高度作为单行高度
+    itemHeight.value = announceContentRef.value.clientHeight
+  }
+}
 
 const isTransitioning = ref(true)
 onMounted(() => {
+  updateHeight()
+  window.addEventListener('resize', updateHeight)
+
   useIntervalFn(() => {
     currentIndex.value++
     if (currentIndex.value === informContents.value.length) {
@@ -53,18 +65,22 @@ onMounted(() => {
     }
   }, 3000)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateHeight)
+})
 </script>
 
 <template>
-  <div class="announce">
+  <div class="announce" @click="router.push({ name: 'Announcement' })" style="cursor: pointer;">
     <a
-      href="javascrpt:void(0)"
+      href="javascript:void(0)"
       class="announce__container"
     >
       <span class="announce-icon">
         <Icon name="notice"/>
       </span>
-      <div class="announce-content">
+      <div class="announce-content" ref="announceContentRef">
         <ul
           class="announce-content__wrapper"
           :style="{
@@ -76,6 +92,7 @@ onMounted(() => {
             v-for="item, index in informContents"
             :key="index"
             class="announce-content__item"
+            :title="item.content"
           >
             {{ item.content }}
           </li>
@@ -83,6 +100,7 @@ onMounted(() => {
             v-for="item, index in informContents"
             :key="item.id"
             class="announce-content__item"
+            :title="item.content"
           >
             {{ item.content }}
           </li>
@@ -118,15 +136,24 @@ onMounted(() => {
     }
   }
   &-content {
-    height: rem(20);
+    height: rem(24);
     overflow: hidden;
-    text-align: center;
+    @extend %text-center;
     font-family: 'base';
+    flex: 1;
+    min-width: 0;
+    margin: 0 rem(8);
+
     &__wrapper {
       @include anim.transition(all, 0.5s, ease-in-out);
     }
     &__item {
-      height: rem(20);
+      height: rem(24);
+      line-height: rem(24);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
   }
 }

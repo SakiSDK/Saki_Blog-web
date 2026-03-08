@@ -9,4 +9,5 @@ export default {
   retry: import.meta.env.VITE_RETRY || false,
   retryCount: import.meta.env.VITE_RETRY_COUNT || 3,
   retryDelay: import.meta.env.VITE_RETRY_Delay || 3,
+  signSecret: import.meta.env.VITE_SIGN_SECRET || 'your-secret-key',
 } as ServerConfig; 

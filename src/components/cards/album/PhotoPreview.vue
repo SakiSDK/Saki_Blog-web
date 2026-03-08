@@ -527,8 +527,8 @@ onUnmounted(() => {
   &-mask {
     @extend %full-screen;
     @include mix.position-style($p: fixed, $t: 0, $l: 0, $z: modal-backdrop);
+    @extend %glass-effect;
     background-color: var(--bg-subtle);
-    backdrop-filter: blur(rem(10));
     cursor: zoom-out;
   }
   &-keyboard-description {
@@ -536,7 +536,7 @@ onUnmounted(() => {
     @include mix.flex-box($d: column, $a: flex-start, $j: center, $g: sm);
     @include mix.container-style($p: md, $bg: var(--bg-subtle), $r: lg);
     @include mix.font-style($c: var(--text-base));
-    backdrop-filter: blur(rem(8));
+    @extend %glass-effect;
     pointer-events: none;
     opacity: 0;
     transform: scale(0.9);

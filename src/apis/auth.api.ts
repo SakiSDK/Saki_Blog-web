@@ -2,15 +2,16 @@ import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { post, get, del, put } from "@/utils/request.util";
 import crypto from "crypto-js";
-// import { useCaptchaStore } from "@/stores/useCaptchaStore"
+import { useCaptchaStore } from "@/stores/captcha.store";
+import serverConfig from "@/configs/server.config";
 
 export interface LoginData {
   email: string;
   password: string;
-  captcha: string;
+  captcha?: string;
 }
 export interface RegisterData {
-  username: string;
+  nickname: string;
   password: string;
   email: string;
 }
@@ -34,7 +35,7 @@ export class AuthApi {
       const timestamp = Date.now().toString(); // 时间戳
       const nonce = Math.random().toString(36).substring(2, 12); // 10位随机字符串
       // 签名规则：与后端Authorization-Signature一致（email+password+timestamp+nonce+服务器秘钥）
-      const signStr = `${data.email}${data.password}${timestamp}${nonce}${config.signSecret}`;
+      const signStr = `${data.email}${data.password}${timestamp}${nonce}${serverConfig.signSecret}`;
       const signature = crypto.SHA256(signStr).toString(); // 生成sha256签名
 
       const captchaStore = useCaptchaStore();
@@ -93,7 +94,7 @@ export class AuthApi {
    * 刷新token
    * @returns
    */
-  static async refresh() {
+  static async refreshToken() {
     return await get("/api/v1/web/auth/refreshAccessToken");
   }
 
@@ -115,6 +116,7 @@ export class AuthApi {
    * 获取用户基本信息
    */
   static async getUserProfile(shortId: string) {
-    
+    const res: any = await get(`/api/v1/web/user/${shortId}`);
+    return res.data;
   }
 }
